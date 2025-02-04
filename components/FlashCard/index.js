@@ -3,7 +3,8 @@ import { collections } from "@/lib/data";
 import { useState } from "react";
 
 const StyledCard = styled.li`
-  background-color: lightgray;
+  background-color: ${({ $showAnswer }) =>
+    $showAnswer ? "#93E9BE" : "lightgray"};
   list-style: none;
   width: 80%;
   border-radius: 20px;
@@ -21,14 +22,17 @@ const StyledQuestion = styled.p`
 
 const StyledAnswer = styled.p`
   font-size: 1.75rem;
-  font-weight: 400;
+  font-weight: 600;
 `;
 
 export default function FlashCard({ question, answer, collectionId }) {
   const [showAnswer, setShowAnswer] = useState(false);
 
   return (
-    <StyledCard onClick={() => setShowAnswer(!showAnswer)}>
+    <StyledCard
+      $showAnswer={showAnswer}
+      onClick={() => setShowAnswer(!showAnswer)}
+    >
       <p>
         {
           collections.find((collection) => collectionId === collection.id)
