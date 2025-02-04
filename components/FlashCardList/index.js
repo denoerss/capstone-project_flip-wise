@@ -1,6 +1,7 @@
 import { flashcards } from "@/lib/data";
 import { collections } from "@/lib/data";
 import styled from "styled-components";
+import { useState } from "react";
 
 const StyledList = styled.ul`
   display: flex;
@@ -18,6 +19,9 @@ const StyledCard = styled.li`
   border-radius: 20px;
   padding: 25px 25px;
   line-height: 1.25;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const StyledQuestion = styled.p`
@@ -26,7 +30,8 @@ const StyledQuestion = styled.p`
 `;
 
 const StyledAnswer = styled.p`
-  font-size: 1.35rem;
+  font-size: 1.75rem;
+  font-weight: 400;
 `;
 
 const StyledHeading = styled.h2`
@@ -36,20 +41,29 @@ const StyledHeading = styled.h2`
 `;
 
 export default function FlashCardList() {
+  const [showAnswer, setShowAnswer] = useState(false);
+
+  function toggleFlip() {
+    setShowAnswer(!showAnswer);
+  }
+
   return (
     <>
       <StyledHeading>Flip Cards List</StyledHeading>
       <StyledList>
         {flashcards.map(({ id, question, answer, collectionId }) => (
-          <StyledCard key={id}>
+          <StyledCard key={id} onClick={toggleFlip}>
             <p>
               {
                 collections.find((collection) => collectionId === collection.id)
                   ?.title
               }
             </p>
-            <StyledQuestion>{question}</StyledQuestion>
-            <StyledAnswer>{answer}</StyledAnswer>
+            {showAnswer ? (
+              <StyledAnswer>{answer}</StyledAnswer>
+            ) : (
+              <StyledQuestion>{question}</StyledQuestion>
+            )}
           </StyledCard>
         ))}
       </StyledList>
