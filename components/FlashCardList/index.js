@@ -37,20 +37,22 @@ const StyledHeading = styled.h2`
 
 export default function FlashCardList() {
   return (
-    <StyledList>
+    <>
       <StyledHeading>Flip Cards List</StyledHeading>
-      {flashcards.map(({ id, question, answer, collectionId }) => (
-        <StyledCard key={id}>
-          <p>
-            {
-              collections.find((collection) => collectionId === collection.id)
-                ?.title
-            }
-          </p>
-          <StyledQuestion>{question}</StyledQuestion>
-          <StyledAnswer>{answer}</StyledAnswer>
-        </StyledCard>
-      ))}
-    </StyledList>
+      <StyledList>
+        {flashcards.map(({ id, question, answer, collectionId }) => (
+          <StyledCard key={id}>
+            <p>
+              {
+                collections.find((collection) => collectionId === collection.id)
+                  ?.title
+              }
+            </p>
+            <StyledQuestion>{question}</StyledQuestion>
+            <StyledAnswer>{answer}</StyledAnswer>
+          </StyledCard>
+        ))}
+      </StyledList>
+    </>
   );
 }
