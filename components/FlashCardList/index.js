@@ -16,7 +16,7 @@ const StyledCard = styled.li`
   list-style: none;
   width: 80%;
   border-radius: 20px;
-  padding: 25px 25px 5px 25px;
+  padding: 25px 25px;
   line-height: 1.25;
 `;
 
