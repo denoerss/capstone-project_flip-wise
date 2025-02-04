@@ -1,23 +1,16 @@
-// import FlashCard from "@/components/FlashCard";
-import { flashcards } from "@/lib/data";
-import { collections } from "@/lib/data";
+import FlashCardList from "@/components/FlashCardList";
+import styled from "styled-components";
+
+const StyledHeader = styled.h1`
+  text-align: center;
+  font-size: 2.5rem;
+`;
 
 export default function HomePage() {
   return (
-    <>
-      <h1>FlipWise</h1>
-      <ul>
-        {flashcards.map(({ id, question, answer, collectionId }) => (
-          <li key={id}>
-            {
-              collections.find((collection) => collectionId === collection.id)
-                ?.title
-            }
-            <p>{question}</p>
-            <p>{answer}</p>
-          </li>
-        ))}
-      </ul>
-    </>
+    <main>
+      <StyledHeader>FlipWise</StyledHeader>
+      <FlashCardList />
+    </main>
   );
 }
