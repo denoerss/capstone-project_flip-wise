@@ -1,5 +1,5 @@
 import { flashcards } from "@/lib/data";
-import FlashCard from "../FlashCard";
+import FlashCard from "./FlashCard";
 import styled from "styled-components";
 
 const StyledList = styled.ul`
