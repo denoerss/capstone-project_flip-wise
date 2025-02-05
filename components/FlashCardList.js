@@ -17,19 +17,20 @@ const StyledHeading = styled.h2`
   margin-bottom: 10px;
 `;
 
-export default function FlashCardList() {
+export default function FlashCardList(isCorrect) {
   return (
     <>
       <StyledHeading>Flip Cards List</StyledHeading>
       <StyledList>
-        {flashcards.map(({ id, question, answer, collectionId }) => (
-          <FlashCard
-            key={id}
-            question={question}
-            answer={answer}
-            collectionId={collectionId}
-          />
-        ))}
+        {isCorrect &&
+          flashcards.map(({ id, question, answer, collectionId }) => (
+            <FlashCard
+              key={id}
+              question={question}
+              answer={answer}
+              collectionId={collectionId}
+            />
+          ))}
       </StyledList>
     </>
   );

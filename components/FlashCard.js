@@ -19,7 +19,12 @@ const StyledCard = styled.li`
 
 const CardInner = styled.div``;
 
-export default function FlashCard({ question, answer, collectionId }) {
+export default function FlashCard({
+  question,
+  answer,
+  collectionId,
+  onMarkCorrect,
+}) {
   const [showAnswer, setShowAnswer] = useState(false);
 
   function flipCard() {
@@ -28,6 +33,7 @@ export default function FlashCard({ question, answer, collectionId }) {
 
   function handleCorrect(event) {
     event.stopPropagation();
+    onMarkCorrect(id);
   }
 
   return (
