@@ -24,6 +24,7 @@ export default function FlashCard({
   answer,
   collectionId,
   onMarkCorrect,
+  id,
 }) {
   const [showAnswer, setShowAnswer] = useState(false);
 
