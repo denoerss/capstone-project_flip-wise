@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { collections } from "@/lib/data";
 import { useState } from "react";
+import FlashCardFront from "./FlashCardFront";
+import FlashCardBack from "./FlashCardBack";
 
 const StyledCard = styled.li`
   background-color: ${({ $showAnswer }) =>
@@ -15,15 +16,7 @@ const StyledCard = styled.li`
   }
 `;
 
-const StyledQuestion = styled.p`
-  font-size: 1.75rem;
-  font-weight: 600;
-`;
-
-const StyledAnswer = styled.p`
-  font-size: 1.75rem;
-  font-weight: 600;
-`;
+const CardInner = styled.div``;
 
 export default function FlashCard({ question, answer, collectionId }) {
   const [showAnswer, setShowAnswer] = useState(false);
@@ -33,17 +26,13 @@ export default function FlashCard({ question, answer, collectionId }) {
       $showAnswer={showAnswer}
       onClick={() => setShowAnswer(!showAnswer)}
     >
-      <p>
-        {
-          collections.find((collection) => collectionId === collection.id)
-            ?.title
-        }
-      </p>
-      {showAnswer ? (
-        <StyledAnswer>{answer}</StyledAnswer>
-      ) : (
-        <StyledQuestion>{question}</StyledQuestion>
-      )}
+      <CardInner>
+        {showAnswer ? (
+          <FlashCardBack answer={answer} collectionId={collectionId} />
+        ) : (
+          <FlashCardFront question={question} collectionId={collectionId} />
+        )}
+      </CardInner>
     </StyledCard>
   );
 }
