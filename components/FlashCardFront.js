@@ -1,5 +1,4 @@
 import { collections } from "@/lib/data";
-import { flashcards } from "@/lib/data";
 import styled from "styled-components";
 
 // const CardFront = styled.div``;
