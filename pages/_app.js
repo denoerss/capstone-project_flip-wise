@@ -1,15 +1,20 @@
 import GlobalStyle from "../styles";
 import { flashcards as initialFlashCards } from "@/lib/data";
-import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import { useRouter } from "next/router";
+import useLocalStorageState from "use-local-storage-state";
 
 export default function App({ Component, pageProps }) {
-  const [flashCards, setFlashCards] = useState(initialFlashCards);
+  const [flashCards, setFlashCards] = useLocalStorageState("flashCards", {
+    defaultValue: initialFlashCards,
+  });
   const router = useRouter();
 
   const activeFlashCards = flashCards.filter((card) => !card.isCorrect);
   const archivedFlashCards = flashCards.filter((card) => card.isCorrect);
+
+  const flashCardsToShow =
+    router.pathname === "/archive" ? archivedFlashCards : activeFlashCards;
 
   function onMarkCorrect(id) {
     const updatedFlashCards = flashCards.map((flashcard) =>
@@ -19,8 +24,6 @@ export default function App({ Component, pageProps }) {
     );
     setFlashCards(updatedFlashCards);
   }
-  const flashCardsToShow =
-    router.pathname === "/archive" ? archivedFlashCards : activeFlashCards;
 
   return (
     <>
