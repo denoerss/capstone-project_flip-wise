@@ -33,6 +33,7 @@ export default function FlashCardList({ onMarkCorrect, flashCards }) {
             collectionId={collectionId}
             onMarkCorrect={onMarkCorrect}
             id={id}
+            flashCards={flashCards}
           />
         ))}
         {router.pathname === "/archive" && flashCards.length === 0 && (

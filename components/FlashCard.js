@@ -25,6 +25,7 @@ export default function FlashCard({
   collectionId,
   onMarkCorrect,
   id,
+  flashCards,
 }) {
   const [showAnswer, setShowAnswer] = useState(false);
 
@@ -42,7 +43,14 @@ export default function FlashCard({
       <CardInner>
         {showAnswer ? (
           <>
-            <Button name="correct" onClick={handleCorrect} />
+            <Button
+              name={
+                flashCards.find((flashCard) => flashCard.id === id)?.isCorrect
+                  ? "incorrect"
+                  : "correct"
+              }
+              onClick={handleCorrect}
+            />
             <FlashCardBack answer={answer} collectionId={collectionId} />
           </>
         ) : (
