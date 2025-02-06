@@ -6,11 +6,11 @@ const StyledHeader = styled.h1`
   font-size: 2.5rem;
 `;
 
-export default function HomePage({ onMarkCorrect }) {
+export default function HomePage({ onMarkCorrect, flashCards }) {
   return (
     <main>
       <StyledHeader>FlipWise</StyledHeader>
-      <FlashCardList onMarkCorrect={onMarkCorrect} />
+      <FlashCardList onMarkCorrect={onMarkCorrect} flashCards={flashCards} />
     </main>
   );
 }
