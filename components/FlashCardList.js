@@ -1,5 +1,6 @@
 import FlashCard from "./FlashCard";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 const StyledList = styled.ul`
   display: flex;
@@ -17,6 +18,9 @@ const StyledHeading = styled.h2`
 `;
 
 export default function FlashCardList({ onMarkCorrect, flashCards }) {
+  const router = useRouter();
+
+  console.log("FLASHCARDS_LENGTH_", flashCards.length);
   return (
     <>
       <StyledHeading>Flip Cards List</StyledHeading>
@@ -31,6 +35,12 @@ export default function FlashCardList({ onMarkCorrect, flashCards }) {
             id={id}
           />
         ))}
+        {router.pathname === "/archive" && flashCards.length === 0 && (
+          <p>No FlipCards archived.</p>
+        )}
+        {router.pathname === "/" && flashCards.length === 0 && (
+          <p>All FlipCards are marked as correct.</p>
+        )}
       </StyledList>
     </>
   );
