@@ -6,15 +6,10 @@ const StyledAnswer = styled.p`
   font-weight: 600;
 `;
 
-export default function FlashCardBack({ answer, collectionId }) {
+export default function FlashCardBack({ answer, collectionTitle }) {
   return (
     <>
-      <p>
-        {
-          collections.find((collection) => collectionId === collection.id)
-            ?.title
-        }
-      </p>
+      <p>{collectionTitle}</p>
       <StyledAnswer>{answer}</StyledAnswer>
     </>
   );

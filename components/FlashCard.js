@@ -17,9 +17,8 @@ const StyledCard = styled.li`
   }
 `;
 
-export default function FlashCard({ card, onMarkCorrect }) {
+export default function FlashCard({ card, onMarkCorrect, collections }) {
   const [showAnswer, setShowAnswer] = useState(false);
-  console.log("the card: ", card);
 
   function flipCard() {
     setShowAnswer(!showAnswer);
@@ -29,6 +28,10 @@ export default function FlashCard({ card, onMarkCorrect }) {
     event.stopPropagation();
     onMarkCorrect(card.id);
   }
+
+  const collectionTitle = collections.find(
+    (collection) => card.collectionId === collection.id
+  )?.title;
 
   return (
     <StyledCard $showAnswer={showAnswer} onClick={flipCard}>
@@ -41,13 +44,13 @@ export default function FlashCard({ card, onMarkCorrect }) {
             />
             <FlashCardBack
               answer={card.answer}
-              collectionId={card.collectionId}
+              collectionTitle={collectionTitle}
             />
           </>
         ) : (
           <FlashCardFront
             question={card.question}
-            collectionId={card.collectionId}
+            collectionTitle={collectionTitle}
           />
         )}
       </div>

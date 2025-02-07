@@ -8,15 +8,10 @@ const StyledQuestion = styled.p`
   font-weight: 600;
 `;
 
-export default function FlashCardFront({ question, collectionId }) {
+export default function FlashCardFront({ question, collectionTitle }) {
   return (
     <>
-      <p>
-        {
-          collections.find((collection) => collectionId === collection.id)
-            ?.title
-        }
-      </p>
+      <p>{collectionTitle}</p>
       <StyledQuestion>{question}</StyledQuestion>
     </>
   );

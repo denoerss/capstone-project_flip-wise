@@ -17,7 +17,11 @@ const StyledHeading = styled.h2`
   margin-bottom: 10px;
 `;
 
-export default function FlashCardList({ onMarkCorrect, flashCards }) {
+export default function FlashCardList({
+  onMarkCorrect,
+  flashCards,
+  collections,
+}) {
   const router = useRouter();
 
   console.log("FLASHCARDS_LENGTH_", flashCards.length);
@@ -26,7 +30,12 @@ export default function FlashCardList({ onMarkCorrect, flashCards }) {
       <StyledHeading>Flip Cards List</StyledHeading>
       <StyledList>
         {flashCards.map((card) => (
-          <FlashCard key={card.id} card={card} onMarkCorrect={onMarkCorrect} />
+          <FlashCard
+            key={card.id}
+            card={card}
+            onMarkCorrect={onMarkCorrect}
+            collections={collections}
+          />
         ))}
         {router.pathname === "/archive" && flashCards.length === 0 && (
           <p>No FlipCards archived.</p>

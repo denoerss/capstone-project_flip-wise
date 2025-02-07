@@ -3,6 +3,7 @@ import { flashcards as initialFlashCards } from "@/lib/data";
 import Navigation from "@/components/Navigation";
 import { useRouter } from "next/router";
 import useLocalStorageState from "use-local-storage-state";
+import { collections } from "@/lib/data";
 
 export default function App({ Component, pageProps }) {
   const [flashCards, setFlashCards] = useLocalStorageState("flashCards", {
@@ -32,6 +33,7 @@ export default function App({ Component, pageProps }) {
         {...pageProps}
         onMarkCorrect={onMarkCorrect}
         flashCards={flashCardsToShow}
+        collections={collections}
       />
       <Navigation />
     </>
