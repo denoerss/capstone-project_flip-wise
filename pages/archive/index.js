@@ -1,8 +1,12 @@
 import FlashCardList from "@/components/FlashCardList";
 
-export default function archive({ onMarkCorrect, flashCards, collections }) {
+export default function ArchivePage({
+  onMarkCorrect,
+  flashCards,
+  collections,
+}) {
   return (
-    <>
+    <main>
       <h1>Archive</h1>
       <FlashCardList
         onMarkCorrect={onMarkCorrect}
@@ -10,6 +14,6 @@ export default function archive({ onMarkCorrect, flashCards, collections }) {
         collections={collections}
         emptyListMessage="No FlipCards archived."
       />
-    </>
+    </main>
   );
 }

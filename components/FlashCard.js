@@ -21,7 +21,7 @@ export default function FlashCard({ card, onMarkCorrect, collections }) {
   const [showAnswer, setShowAnswer] = useState(false);
 
   function flipCard() {
-    setShowAnswer(!showAnswer);
+    setShowAnswer((prev) => !prev);
   }
 
   function handleCorrect(event) {
@@ -35,7 +35,7 @@ export default function FlashCard({ card, onMarkCorrect, collections }) {
 
   return (
     <StyledCard $showAnswer={showAnswer} onClick={flipCard}>
-      <div>
+      <>
         {showAnswer ? (
           <>
             <Button
@@ -53,7 +53,7 @@ export default function FlashCard({ card, onMarkCorrect, collections }) {
             collectionTitle={collectionTitle}
           />
         )}
-      </div>
+      </>
     </StyledCard>
   );
 }
