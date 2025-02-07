@@ -9,8 +9,14 @@ const StyledButton = styled.button`
   &:hover {
     cursor: pointer;
   }
+  background-color: ${({ $buttonVariant }) =>
+    $buttonVariant === "delete" ? "red" : "gray"};
 `;
 
-export default function Button({ onClick, name }) {
-  return <StyledButton onClick={onClick}>{name}</StyledButton>;
+export default function Button({ onClick, name, $buttonVariant }) {
+  return (
+    <StyledButton $buttonVariant={$buttonVariant} onClick={onClick}>
+      {name}
+    </StyledButton>
+  );
 }

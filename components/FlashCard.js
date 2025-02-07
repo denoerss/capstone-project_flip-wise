@@ -35,7 +35,7 @@ export default function FlashCard({
     onMarkCorrect(card.id);
   }
 
-  function handleToggleDelete(event) {
+  function handleToggleButton(event) {
     event.stopPropagation();
     setIsClicked((prev) => !prev);
   }
@@ -71,11 +71,15 @@ export default function FlashCard({
           />
         )}
         {!isClicked ? (
-          <Button name="Delete" onClick={handleToggleDelete} />
+          <Button
+            $buttonVariant="delete"
+            name="Delete"
+            onClick={handleToggleButton}
+          />
         ) : (
           <>
             <Button name="Confirm" onClick={handleConfirmDelete} />
-            <Button name="Cancel" onClick={handleToggleDelete} />
+            <Button name="Cancel" onClick={handleToggleButton} />
           </>
         )}
       </>
