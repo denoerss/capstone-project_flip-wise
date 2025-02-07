@@ -17,8 +17,6 @@ const StyledCard = styled.li`
   }
 `;
 
-const CardInner = styled.div``;
-
 export default function FlashCard({
   question,
   answer,
@@ -40,7 +38,7 @@ export default function FlashCard({
 
   return (
     <StyledCard $showAnswer={showAnswer} onClick={flipCard}>
-      <CardInner>
+      <div>
         {showAnswer ? (
           <>
             <Button
@@ -56,7 +54,7 @@ export default function FlashCard({
         ) : (
           <FlashCardFront question={question} collectionId={collectionId} />
         )}
-      </CardInner>
+      </div>
     </StyledCard>
   );
 }
