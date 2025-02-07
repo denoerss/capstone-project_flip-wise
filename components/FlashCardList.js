@@ -25,16 +25,8 @@ export default function FlashCardList({ onMarkCorrect, flashCards }) {
     <>
       <StyledHeading>Flip Cards List</StyledHeading>
       <StyledList>
-        {flashCards.map(({ id, question, answer, collectionId }) => (
-          <FlashCard
-            key={id}
-            question={question}
-            answer={answer}
-            collectionId={collectionId}
-            onMarkCorrect={onMarkCorrect}
-            id={id}
-            flashCards={flashCards}
-          />
+        {flashCards.map((card) => (
+          <FlashCard key={card.id} card={card} onMarkCorrect={onMarkCorrect} />
         ))}
         {router.pathname === "/archive" && flashCards.length === 0 && (
           <p>No FlipCards archived.</p>
