@@ -14,6 +14,7 @@ export default function HomePage({ onMarkCorrect, flashCards, collections }) {
         onMarkCorrect={onMarkCorrect}
         flashCards={flashCards}
         collections={collections}
+        emptyListMessage="All FlipCards are marked as correct."
       />
     </main>
   );

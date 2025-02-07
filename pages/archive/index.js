@@ -8,6 +8,7 @@ export default function archive({ onMarkCorrect, flashCards, collections }) {
         onMarkCorrect={onMarkCorrect}
         flashCards={flashCards}
         collections={collections}
+        emptyListMessage="No FlipCards archived."
       />
     </>
   );
