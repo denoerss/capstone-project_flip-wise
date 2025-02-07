@@ -17,7 +17,12 @@ const StyledCard = styled.li`
   }
 `;
 
-export default function FlashCard({ card, onMarkCorrect, collections }) {
+export default function FlashCard({
+  card,
+  onMarkCorrect,
+  collections,
+  deleteCard,
+}) {
   const [showAnswer, setShowAnswer] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
 
@@ -30,13 +35,15 @@ export default function FlashCard({ card, onMarkCorrect, collections }) {
     onMarkCorrect(card.id);
   }
 
-  function handleClickDelete(event) {
+  function handleToggleDelete(event) {
     event.stopPropagation();
     setIsClicked((prev) => !prev);
   }
-  function handleClickCancel(event) {
+
+  function handleConfirmDelete(event) {
     event.stopPropagation();
     setIsClicked((prev) => !prev);
+    deleteCard(card.id);
   }
 
   const collectionTitle = collections.find(
@@ -63,12 +70,12 @@ export default function FlashCard({ card, onMarkCorrect, collections }) {
             collectionTitle={collectionTitle}
           />
         )}
-        {isClicked ? (
-          <Button name="Delete" onClick={handleClickDelete} />
+        {!isClicked ? (
+          <Button name="Delete" onClick={handleToggleDelete} />
         ) : (
           <>
-            <Button name="Confirm" onClick={handleClickCancel} />
-            <Button name="Cancel" onClick={handleClickCancel} />
+            <Button name="Confirm" onClick={handleConfirmDelete} />
+            <Button name="Cancel" onClick={handleToggleDelete} />
           </>
         )}
       </>

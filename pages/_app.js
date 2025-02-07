@@ -26,12 +26,20 @@ export default function App({ Component, pageProps }) {
     setFlashCards(updatedFlashCards);
   }
 
+  function deleteCard(id) {
+    const updatedFlashCards = flashCards.filter(
+      (flashcard) => flashcard.id !== id
+    );
+    setFlashCards(updatedFlashCards);
+  }
+
   return (
     <>
       <GlobalStyle />
       <Component
         {...pageProps}
         onMarkCorrect={onMarkCorrect}
+        deleteCard={deleteCard}
         flashCards={flashCardsToShow}
         collections={collections}
       />

@@ -18,6 +18,7 @@ const StyledHeading = styled.h2`
 
 export default function FlashCardList({
   onMarkCorrect,
+  deleteCard,
   flashCards,
   collections,
   emptyListMessage,
@@ -32,6 +33,7 @@ export default function FlashCardList({
             card={card}
             onMarkCorrect={onMarkCorrect}
             collections={collections}
+            deleteCard={deleteCard}
           />
         ))}
         {flashCards.length === 0 && <p>{emptyListMessage}</p>}

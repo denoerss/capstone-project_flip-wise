@@ -2,6 +2,7 @@ import FlashCardList from "@/components/FlashCardList";
 
 export default function ArchivePage({
   onMarkCorrect,
+  deleteCard,
   flashCards,
   collections,
 }) {
@@ -10,6 +11,7 @@ export default function ArchivePage({
       <h1>Archive</h1>
       <FlashCardList
         onMarkCorrect={onMarkCorrect}
+        deleteCard={deleteCard}
         flashCards={flashCards}
         collections={collections}
         emptyListMessage="No FlipCards archived."
