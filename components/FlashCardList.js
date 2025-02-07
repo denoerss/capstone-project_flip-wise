@@ -1,5 +1,4 @@
-import { flashcards } from "@/lib/data";
-import FlashCard from "../FlashCard";
+import FlashCard from "./FlashCard";
 import styled from "styled-components";
 
 const StyledList = styled.ul`
@@ -17,19 +16,25 @@ const StyledHeading = styled.h2`
   margin-bottom: 10px;
 `;
 
-export default function FlashCardList() {
+export default function FlashCardList({
+  onMarkCorrect,
+  flashCards,
+  collections,
+  emptyListMessage,
+}) {
   return (
     <>
       <StyledHeading>Flip Cards List</StyledHeading>
       <StyledList>
-        {flashcards.map(({ id, question, answer, collectionId }) => (
+        {flashCards.map((card) => (
           <FlashCard
-            key={id}
-            question={question}
-            answer={answer}
-            collectionId={collectionId}
+            key={card.id}
+            card={card}
+            onMarkCorrect={onMarkCorrect}
+            collections={collections}
           />
         ))}
+        {flashCards.length === 0 && <p>{emptyListMessage}</p>}
       </StyledList>
     </>
   );
