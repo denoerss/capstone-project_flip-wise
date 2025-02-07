@@ -19,6 +19,7 @@ const StyledCard = styled.li`
 
 export default function FlashCard({ card, onMarkCorrect, collections }) {
   const [showAnswer, setShowAnswer] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
 
   function flipCard() {
     setShowAnswer((prev) => !prev);
@@ -27,6 +28,15 @@ export default function FlashCard({ card, onMarkCorrect, collections }) {
   function handleCorrect(event) {
     event.stopPropagation();
     onMarkCorrect(card.id);
+  }
+
+  function handleClickDelete(event) {
+    event.stopPropagation();
+    setIsClicked((prev) => !prev);
+  }
+  function handleClickCancel(event) {
+    event.stopPropagation();
+    setIsClicked((prev) => !prev);
   }
 
   const collectionTitle = collections.find(
@@ -52,6 +62,14 @@ export default function FlashCard({ card, onMarkCorrect, collections }) {
             question={card.question}
             collectionTitle={collectionTitle}
           />
+        )}
+        {isClicked ? (
+          <Button name="Delete" onClick={handleClickDelete} />
+        ) : (
+          <>
+            <Button name="Confirm" onClick={handleClickCancel} />
+            <Button name="Cancel" onClick={handleClickCancel} />
+          </>
         )}
       </>
     </StyledCard>
