@@ -11,6 +11,10 @@ const StyledButton = styled.button`
   }
 `;
 
-export default function Button({ onClick, name }) {
-  return <StyledButton onClick={onClick}>{name}</StyledButton>;
+export default function Button({ handleSubmit, onClick, name }) {
+  return (
+    <StyledButton onSubmit={handleSubmit} onClick={onClick}>
+      {name}
+    </StyledButton>
+  );
 }

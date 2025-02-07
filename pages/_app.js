@@ -23,6 +23,7 @@ export default function App({ Component, pageProps }) {
         ? { ...flashcard, isCorrect: !flashcard.isCorrect }
         : flashcard
     );
+
     setFlashCards(updatedFlashCards);
   }
 
