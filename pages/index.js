@@ -11,6 +11,7 @@ export default function HomePage({
   deleteCard,
   flashCards,
   collections,
+  noCards,
 }) {
   return (
     <main>
@@ -20,7 +21,11 @@ export default function HomePage({
         deleteCard={deleteCard}
         flashCards={flashCards}
         collections={collections}
-        emptyListMessage="All FlipCards are marked as correct."
+        emptyListMessage={
+          noCards
+            ? "No FlipCards left.\nClick on 'New Card' below to add new FlipCards."
+            : "All FlipCards are marked as correct."
+        }
       />
     </main>
   );

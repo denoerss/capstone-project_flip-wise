@@ -5,6 +5,7 @@ export default function ArchivePage({
   deleteCard,
   flashCards,
   collections,
+  noCards,
 }) {
   return (
     <main>
@@ -14,7 +15,11 @@ export default function ArchivePage({
         deleteCard={deleteCard}
         flashCards={flashCards}
         collections={collections}
-        emptyListMessage="No FlipCards archived."
+        emptyListMessage={
+          noCards
+            ? "No FlipCards left.\nClick on 'New Card' below to add new FlipCards."
+            : "No FlipCards archived."
+        }
       />
     </main>
   );

@@ -16,6 +16,13 @@ const StyledHeading = styled.h2`
   margin-bottom: 10px;
 `;
 
+const StyledEmptyListMessage = styled.p`
+  white-space: pre-line;
+  text-align: center;
+  line-height: 5;
+  margin-top: 5rem;
+`;
+
 export default function FlashCardList({
   onMarkCorrect,
   deleteCard,
@@ -36,7 +43,9 @@ export default function FlashCardList({
             deleteCard={deleteCard}
           />
         ))}
-        {flashCards.length === 0 && <p>{emptyListMessage}</p>}
+        {flashCards.length === 0 && (
+          <StyledEmptyListMessage>{emptyListMessage}</StyledEmptyListMessage>
+        )}
       </StyledList>
     </>
   );

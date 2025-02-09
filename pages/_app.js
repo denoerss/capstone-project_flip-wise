@@ -17,6 +17,8 @@ export default function App({ Component, pageProps }) {
   const flashCardsToShow =
     router.pathname === "/archive" ? archivedFlashCards : activeFlashCards;
 
+  const noCards = flashCards.length === 0 ? true : false;
+
   function onMarkCorrect(id) {
     const updatedFlashCards = flashCards.map((flashcard) =>
       flashcard.id === id
@@ -32,6 +34,7 @@ export default function App({ Component, pageProps }) {
     );
     setFlashCards(updatedFlashCards);
   }
+  console.log("FlashCards: ", flashCards);
 
   return (
     <>
@@ -42,6 +45,7 @@ export default function App({ Component, pageProps }) {
         deleteCard={deleteCard}
         flashCards={flashCardsToShow}
         collections={collections}
+        noCards={noCards}
       />
       <Navigation />
     </>
