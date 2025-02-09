@@ -11,7 +11,7 @@ const StyledCard = styled.li`
   list-style: none;
   width: 80%;
   border-radius: 20px;
-  padding: 25px 25px 70px;
+  padding: 25px 25px 80px;
   line-height: 1.25;
   &:hover {
     cursor: pointer;
@@ -32,6 +32,13 @@ const StyledButtonContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   gap: 10px;
+`;
+
+const StyledWarning = styled.p`
+  background-color: #ffa500;
+  padding: 5px;
+  border-radius: 10px;
+  margin-bottom: 10px;
 `;
 
 export default function FlashCard({
@@ -96,7 +103,7 @@ export default function FlashCard({
             />
           ) : (
             <>
-              <p>Delete Card?</p>
+              <StyledWarning>Delete Card?</StyledWarning>
               <StyledButtonContainer>
                 <Button name="Confirm" onClick={handleConfirmDelete} />
                 <Button name="Cancel" onClick={handleToggleButton} />
