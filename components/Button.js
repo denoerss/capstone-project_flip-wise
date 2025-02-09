@@ -10,7 +10,7 @@ const StyledButton = styled.button`
     cursor: pointer;
   }
   background-color: ${({ $buttonVariant }) =>
-    $buttonVariant === "delete" ? "red" : "gray"};
+    $buttonVariant === "delete" ? "red" : "#EEDC82"};
 `;
 
 export default function Button({ onClick, name, $buttonVariant }) {
