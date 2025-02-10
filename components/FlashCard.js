@@ -6,7 +6,7 @@ import Button from "./Button";
 
 const StyledCard = styled.li`
   background-color: ${({ $showAnswer }) =>
-    $showAnswer ? "#93E9BE" : "lightgray"};
+    $showAnswer ? "#A9A9A9" : "#D3D3D3"};
   position: relative;
   list-style: none;
   width: 80%;
@@ -48,7 +48,7 @@ export default function FlashCard({
   deleteCard,
 }) {
   const [showAnswer, setShowAnswer] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
+  const [isDeleteOptionVisible, setIsDeleteOptionVisible] = useState(true);
 
   function flipCard() {
     setShowAnswer((prev) => !prev);
@@ -61,12 +61,12 @@ export default function FlashCard({
 
   function handleToggleButton(event) {
     event.stopPropagation();
-    setIsClicked((prev) => !prev);
+    setIsDeleteOptionVisible((prev) => !prev);
   }
 
   function handleConfirmDelete(event) {
     event.stopPropagation();
-    setIsClicked((prev) => !prev);
+    setIsDeleteOptionVisible(true);
     deleteCard(card.id);
   }
 
@@ -80,9 +80,11 @@ export default function FlashCard({
         {showAnswer ? (
           <>
             <Button
-              name={card.isCorrect ? "incorrect" : "correct"}
               onClick={handleCorrect}
-            />
+              buttonVariant={card.isCorrect ? "incorrect" : "correct"}
+            >
+              {card.isCorrect ? "incorrect" : "correct"}
+            </Button>
             <FlashCardBack
               answer={card.answer}
               collectionTitle={collectionTitle}
@@ -95,18 +97,20 @@ export default function FlashCard({
           />
         )}
         <StyledDeleteContainer>
-          {!isClicked ? (
-            <Button
-              $buttonVariant="delete"
-              name="Delete"
-              onClick={handleToggleButton}
-            />
+          {isDeleteOptionVisible ? (
+            <Button buttonVariant="delete" onClick={handleToggleButton}>
+              Delete
+            </Button>
           ) : (
             <>
               <StyledWarning>Delete Card?</StyledWarning>
               <StyledButtonContainer>
-                <Button name="Confirm" onClick={handleConfirmDelete} />
-                <Button name="Cancel" onClick={handleToggleButton} />
+                <Button buttonVariant="confirm" onClick={handleConfirmDelete}>
+                  Confirm
+                </Button>
+                <Button buttonVariant="cancel" onClick={handleToggleButton}>
+                  Cancel
+                </Button>
               </StyledButtonContainer>
             </>
           )}

@@ -34,7 +34,6 @@ export default function App({ Component, pageProps }) {
     );
     setFlashCards(updatedFlashCards);
   }
-  console.log("FlashCards: ", flashCards);
 
   return (
     <>

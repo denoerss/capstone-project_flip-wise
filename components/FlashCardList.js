@@ -7,7 +7,7 @@ const StyledList = styled.ul`
   align-items: center;
   justify-content: center;
   gap: 15px;
-  padding-left: 0px;
+  padding-left: 0;
 `;
 
 const StyledHeading = styled.h2`

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import css from "styled-jsx/css";
 
 const StyledButton = styled.button`
   min-width: 80px;
@@ -9,14 +10,42 @@ const StyledButton = styled.button`
   &:hover {
     cursor: pointer;
   }
-  background-color: ${({ $buttonVariant }) =>
-    $buttonVariant === "delete" ? "red" : "#EEDC82"};
+
+  ${({ $buttonVariant }) =>
+    $buttonVariant === "delete" &&
+    css`
+      background-color: #ff6347;
+    `}
+
+  ${({ $buttonVariant }) =>
+    $buttonVariant === "confirm" &&
+    css`
+      background-color: #eedc82;
+    `}
+
+  ${({ $buttonVariant }) =>
+    $buttonVariant === "cancel" &&
+    css`
+      background-color: #e57373;
+    `}
+
+  ${({ $buttonVariant }) =>
+    $buttonVariant === "correct" &&
+    css`
+      background-color: #93e9be;
+    `}
+
+  ${({ $buttonVariant }) =>
+    $buttonVariant === "incorrect" &&
+    css`
+      background-color: rgb(247, 207, 229);
+    `}
 `;
 
-export default function Button({ onClick, name, $buttonVariant }) {
+export default function Button({ onClick, children, buttonVariant }) {
   return (
-    <StyledButton $buttonVariant={$buttonVariant} onClick={onClick}>
-      {name}
+    <StyledButton $buttonVariant={buttonVariant} onClick={onClick}>
+      {children}
     </StyledButton>
   );
 }
