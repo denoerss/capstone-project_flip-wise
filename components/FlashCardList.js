@@ -43,10 +43,10 @@ export default function FlashCardList({
             deleteCard={deleteCard}
           />
         ))}
-        {flashCards.length === 0 && (
-          <StyledEmptyListMessage>{emptyListMessage}</StyledEmptyListMessage>
-        )}
       </StyledList>
+      {flashCards.length === 0 && (
+        <StyledEmptyListMessage>{emptyListMessage}</StyledEmptyListMessage>
+      )}
     </>
   );
 }
