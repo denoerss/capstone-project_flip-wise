@@ -22,7 +22,11 @@ export default function Form() {
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
 
-    console.log("DATA_", data);
+    const newFlashCard = {
+      question: data.question,
+      answer: data.answer,
+      collection: data.collection,
+    };
   }
 
   return (
@@ -30,17 +34,17 @@ export default function Form() {
       <StyledForm onSubmit={handleSubmit}>
         <StyledFormContainer>
           <label htmlFor="question">Question*</label>
-          <input type="text" id="question"></input>
+          <input type="text" id="question" required></input>
         </StyledFormContainer>
 
         <StyledFormContainer>
           <label htmlFor="answer">Answer*</label>
-          <input type="text" id="answer"></input>
+          <input type="text" id="answer" required></input>
         </StyledFormContainer>
 
         <StyledFormContainer>
           <label htmlFor="collections">Collection*</label>
-          <select id="collections">
+          <select id="collections" required>
             {collections.map((collection) => (
               <option key={collection.id}>{collection.title}</option>
             ))}
