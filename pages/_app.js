@@ -17,7 +17,7 @@ export default function App({ Component, pageProps }) {
   const flashCardsToShow =
     router.pathname === "/archive" ? archivedFlashCards : activeFlashCards;
 
-  const noCards = flashCards.length === 0 ? true : false;
+  const noCards = flashCards.length === 0;
 
   function onMarkCorrect(id) {
     const updatedFlashCards = flashCards.map((flashcard) =>

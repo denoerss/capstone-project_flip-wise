@@ -48,7 +48,7 @@ export default function FlashCard({
   deleteCard,
 }) {
   const [showAnswer, setShowAnswer] = useState(false);
-  const [isDeleteOptionVisible, setIsDeleteOptionVisible] = useState(true);
+  const [showDeleteButton, setShowDeleteButton] = useState(true);
 
   function flipCard() {
     setShowAnswer((prev) => !prev);
@@ -61,12 +61,12 @@ export default function FlashCard({
 
   function handleToggleButton(event) {
     event.stopPropagation();
-    setIsDeleteOptionVisible((prev) => !prev);
+    setShowDeleteButton((prev) => !prev);
   }
 
   function handleConfirmDelete(event) {
     event.stopPropagation();
-    setIsDeleteOptionVisible(true);
+    setShowDeleteButton(true);
     deleteCard(card.id);
   }
 
@@ -97,7 +97,7 @@ export default function FlashCard({
           />
         )}
         <StyledDeleteContainer>
-          {isDeleteOptionVisible ? (
+          {showDeleteButton ? (
             <Button buttonVariant="delete" onClick={handleToggleButton}>
               Delete
             </Button>
