@@ -3,6 +3,7 @@ import { useState } from "react";
 import FlashCardFront from "./FlashCardFront";
 import FlashCardBack from "./FlashCardBack";
 import Button from "./Button";
+import { collections } from "@/lib/data";
 
 const StyledCard = styled.li`
   background-color: ${({ $showAnswer }) =>
@@ -17,7 +18,7 @@ const StyledCard = styled.li`
   }
 `;
 
-export default function FlashCard({ card, onMarkCorrect, collections }) {
+export default function FlashCard({ card, onMarkCorrect }) {
   const [showAnswer, setShowAnswer] = useState(false);
 
   function flipCard() {

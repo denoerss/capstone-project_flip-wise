@@ -1,6 +1,8 @@
 import Button from "./Button";
 import { collections } from "@/lib/data";
 import styled from "styled-components";
+import { uid } from "uid";
+import { useState } from "react";
 
 const StyledFormContainer = styled.div``;
 
@@ -15,18 +17,40 @@ const SmallText = styled.p`
   font-size: 0.8rem;
 `;
 
-export default function Form() {
+const SubmitMessage = styled.p`
+  text-align: center;
+`;
+
+export default function Form({ onAddFlashCard }) {
+  const [isCardCreatedMessage, setIsCardCreatedMessage] = useState("");
+
   function handleSubmit(event) {
     event.preventDefault();
 
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
+    setIsCardCreatedMessage("New Card Created.");
+
+    const formElements = event.target.elements;
+
+    const formAnswer = formElements.answer.value;
+    const formQuestion = formElements.question.value;
+    const selectedCollectionTitle = formElements.collections.value;
+
+    const collectionId =
+      collections.find(
+        (collection) => collection.title === selectedCollectionTitle
+      )?.id || null;
 
     const newFlashCard = {
-      question: data.question,
-      answer: data.answer,
-      collection: data.collection,
+      id: uid,
+      collectionId: collectionId,
+      answer: formAnswer,
+      question: formQuestion,
+      isCorrect: false,
     };
+
+    onAddFlashCard(newFlashCard);
+
+    event.target.reset();
   }
 
   return (
@@ -54,6 +78,8 @@ export default function Form() {
         <SmallText>*required</SmallText>
 
         <Button name="Submit" />
+
+        <SubmitMessage>{isCardCreatedMessage}</SubmitMessage>
       </StyledForm>
     </>
   );

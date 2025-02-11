@@ -1,10 +1,10 @@
 import Form from "@/components/Form";
 
-export default function Create({ handleSubmit }) {
+export default function Create({ onAddFlashCard }) {
   return (
     <main>
       <h1>Create new FlashCard</h1>
-      <Form onSubmit={handleSubmit} />;
+      <Form onAddFlashCard={onAddFlashCard} />;
     </main>
   );
 }
