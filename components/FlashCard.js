@@ -19,9 +19,6 @@ const StyledCard = styled.li`
   }
 `;
 
-
-export default function FlashCard({ card, onMarkCorrect }) {
-  
 const StyledDeleteContainer = styled.div`
   position: absolute;
   bottom: 10px;
@@ -45,13 +42,7 @@ const StyledWarning = styled.p`
   margin-bottom: 10px;
 `;
 
-export default function FlashCard({
-  card,
-  onMarkCorrect,
-  collections,
-  deleteCard,
-}) {
-
+export default function FlashCard({ card, onMarkCorrect, deleteCard }) {
   const [showAnswer, setShowAnswer] = useState(false);
   const [showDeleteButton, setShowDeleteButton] = useState(true);
 

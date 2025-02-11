@@ -30,7 +30,7 @@ export default function Navigation() {
   return (
     <NavbarContainer>
       <NavItem href="/">Home</NavItem>
-      <NavItem href="/create">Add Card</NavItem>
+      <NavItem href="/create">New Card</NavItem>
       <NavItem href="/archive">Archive</NavItem>
     </NavbarContainer>
   );

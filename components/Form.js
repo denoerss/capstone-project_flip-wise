@@ -77,7 +77,7 @@ export default function Form({ onAddFlashCard }) {
 
         <SmallText>*required</SmallText>
 
-        <Button name="Submit" />
+        <Button>Submit</Button>
 
         <SubmitMessage>{isCardCreatedMessage}</SubmitMessage>
       </StyledForm>

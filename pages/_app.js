@@ -28,7 +28,6 @@ export default function App({ Component, pageProps }) {
     setFlashCards(updatedFlashCards);
   }
 
-
   const addFlashCard = (newFlashCard) =>
     setFlashCards([newFlashCard, ...flashCards]);
 
@@ -48,7 +47,6 @@ export default function App({ Component, pageProps }) {
         deleteCard={deleteCard}
         flashCards={flashCardsToShow}
         onAddFlashCard={addFlashCard}
-        collections={collections}
         noCards={noCards}
       />
       <Navigation />
