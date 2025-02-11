@@ -17,11 +17,20 @@ export default function App({ Component, pageProps }) {
   const flashCardsToShow =
     router.pathname === "/archive" ? archivedFlashCards : activeFlashCards;
 
+  const noCards = flashCards.length === 0;
+
   function onMarkCorrect(id) {
     const updatedFlashCards = flashCards.map((flashcard) =>
       flashcard.id === id
         ? { ...flashcard, isCorrect: !flashcard.isCorrect }
         : flashcard
+    );
+    setFlashCards(updatedFlashCards);
+  }
+
+  function deleteCard(id) {
+    const updatedFlashCards = flashCards.filter(
+      (flashcard) => flashcard.id !== id
     );
     setFlashCards(updatedFlashCards);
   }
@@ -32,8 +41,10 @@ export default function App({ Component, pageProps }) {
       <Component
         {...pageProps}
         onMarkCorrect={onMarkCorrect}
+        deleteCard={deleteCard}
         flashCards={flashCardsToShow}
         collections={collections}
+        noCards={noCards}
       />
       <Navigation />
     </>
