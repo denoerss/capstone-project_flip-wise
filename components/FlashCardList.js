@@ -7,7 +7,7 @@ const StyledList = styled.ul`
   align-items: center;
   justify-content: center;
   gap: 15px;
-  padding-left: 0px;
+  padding-left: 0;
 `;
 
 const StyledHeading = styled.h2`
@@ -16,8 +16,16 @@ const StyledHeading = styled.h2`
   margin-bottom: 10px;
 `;
 
+const StyledEmptyListMessage = styled.p`
+  white-space: pre-line;
+  text-align: center;
+  line-height: 5;
+  margin-top: 5rem;
+`;
+
 export default function FlashCardList({
   onMarkCorrect,
+  deleteCard,
   flashCards,
   collections,
   emptyListMessage,
@@ -32,10 +40,13 @@ export default function FlashCardList({
             card={card}
             onMarkCorrect={onMarkCorrect}
             collections={collections}
+            deleteCard={deleteCard}
           />
         ))}
-        {flashCards.length === 0 && <p>{emptyListMessage}</p>}
       </StyledList>
+      {flashCards.length === 0 && (
+        <StyledEmptyListMessage>{emptyListMessage}</StyledEmptyListMessage>
+      )}
     </>
   );
 }
