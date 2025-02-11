@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import css from "styled-jsx/css";
+import styled, { css } from "styled-components";
 
 const StyledButton = styled.button`
   min-width: 80px;
