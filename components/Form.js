@@ -56,6 +56,9 @@ export default function Form({ onAddFlashCard, collections }) {
         <div>
           <label htmlFor="collections">Collection*</label>
           <select id="collections" name="collectionId" required>
+            <option selected disabled value="">
+              - please select a collection -
+            </option>
             {collections.map((collection) => (
               <option key={collection.id} value={collection.id}>
                 {collection.title}
