@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Link from "next/link";
 
 const NavbarContainer = styled.nav`
   position: fixed;
@@ -15,7 +16,7 @@ const NavbarContainer = styled.nav`
   z-index: 10;
 `;
 
-const NavItem = styled.a`
+const NavItem = styled(Link)`
   color: #333;
   text-decoration: none;
   font-size: 16px;

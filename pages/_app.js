@@ -3,6 +3,7 @@ import { flashcards as initialFlashCards } from "@/lib/data";
 import Navigation from "@/components/Navigation";
 import { useRouter } from "next/router";
 import useLocalStorageState from "use-local-storage-state";
+import { collections } from "@/lib/data";
 
 export default function App({ Component, pageProps }) {
   const [flashCards, setFlashCards] = useLocalStorageState("flashCards", {
@@ -28,8 +29,9 @@ export default function App({ Component, pageProps }) {
     setFlashCards(updatedFlashCards);
   }
 
-  const addFlashCard = (newFlashCard) =>
+  function addFlashCard(newFlashCard) {
     setFlashCards([newFlashCard, ...flashCards]);
+  }
 
   function deleteCard(id) {
     const updatedFlashCards = flashCards.filter(
@@ -48,6 +50,7 @@ export default function App({ Component, pageProps }) {
         flashCards={flashCardsToShow}
         onAddFlashCard={addFlashCard}
         noCards={noCards}
+        collections={collections}
       />
       <Navigation />
     </>

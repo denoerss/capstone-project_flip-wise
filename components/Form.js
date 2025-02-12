@@ -1,10 +1,7 @@
 import Button from "./Button";
-import { collections } from "@/lib/data";
 import styled from "styled-components";
 import { uid } from "uid";
 import { useState } from "react";
-
-const StyledFormContainer = styled.div``;
 
 const StyledForm = styled.form`
   display: flex;
@@ -21,7 +18,7 @@ const SubmitMessage = styled.p`
   text-align: center;
 `;
 
-export default function Form({ onAddFlashCard }) {
+export default function Form({ onAddFlashCard, collections }) {
   const [isCardCreatedMessage, setIsCardCreatedMessage] = useState("");
 
   function handleSubmit(event) {
@@ -29,22 +26,12 @@ export default function Form({ onAddFlashCard }) {
 
     setIsCardCreatedMessage("New Card Created.");
 
-    const formElements = event.target.elements;
-
-    const formAnswer = formElements.answer.value;
-    const formQuestion = formElements.question.value;
-    const selectedCollectionTitle = formElements.collections.value;
-
-    const collectionId =
-      collections.find(
-        (collection) => collection.title === selectedCollectionTitle
-      )?.id || null;
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
 
     const newFlashCard = {
-      id: uid,
-      collectionId: collectionId,
-      answer: formAnswer,
-      question: formQuestion,
+      id: uid(),
+      ...data,
       isCorrect: false,
     };
 
@@ -56,30 +43,34 @@ export default function Form({ onAddFlashCard }) {
   return (
     <>
       <StyledForm onSubmit={handleSubmit}>
-        <StyledFormContainer>
+        <div>
           <label htmlFor="question">Question*</label>
-          <input type="text" id="question" required></input>
-        </StyledFormContainer>
+          <input type="text" id="question" name="question" required />
+        </div>
 
-        <StyledFormContainer>
+        <div>
           <label htmlFor="answer">Answer*</label>
-          <input type="text" id="answer" required></input>
-        </StyledFormContainer>
+          <input type="text" id="answer" name="answer" required />
+        </div>
 
-        <StyledFormContainer>
+        <div>
           <label htmlFor="collections">Collection*</label>
-          <select id="collections" required>
+          <select id="collections" name="collectionId" required>
             {collections.map((collection) => (
-              <option key={collection.id}>{collection.title}</option>
+              <option key={collection.id} value={collection.id}>
+                {collection.title}
+              </option>
             ))}
           </select>
-        </StyledFormContainer>
+        </div>
 
         <SmallText>*required</SmallText>
 
         <Button>Submit</Button>
 
-        <SubmitMessage>{isCardCreatedMessage}</SubmitMessage>
+        {isCardCreatedMessage && (
+          <SubmitMessage>{isCardCreatedMessage}</SubmitMessage>
+        )}
       </StyledForm>
     </>
   );

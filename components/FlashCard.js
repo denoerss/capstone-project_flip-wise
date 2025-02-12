@@ -3,7 +3,6 @@ import { useState } from "react";
 import FlashCardFront from "./FlashCardFront";
 import FlashCardBack from "./FlashCardBack";
 import Button from "./Button";
-import { collections } from "@/lib/data";
 
 const StyledCard = styled.li`
   background-color: ${({ $showAnswer }) =>
@@ -42,7 +41,12 @@ const StyledWarning = styled.p`
   margin-bottom: 10px;
 `;
 
-export default function FlashCard({ card, onMarkCorrect, deleteCard }) {
+export default function FlashCard({
+  card,
+  onMarkCorrect,
+  deleteCard,
+  collections,
+}) {
   const [showAnswer, setShowAnswer] = useState(false);
   const [showDeleteButton, setShowDeleteButton] = useState(true);
 
