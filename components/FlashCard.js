@@ -12,7 +12,7 @@ const StyledCard = styled.li`
   list-style: none;
   width: 80%;
   border-radius: 20px;
-  padding: 25px 25px 80px;
+  padding: 25px 25px 25px;
   line-height: 1.25;
   &:hover {
     cursor: pointer;
@@ -21,22 +21,16 @@ const StyledCard = styled.li`
 
 const StyledButtonContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 10px;
 `;
 
 const StyledDeleteContainer = styled.div`
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-const StyledEditContainer = styled.div`
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
 `;
 
 const StyledConfirmContainer = styled.div`
@@ -51,6 +45,21 @@ const StyledWarning = styled.p`
   padding: 5px;
   border-radius: 10px;
   margin-bottom: 10px;
+`;
+
+const StyledEditLink = styled(Link)`
+  background-color: rgb(149, 178, 246);
+  min-width: 80px;
+  padding: 0.9rem;
+  border-style: none;
+  border-radius: 10px;
+  font-size: 1.3rem;
+  color: rgb(17, 17, 17);
+  text-decoration: none;
+  text-align: center;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export default function FlashCard({
@@ -109,11 +118,15 @@ export default function FlashCard({
           />
         )}
         <StyledButtonContainer>
-          <StyledEditContainer>
-            <Button buttonVariant="edit">
-              <Link href={`/edit/${card.id}`}>Edit</Link>
-            </Button>
-          </StyledEditContainer>
+          <StyledEditLink
+            href={`/edit/${card.id}`}
+            onClick={(event) => {
+              event.stopPropagation();
+            }}
+          >
+            Edit
+          </StyledEditLink>
+
           <StyledDeleteContainer>
             {showDeleteButton ? (
               <Button buttonVariant="delete" onClick={handleToggleButton}>

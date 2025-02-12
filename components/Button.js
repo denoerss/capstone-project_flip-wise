@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 const StyledButton = styled.button`
   min-width: 80px;
-  padding: 15px;
+  padding: 1rem;
   border-style: none;
   border-radius: 10px;
   font-size: 1.25rem;
