@@ -18,6 +18,12 @@ const StyledCard = styled.li`
   }
 `;
 
+const StyledButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+`;
+
 const StyledDeleteContainer = styled.div`
   position: absolute;
   bottom: 10px;
@@ -26,8 +32,13 @@ const StyledDeleteContainer = styled.div`
   flex-direction: column;
   align-items: center;
 `;
+const StyledEditContainer = styled.div`
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+`;
 
-const StyledButtonContainer = styled.div`
+const StyledConfirmContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -96,25 +107,30 @@ export default function FlashCard({
             collectionTitle={collectionTitle}
           />
         )}
-        <StyledDeleteContainer>
-          {showDeleteButton ? (
-            <Button buttonVariant="delete" onClick={handleToggleButton}>
-              Delete
-            </Button>
-          ) : (
-            <>
-              <StyledWarning>Delete Card?</StyledWarning>
-              <StyledButtonContainer>
-                <Button buttonVariant="confirm" onClick={handleConfirmDelete}>
-                  Confirm
-                </Button>
-                <Button buttonVariant="cancel" onClick={handleToggleButton}>
-                  Cancel
-                </Button>
-              </StyledButtonContainer>
-            </>
-          )}
-        </StyledDeleteContainer>
+        <StyledButtonContainer>
+          <StyledEditContainer>
+            <Button buttonVariant="edit">Edit</Button>
+          </StyledEditContainer>
+          <StyledDeleteContainer>
+            {showDeleteButton ? (
+              <Button buttonVariant="delete" onClick={handleToggleButton}>
+                Delete
+              </Button>
+            ) : (
+              <>
+                <StyledWarning>Delete Card?</StyledWarning>
+                <StyledConfirmContainer>
+                  <Button buttonVariant="confirm" onClick={handleConfirmDelete}>
+                    Confirm
+                  </Button>
+                  <Button buttonVariant="cancel" onClick={handleToggleButton}>
+                    Cancel
+                  </Button>
+                </StyledConfirmContainer>
+              </>
+            )}
+          </StyledDeleteContainer>
+        </StyledButtonContainer>
       </>
     </StyledCard>
   );
