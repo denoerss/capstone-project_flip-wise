@@ -25,7 +25,12 @@ export default function App({ Component, pageProps }) {
         ? { ...flashcard, isCorrect: !flashcard.isCorrect }
         : flashcard
     );
+
     setFlashCards(updatedFlashCards);
+  }
+
+  function addFlashCard(newFlashCard) {
+    setFlashCards([newFlashCard, ...flashCards]);
   }
 
   function deleteCard(id) {
@@ -43,8 +48,9 @@ export default function App({ Component, pageProps }) {
         onMarkCorrect={onMarkCorrect}
         deleteCard={deleteCard}
         flashCards={flashCardsToShow}
-        collections={collections}
+        onAddFlashCard={addFlashCard}
         noCards={noCards}
+        collections={collections}
       />
       <Navigation />
     </>

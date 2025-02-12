@@ -44,8 +44,8 @@ const StyledWarning = styled.p`
 export default function FlashCard({
   card,
   onMarkCorrect,
-  collections,
   deleteCard,
+  collections,
 }) {
   const [showAnswer, setShowAnswer] = useState(false);
   const [showDeleteButton, setShowDeleteButton] = useState(true);
