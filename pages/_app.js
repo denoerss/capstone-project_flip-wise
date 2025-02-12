@@ -59,7 +59,7 @@ export default function App({ Component, pageProps }) {
         deleteCard={deleteCard}
         flashCards={flashCardsToShow}
         onAddFlashCard={addFlashCard}
-        onEditFlashcard={editFlashCard}
+        onEditFlashCard={editFlashCard}
         noCards={noCards}
         collections={collections}
       />

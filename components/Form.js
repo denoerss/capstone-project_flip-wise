@@ -18,7 +18,12 @@ const SubmitMessage = styled.p`
   text-align: center;
 `;
 
-export default function Form({ onAddFlashCard, onEditFlashCard, collections }) {
+export default function Form({
+  onAddFlashCard,
+  onEditFlashCard,
+  collections,
+  prevValues,
+}) {
   const [isCardCreatedMessage, setIsCardCreatedMessage] = useState("");
 
   function handleSubmit(event) {
@@ -40,10 +45,11 @@ export default function Form({ onAddFlashCard, onEditFlashCard, collections }) {
       ...data,
     };
 
-    onAddFlashCard(newFlashCard);
-    onEditFlashCard(cardToEdit);
+    onAddFlashCard ? onAddFlashCard(newFlashCard) : onEditFlashCard(cardToEdit);
 
     event.target.reset();
+
+    console.log("Question: ", prevValues.question);
   }
 
   return (
@@ -56,7 +62,7 @@ export default function Form({ onAddFlashCard, onEditFlashCard, collections }) {
             id="question"
             name="question"
             required
-            defaultValue={prevValues.question}
+            defaultValue={prevValues?.question}
           />
         </div>
 
@@ -67,7 +73,7 @@ export default function Form({ onAddFlashCard, onEditFlashCard, collections }) {
             id="answer"
             name="answer"
             required
-            defaultValue={prevValues.answer}
+            defaultValue={prevValues?.answer}
           />
         </div>
 
@@ -77,7 +83,7 @@ export default function Form({ onAddFlashCard, onEditFlashCard, collections }) {
             id="collections"
             name="collectionId"
             required
-            defaultValue={prevValues.collectionId}
+            defaultValue={prevValues?.collectionId}
           >
             <option selected disabled value="">
               - please select a collection -

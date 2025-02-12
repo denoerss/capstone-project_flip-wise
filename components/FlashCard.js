@@ -3,6 +3,7 @@ import { useState } from "react";
 import FlashCardFront from "./FlashCardFront";
 import FlashCardBack from "./FlashCardBack";
 import Button from "./Button";
+import Link from "next/link";
 
 const StyledCard = styled.li`
   background-color: ${({ $showAnswer }) =>
@@ -109,7 +110,9 @@ export default function FlashCard({
         )}
         <StyledButtonContainer>
           <StyledEditContainer>
-            <Button buttonVariant="edit">Edit</Button>
+            <Button buttonVariant="edit">
+              <Link href={`/edit/${card.id}`}>Edit</Link>
+            </Button>
           </StyledEditContainer>
           <StyledDeleteContainer>
             {showDeleteButton ? (
