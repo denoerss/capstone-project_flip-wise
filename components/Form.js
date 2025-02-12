@@ -18,7 +18,7 @@ const SubmitMessage = styled.p`
   text-align: center;
 `;
 
-export default function Form({ onAddFlashCard, collections }) {
+export default function Form({ onAddFlashCard, onEditFlashCard, collections }) {
   const [isCardCreatedMessage, setIsCardCreatedMessage] = useState("");
 
   function handleSubmit(event) {
@@ -35,7 +35,13 @@ export default function Form({ onAddFlashCard, collections }) {
       isCorrect: false,
     };
 
+    const cardToEdit = {
+      ...prevValues,
+      ...data,
+    };
+
     onAddFlashCard(newFlashCard);
+    onEditFlashCard(cardToEdit);
 
     event.target.reset();
   }
@@ -45,17 +51,34 @@ export default function Form({ onAddFlashCard, collections }) {
       <StyledForm onSubmit={handleSubmit}>
         <div>
           <label htmlFor="question">Question*</label>
-          <input type="text" id="question" name="question" required />
+          <input
+            type="text"
+            id="question"
+            name="question"
+            required
+            defaultValue={prevValues.question}
+          />
         </div>
 
         <div>
           <label htmlFor="answer">Answer*</label>
-          <input type="text" id="answer" name="answer" required />
+          <input
+            type="text"
+            id="answer"
+            name="answer"
+            required
+            defaultValue={prevValues.answer}
+          />
         </div>
 
         <div>
           <label htmlFor="collections">Collection*</label>
-          <select id="collections" name="collectionId" required>
+          <select
+            id="collections"
+            name="collectionId"
+            required
+            defaultValue={prevValues.collectionId}
+          >
             <option selected disabled value="">
               - please select a collection -
             </option>

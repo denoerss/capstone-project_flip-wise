@@ -33,6 +33,16 @@ export default function App({ Component, pageProps }) {
     setFlashCards([newFlashCard, ...flashCards]);
   }
 
+  function editFlashCard(cardToEdit) {
+    setFlashCards(
+      flashCards.map((flashCard) =>
+        flashCard.id === cardToEdit.id
+          ? { ...flashCard, ...cardToEdit }
+          : flashCard
+      )
+    );
+  }
+
   function deleteCard(id) {
     const updatedFlashCards = flashCards.filter(
       (flashcard) => flashcard.id !== id
@@ -49,6 +59,7 @@ export default function App({ Component, pageProps }) {
         deleteCard={deleteCard}
         flashCards={flashCardsToShow}
         onAddFlashCard={addFlashCard}
+        onEditFlashcard={editFlashCard}
         noCards={noCards}
         collections={collections}
       />
