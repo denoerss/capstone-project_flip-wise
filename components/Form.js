@@ -2,6 +2,7 @@ import Button from "./Button";
 import styled from "styled-components";
 import { uid } from "uid";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 const StyledForm = styled.form`
   display: flex;
@@ -24,13 +25,14 @@ export default function Form({
   collections,
   prevValues,
 }) {
+  const router = useRouter();
+
   const [confirmMessage, setConfirmMessage] = useState("");
 
   function handleSubmit(event) {
     event.preventDefault();
 
-    setConfirmMessage(onAddFlashCard ? "New Card Created." : "Card Updated.");
-
+    // get form data
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
 
@@ -45,8 +47,13 @@ export default function Form({
       ...data,
     };
 
-    onAddFlashCard ? onAddFlashCard(newFlashCard) : onEditFlashCard(cardToEdit);
+    setConfirmMessage(onAddFlashCard ? "New Card Created." : "Card Updated.");
 
+    // set form functionality for both cases (add and update card)
+    onAddFlashCard ? onAddFlashCard(newFlashCard) : onEditFlashCard(cardToEdit);
+    // redirect router on update card
+    onEditFlashCard && cardToEdit.isCorrect ? null : router.back();
+    // reset form on add new card
     onAddFlashCard && event.target.reset();
   }
 
