@@ -14,8 +14,11 @@ export default function App({ Component, pageProps }) {
   const activeFlashCards = flashCards.filter((card) => !card.isCorrect);
   const archivedFlashCards = flashCards.filter((card) => card.isCorrect);
 
-  const flashCardsToShow =
-    router.pathname === "/archive" ? archivedFlashCards : activeFlashCards;
+  const flashCardsToShow = router.pathname.startsWith("/edit")
+    ? flashCards
+    : router.pathname === "/archive"
+    ? archivedFlashCards
+    : activeFlashCards;
 
   const noCards = flashCards.length === 0;
 

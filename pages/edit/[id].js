@@ -17,6 +17,7 @@ export default function Edit({ onEditFlashCard, collections, flashCards }) {
           collectionId: selectedFlashCard?.collectionId,
           question: selectedFlashCard?.question,
           answer: selectedFlashCard?.answer,
+          isCorrect: selectedFlashCard?.isCorrect,
         }}
       />
       ;

@@ -48,8 +48,6 @@ export default function Form({
     onAddFlashCard ? onAddFlashCard(newFlashCard) : onEditFlashCard(cardToEdit);
 
     event.target.reset();
-
-    console.log("Question: ", prevValues.question);
   }
 
   return (
