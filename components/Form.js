@@ -25,6 +25,9 @@ export default function Form({
   prevValues,
 }) {
   const [isCardCreatedMessage, setIsCardCreatedMessage] = useState("");
+  // const [selectedCollection, setSelectedCollection] = useState(
+  //   prevValues?.collectionId
+  // );
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -33,6 +36,8 @@ export default function Form({
 
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
+
+    // updatedCollectionId = data.collectionId;
 
     const newFlashCard = {
       id: uid(),
@@ -45,9 +50,22 @@ export default function Form({
       ...data,
     };
 
+    //   if (onAddFlashCard) {
+    //     onAddFlashCard(newFlashCard);
+    //     // Manually reset the question & answer fields...
+    //     event.target.elements.question.value = "";
+    //     event.target.elements.answer.value = "";
+    //     // and reset the controlled select value
+    //     setSelectedCollection("");
+    //   } else {
+    //     onEditFlashCard(cardToEdit);
+    //     // Do not reset fields when editing.
+    //   }
+    // }
+
     onAddFlashCard ? onAddFlashCard(newFlashCard) : onEditFlashCard(cardToEdit);
 
-    event.target.reset();
+    onAddFlashCard && event.target.reset();
   }
 
   return (
@@ -60,7 +78,7 @@ export default function Form({
             id="question"
             name="question"
             required
-            defaultValue={prevValues?.question}
+            defaultValue={prevValues?.question || ""}
           />
         </div>
 
@@ -71,7 +89,7 @@ export default function Form({
             id="answer"
             name="answer"
             required
-            defaultValue={prevValues?.answer}
+            defaultValue={prevValues?.answer || ""}
           />
         </div>
 
@@ -81,9 +99,9 @@ export default function Form({
             id="collections"
             name="collectionId"
             required
-            defaultValue={prevValues?.collectionId}
+            defaultValue={prevValues?.collectionId || ""}
           >
-            <option selected disabled value="">
+            <option disabled value="">
               - please select a collection -
             </option>
             {collections.map((collection) => (

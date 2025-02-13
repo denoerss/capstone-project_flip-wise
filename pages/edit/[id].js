@@ -13,11 +13,10 @@ export default function Edit({ onEditFlashCard, collections, flashCards }) {
         onEditFlashCard={onEditFlashCard}
         collections={collections}
         prevValues={{
-          id: selectedFlashCard?.id,
-          collectionId: selectedFlashCard?.collectionId,
-          question: selectedFlashCard?.question,
-          answer: selectedFlashCard?.answer,
-          isCorrect: selectedFlashCard?.isCorrect,
+          id: selectedFlashCard?.id || "",
+          collectionId: selectedFlashCard?.collectionId || "",
+          question: selectedFlashCard?.question || "",
+          answer: selectedFlashCard?.answer || "",
         }}
       />
       ;
