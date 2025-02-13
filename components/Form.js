@@ -52,9 +52,15 @@ export default function Form({
     // set form functionality for both cases (add and update card)
     onAddFlashCard ? onAddFlashCard(newFlashCard) : onEditFlashCard(cardToEdit);
     // redirect router on update card
-    onEditFlashCard && cardToEdit.isCorrect ? null : router.back();
+    onEditFlashCard && router.back();
     // reset form on add new card
     onAddFlashCard && event.target.reset();
+  }
+
+  function handleReset(event) {
+    event.preventDefault();
+
+    prevValues.values = prevValues || "";
   }
 
   return (
@@ -104,6 +110,12 @@ export default function Form({
         <SmallText>*required</SmallText>
 
         <Button>{onAddFlashCard ? "Create" : "Update"}</Button>
+
+        {router.pathname === "/edit" ? null : (
+          <Button type="button" onClick={handleReset}>
+            Reset
+          </Button>
+        )}
 
         {confirmMessage && <SubmitMessage>{confirmMessage}</SubmitMessage>}
       </StyledForm>
