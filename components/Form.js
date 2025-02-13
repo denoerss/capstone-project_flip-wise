@@ -57,10 +57,9 @@ export default function Form({
     onAddFlashCard && event.target.reset();
   }
 
-  function handleReset(event) {
+  function handleCancel(event) {
     event.preventDefault();
-
-    prevValues.values = prevValues || "";
+    event.target.form.reset();
   }
 
   return (
@@ -112,9 +111,7 @@ export default function Form({
         <Button>{onAddFlashCard ? "Create" : "Update"}</Button>
 
         {router.pathname === "/edit" ? null : (
-          <Button type="button" onClick={handleReset}>
-            Reset
-          </Button>
+          <Button onClick={handleCancel}>Cancel</Button>
         )}
 
         {confirmMessage && <SubmitMessage>{confirmMessage}</SubmitMessage>}
