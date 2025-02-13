@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 const StyledButton = styled.button`
   min-width: 80px;
-  padding: 15px;
+  padding: 1rem;
   border-style: none;
   border-radius: 10px;
   font-size: 1.25rem;
@@ -38,6 +38,12 @@ const StyledButton = styled.button`
     $buttonVariant === "incorrect" &&
     css`
       background-color: rgb(247, 207, 229);
+    `}
+
+  ${({ $buttonVariant }) =>
+    $buttonVariant === "edit" &&
+    css`
+      background-color: rgb(140, 151, 215);
     `}
 `;
 

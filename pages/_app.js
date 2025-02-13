@@ -14,8 +14,11 @@ export default function App({ Component, pageProps }) {
   const activeFlashCards = flashCards.filter((card) => !card.isCorrect);
   const archivedFlashCards = flashCards.filter((card) => card.isCorrect);
 
-  const flashCardsToShow =
-    router.pathname === "/archive" ? archivedFlashCards : activeFlashCards;
+  const flashCardsToShow = router.pathname.startsWith("/edit")
+    ? flashCards
+    : router.pathname === "/archive"
+    ? archivedFlashCards
+    : activeFlashCards;
 
   const noCards = flashCards.length === 0;
 
@@ -31,6 +34,16 @@ export default function App({ Component, pageProps }) {
 
   function addFlashCard(newFlashCard) {
     setFlashCards([newFlashCard, ...flashCards]);
+  }
+
+  function editFlashCard(cardToEdit) {
+    setFlashCards(
+      flashCards.map((flashCard) =>
+        flashCard.id === cardToEdit.id
+          ? { ...flashCard, ...cardToEdit }
+          : flashCard
+      )
+    );
   }
 
   function deleteCard(id) {
@@ -49,6 +62,7 @@ export default function App({ Component, pageProps }) {
         deleteCard={deleteCard}
         flashCards={flashCardsToShow}
         onAddFlashCard={addFlashCard}
+        onEditFlashCard={editFlashCard}
         noCards={noCards}
         collections={collections}
       />
