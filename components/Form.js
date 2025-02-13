@@ -24,20 +24,15 @@ export default function Form({
   collections,
   prevValues,
 }) {
-  const [isCardCreatedMessage, setIsCardCreatedMessage] = useState("");
-  // const [selectedCollection, setSelectedCollection] = useState(
-  //   prevValues?.collectionId
-  // );
+  const [confirmMessage, setConfirmMessage] = useState("");
 
   function handleSubmit(event) {
     event.preventDefault();
 
-    setIsCardCreatedMessage("New Card Created.");
+    setConfirmMessage(onAddFlashCard ? "New Card Created." : "Card Updated.");
 
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-
-    // updatedCollectionId = data.collectionId;
 
     const newFlashCard = {
       id: uid(),
@@ -49,19 +44,6 @@ export default function Form({
       ...prevValues,
       ...data,
     };
-
-    //   if (onAddFlashCard) {
-    //     onAddFlashCard(newFlashCard);
-    //     // Manually reset the question & answer fields...
-    //     event.target.elements.question.value = "";
-    //     event.target.elements.answer.value = "";
-    //     // and reset the controlled select value
-    //     setSelectedCollection("");
-    //   } else {
-    //     onEditFlashCard(cardToEdit);
-    //     // Do not reset fields when editing.
-    //   }
-    // }
 
     onAddFlashCard ? onAddFlashCard(newFlashCard) : onEditFlashCard(cardToEdit);
 
@@ -114,11 +96,9 @@ export default function Form({
 
         <SmallText>*required</SmallText>
 
-        <Button>Submit</Button>
+        <Button>{onAddFlashCard ? "Create" : "Update"}</Button>
 
-        {isCardCreatedMessage && (
-          <SubmitMessage>{isCardCreatedMessage}</SubmitMessage>
-        )}
+        {confirmMessage && <SubmitMessage>{confirmMessage}</SubmitMessage>}
       </StyledForm>
     </>
   );
