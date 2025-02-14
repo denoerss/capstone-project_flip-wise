@@ -1,21 +1,17 @@
 import Form from "@/components/Form";
 import { useRouter } from "next/router";
 
-export default function Edit({ onEditFlashCard, collections, flashCards }) {
+export default function Edit({ collections, flashCards, onSubmit }) {
   const router = useRouter();
   const { id } = router.query;
 
   const selectedFlashCard = flashCards.find((card) => card.id === id);
 
-  if(!selectedFlashCard) {
-    router.replace("/");
-  }
-
   return (
     <main>
       <h1>Edit the FlashCard</h1>
       <Form
-        onEditFlashCard={onEditFlashCard}
+        onSubmit={onSubmit}      
         collections={collections}
         prevValues={{
           id: selectedFlashCard?.id || "",

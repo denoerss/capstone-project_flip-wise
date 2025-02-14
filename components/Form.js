@@ -1,6 +1,5 @@
 import Button from "./Button";
 import styled from "styled-components";
-import { uid } from "uid";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
@@ -20,51 +19,24 @@ const SubmitMessage = styled.p`
 `;
 
 export default function Form({
-  onAddFlashCard,
-  onEditFlashCard,
+  onSubmit, // function to handle form submit for both add and edit mode
   collections,
   prevValues,
 }) {
   const router = useRouter();
-
   const [confirmMessage, setConfirmMessage] = useState("");
-
-  function handleSubmit(event) {
-    event.preventDefault();
-
-    // get form data
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
-
-    const newFlashCard = {
-      id: uid(),
-      ...data,
-      isCorrect: false,
-    };
-
-    const cardToEdit = {
-      ...prevValues,
-      ...data,
-    };
-
-    setConfirmMessage(onAddFlashCard ? "New Card Created." : "Card Updated.");
-
-    // set form functionality for both cases (add and update card)
-    onAddFlashCard ? onAddFlashCard(newFlashCard) : onEditFlashCard(cardToEdit);
-    // redirect router on update card
-    onEditFlashCard && router.back();
-    // reset form on add new card
-    onAddFlashCard && event.target.reset();
-  }
 
   function handleCancel(event) {
     event.preventDefault();
-    event.target.form.reset();
+    event.target.form.reset(); // reset the form
   }
 
   return (
     <>
-      <StyledForm onSubmit={handleSubmit}>
+      <StyledForm onSubmit={(e)=> {
+        onSubmit(e, prevValues?.id), 
+        setConfirmMessage(true)
+        }} >
         <div>
           <label htmlFor="question">Question*</label>
           <input
@@ -108,13 +80,12 @@ export default function Form({
 
         <SmallText>*required</SmallText>
 
-        <Button>{onAddFlashCard ? "Create" : "Update"}</Button>
-
+        <Button>{prevValues?.id ? "Update" : "Create"}</Button>
         {router.pathname === "/edit" ? null : (
           <Button onClick={handleCancel}>Cancel</Button>
         )}
 
-        {confirmMessage && <SubmitMessage>{confirmMessage}</SubmitMessage>}
+        {confirmMessage &&  <SubmitMessage>{prevValues?.id ? "Card Updated." : "New Card Created."}</SubmitMessage>      }
       </StyledForm>
     </>
   );
