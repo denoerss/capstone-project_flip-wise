@@ -42,9 +42,10 @@ export default function App({ Component, pageProps }) {
     } else {
       setFlashCards(
         flashCards.map((flashCard) =>
-          flashCard.id ===  flashCardToUpdate_id ? {id:flashCardToUpdate_id,...data} : flashCard
+          flashCard.id ===  flashCardToUpdate_id ? {id:flashCardToUpdate_id, ...data} : flashCard
          )
        );
+      router.push("/");
     }
   }
 
