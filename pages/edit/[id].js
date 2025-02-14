@@ -4,7 +4,12 @@ import { useRouter } from "next/router";
 export default function Edit({ onEditFlashCard, collections, flashCards }) {
   const router = useRouter();
   const { id } = router.query;
+
   const selectedFlashCard = flashCards.find((card) => card.id === id);
+
+  if(!selectedFlashCard) {
+    router.replace("/");
+  }
 
   return (
     <main>
