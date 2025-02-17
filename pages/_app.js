@@ -42,14 +42,20 @@ export default function App({ Component, pageProps }) {
     } else {
       setFlashCards(
         flashCards.map((flashCard) =>
-          flashCard.id ===  flashCardToUpdate_id ? {id:flashCardToUpdate_id, ...data} : flashCard
-         )
-       );
-      router.push("/");
+          flashCard.id === flashCardToUpdate_id
+            ? {
+                id: flashCardToUpdate_id,
+                ...data,
+                isCorrect: flashCard.isCorrect,
+              }
+            : flashCard
+        )
+      );
+      router.back();
     }
   }
 
-   function deleteCard(id) {
+  function deleteCard(id) {
     const updatedFlashCards = flashCards.filter(
       (flashcard) => flashcard.id !== id
     );
@@ -75,7 +81,7 @@ export default function App({ Component, pageProps }) {
       <Component
         {...pageProps}
         onSubmit={handleSubmit}
-        flashCards={flashCards}
+        flashCards={flashCardsToShow}
         deleteCard={deleteCard}
         onMarkCorrect={onMarkCorrect}
         noCards={noCards}

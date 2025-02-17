@@ -11,13 +11,14 @@ export default function Edit({ collections, flashCards, onSubmit }) {
     <main>
       <h1>Edit the FlashCard</h1>
       <Form
-        onSubmit={onSubmit}      
+        onSubmit={onSubmit}
         collections={collections}
         prevValues={{
           id: selectedFlashCard?.id || "",
           collectionId: selectedFlashCard?.collectionId || "",
           question: selectedFlashCard?.question || "",
           answer: selectedFlashCard?.answer || "",
+          isCorrect: selectedFlashCard?.isCorrect || false,
         }}
       />
       ;
