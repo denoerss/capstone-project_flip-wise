@@ -1,7 +1,7 @@
 import Button from "./Button";
 import styled from "styled-components";
-import { uid } from "uid";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 const StyledForm = styled.form`
   display: flex;
@@ -18,45 +18,57 @@ const SubmitMessage = styled.p`
   text-align: center;
 `;
 
-export default function Form({ onAddFlashCard, collections }) {
-  const [isCardCreatedMessage, setIsCardCreatedMessage] = useState("");
+export default function Form({
+  onSubmit, // function to handle form submit for both add and edit mode
+  collections,
+  prevValues,
+}) {
+  const router = useRouter();
+  const [confirmMessage, setConfirmMessage] = useState("");
 
-  function handleSubmit(event) {
+  function handleCancel(event) {
     event.preventDefault();
-
-    setIsCardCreatedMessage("New Card Created.");
-
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
-
-    const newFlashCard = {
-      id: uid(),
-      ...data,
-      isCorrect: false,
-    };
-
-    onAddFlashCard(newFlashCard);
-
-    event.target.reset();
+    event.target.form.reset(); // reset the form
   }
 
   return (
     <>
-      <StyledForm onSubmit={handleSubmit}>
+      <StyledForm
+        onSubmit={(e) => {
+          onSubmit(e, prevValues?.id), setConfirmMessage(true);
+        }}
+      >
         <div>
           <label htmlFor="question">Question*</label>
-          <input type="text" id="question" name="question" required />
+          <input
+            type="text"
+            id="question"
+            name="question"
+            required
+            defaultValue={prevValues?.question || ""}
+          />
         </div>
 
         <div>
           <label htmlFor="answer">Answer*</label>
-          <input type="text" id="answer" name="answer" required />
+          <input
+            type="text"
+            id="answer"
+            name="answer"
+            required
+            defaultValue={prevValues?.answer || ""}
+          />
         </div>
 
         <div>
           <label htmlFor="collections">Collection*</label>
-          <select id="collections" name="collectionId" required>
-            <option selected disabled value="">
+          <select
+            id="collections"
+            name="collectionId"
+            required
+            defaultValue={prevValues?.collectionId || ""}
+          >
+            <option disabled value="">
               - please select a collection -
             </option>
             {collections.map((collection) => (
@@ -69,10 +81,15 @@ export default function Form({ onAddFlashCard, collections }) {
 
         <SmallText>*required</SmallText>
 
-        <Button>Submit</Button>
+        <Button>{prevValues?.id ? "Update" : "Create"}</Button>
+        {router.pathname === "/edit" ? null : (
+          <Button onClick={handleCancel}>Reset</Button>
+        )}
 
-        {isCardCreatedMessage && (
-          <SubmitMessage>{isCardCreatedMessage}</SubmitMessage>
+        {confirmMessage && (
+          <SubmitMessage>
+            {prevValues?.id ? "Card Updated." : "New Card Created."}
+          </SubmitMessage>
         )}
       </StyledForm>
     </>
