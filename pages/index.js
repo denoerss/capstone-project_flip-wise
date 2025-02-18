@@ -1,4 +1,4 @@
-import FlashCardList from "@/components/FlashCardList";
+import CollectionList from "@/components/CollectionList";
 import styled from "styled-components";
 
 const StyledHeading = styled.h1`
@@ -6,26 +6,13 @@ const StyledHeading = styled.h1`
   font-size: 2.5rem;
 `;
 
-export default function HomePage({
-  onMarkCorrect,
-  deleteCard,
-  flashCards,
-  collections,
-  noCards,
-}) {
+export default function HomePage({ collections }) {
   return (
     <main>
       <StyledHeading>FlipWise</StyledHeading>
-      <FlashCardList
-        onMarkCorrect={onMarkCorrect}
-        deleteCard={deleteCard}
-        flashCards={flashCards}
+      <CollectionList
         collections={collections}
-        emptyListMessage={
-          noCards
-            ? "No FlipCards left.\nClick on 'New Card' below to add new FlipCards."
-            : "All FlipCards are marked as correct."
-        }
+        emptyListMessage="No Collections available."
       />
     </main>
   );
