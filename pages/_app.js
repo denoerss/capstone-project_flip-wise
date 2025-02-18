@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }) {
     ? flashCards
     : router.pathname === "/archive"
     ? archivedFlashCards
-    : activeFlashCards;
+    : router.pathname.startsWith("/collection") && activeFlashCards;
 
   // function for submitting or editing a flashcard
   function handleSubmit(event, flashCardToUpdate_id) {
