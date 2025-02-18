@@ -16,7 +16,6 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "styled-components": "^6.0.2",
-    "type": "^2.7.3",
     "uid": "^2.0.2",
     "use-local-storage-state": "^19.5.0"
   },
