@@ -1,16 +1,56 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const StyledButton = styled.button`
   min-width: 80px;
-  padding: 15px;
+  padding: 1rem;
   border-style: none;
   border-radius: 10px;
   font-size: 1.25rem;
   &:hover {
     cursor: pointer;
   }
+
+  ${({ $buttonVariant }) =>
+    $buttonVariant === "delete" &&
+    css`
+      background-color: #ff6347;
+    `}
+
+  ${({ $buttonVariant }) =>
+    $buttonVariant === "confirm" &&
+    css`
+      background-color: #eedc82;
+    `}
+
+  ${({ $buttonVariant }) =>
+    $buttonVariant === "cancel" &&
+    css`
+      background-color: #e57373;
+    `}
+
+  ${({ $buttonVariant }) =>
+    $buttonVariant === "correct" &&
+    css`
+      background-color: #93e9be;
+    `}
+
+  ${({ $buttonVariant }) =>
+    $buttonVariant === "incorrect" &&
+    css`
+      background-color: rgb(247, 207, 229);
+    `}
+
+  ${({ $buttonVariant }) =>
+    $buttonVariant === "edit" &&
+    css`
+      background-color: rgb(140, 151, 215);
+    `}
 `;
 
-export default function Button({ onClick, name }) {
-  return <StyledButton onClick={onClick}>{name}</StyledButton>;
+export default function Button({ onClick, children, buttonVariant }) {
+  return (
+    <StyledButton $buttonVariant={buttonVariant} onClick={onClick}>
+      {children}
+    </StyledButton>
+  );
 }

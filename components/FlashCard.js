@@ -3,22 +3,73 @@ import { useState } from "react";
 import FlashCardFront from "./FlashCardFront";
 import FlashCardBack from "./FlashCardBack";
 import Button from "./Button";
+import Link from "next/link";
 
 const StyledCard = styled.li`
   background-color: ${({ $showAnswer }) =>
-    $showAnswer ? "#93E9BE" : "lightgray"};
+    $showAnswer ? "#A9A9A9" : "#D3D3D3"};
+  position: relative;
   list-style: none;
   width: 80%;
   border-radius: 20px;
-  padding: 25px 25px;
+  padding: 25px 25px 25px;
   line-height: 1.25;
   &:hover {
     cursor: pointer;
   }
 `;
 
-export default function FlashCard({ card, onMarkCorrect, collections }) {
+const StyledButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 10px;
+`;
+
+const StyledDeleteContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const StyledConfirmContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+`;
+
+const StyledWarning = styled.p`
+  background-color: #ffa500;
+  padding: 5px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+`;
+
+const StyledEditLink = styled(Link)`
+  background-color: rgb(149, 178, 246);
+  min-width: 80px;
+  padding: 0.9rem;
+  border-style: none;
+  border-radius: 10px;
+  font-size: 1.3rem;
+  color: rgb(17, 17, 17);
+  text-decoration: none;
+  text-align: center;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export default function FlashCard({
+  card,
+  onMarkCorrect,
+  deleteCard,
+  collections,
+}) {
   const [showAnswer, setShowAnswer] = useState(false);
+  const [showDeleteButton, setShowDeleteButton] = useState(true);
 
   function flipCard() {
     setShowAnswer((prev) => !prev);
@@ -27,6 +78,17 @@ export default function FlashCard({ card, onMarkCorrect, collections }) {
   function handleCorrect(event) {
     event.stopPropagation();
     onMarkCorrect(card.id);
+  }
+
+  function handleToggleButton(event) {
+    event.stopPropagation();
+    setShowDeleteButton((prev) => !prev);
+  }
+
+  function handleConfirmDelete(event) {
+    event.stopPropagation();
+    setShowDeleteButton(true);
+    deleteCard(card.id);
   }
 
   const collectionTitle = collections.find(
@@ -39,9 +101,11 @@ export default function FlashCard({ card, onMarkCorrect, collections }) {
         {showAnswer ? (
           <>
             <Button
-              name={card.isCorrect ? "incorrect" : "correct"}
               onClick={handleCorrect}
-            />
+              buttonVariant={card.isCorrect ? "incorrect" : "correct"}
+            >
+              {card.isCorrect ? "incorrect" : "correct"}
+            </Button>
             <FlashCardBack
               answer={card.answer}
               collectionTitle={collectionTitle}
@@ -53,6 +117,36 @@ export default function FlashCard({ card, onMarkCorrect, collections }) {
             collectionTitle={collectionTitle}
           />
         )}
+        <StyledButtonContainer>
+          <StyledEditLink
+            href={`/edit/${card.id}`}
+            onClick={(event) => {
+              event.stopPropagation();
+            }}
+          >
+            Edit
+          </StyledEditLink>
+
+          <StyledDeleteContainer>
+            {showDeleteButton ? (
+              <Button buttonVariant="delete" onClick={handleToggleButton}>
+                Delete
+              </Button>
+            ) : (
+              <>
+                <StyledWarning>Delete Card?</StyledWarning>
+                <StyledConfirmContainer>
+                  <Button buttonVariant="confirm" onClick={handleConfirmDelete}>
+                    Confirm
+                  </Button>
+                  <Button buttonVariant="cancel" onClick={handleToggleButton}>
+                    Cancel
+                  </Button>
+                </StyledConfirmContainer>
+              </>
+            )}
+          </StyledDeleteContainer>
+        </StyledButtonContainer>
       </>
     </StyledCard>
   );
