@@ -17,15 +17,16 @@ export default function HomePage({
   const router = useRouter();
   const { id } = router.query;
 
-  const collectionCard_id = collections.find(
+  const currentCollection = collections.find(
     (collection) => collection.id === id
   );
+  const currentCollectionId = currentCollection?.id;
 
   return (
     <main>
       <StyledHeading>FlipWise</StyledHeading>
       <FlashCardList
-        collectionCard_id={collectionCard_id}
+        currentCollectionId={currentCollectionId}
         onMarkCorrect={onMarkCorrect}
         deleteCard={deleteCard}
         flashCards={flashCards}
