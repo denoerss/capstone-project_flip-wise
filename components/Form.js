@@ -33,10 +33,11 @@ export default function Form({
 
   return (
     <>
-      <StyledForm onSubmit={(e)=> {
-        onSubmit(e, prevValues?.id), 
-        setConfirmMessage(true)
-        }} >
+      <StyledForm
+        onSubmit={(e) => {
+          onSubmit(e, prevValues?.id), setConfirmMessage(true);
+        }}
+      >
         <div>
           <label htmlFor="question">Question*</label>
           <input
@@ -82,10 +83,14 @@ export default function Form({
 
         <Button>{prevValues?.id ? "Update" : "Create"}</Button>
         {router.pathname === "/edit" ? null : (
-          <Button onClick={handleCancel}>Cancel</Button>
+          <Button onClick={handleCancel}>Reset</Button>
         )}
 
-        {confirmMessage &&  <SubmitMessage>{prevValues?.id ? "Card Updated." : "New Card Created."}</SubmitMessage>      }
+        {confirmMessage && (
+          <SubmitMessage>
+            {prevValues?.id ? "Card Updated." : "New Card Created."}
+          </SubmitMessage>
+        )}
       </StyledForm>
     </>
   );
