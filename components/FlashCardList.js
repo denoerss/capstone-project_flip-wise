@@ -1,5 +1,7 @@
 import FlashCard from "./FlashCard";
 import styled from "styled-components";
+import { useState } from "react";
+import { useRouter } from "next/router";
 
 const StyledList = styled.ul`
   display: flex;
@@ -31,6 +33,11 @@ export default function FlashCardList({
   collections,
   emptyListMessage,
 }) {
+  const router = useRouter();
+  const { pathname } = router;
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  // const [selectedCollection, setSelectedCollection] = useState("");
 
   const filteredFlashCards = currentCollection 
   ? flashCards.filter((card) => card.collectionId === currentCollection.id
@@ -38,19 +45,50 @@ export default function FlashCardList({
 
   return (
     <>
-      <StyledHeading>{currentCollection ? currentCollection.title : "Archived Cards" }</StyledHeading>
+      <div>
+        <StyledHeading onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+          {currentCollection ? currentCollection.title : "All Cards" } ⏷
+        </StyledHeading>
+
+        {isDropdownOpen && (
+          <ul>
+            {collections.map((collection) => (
+              <p 
+                key={collection.id}
+                onClick={() => {
+                  router.push(pathname.includes("/archive") ? `/archive/${collection.id}` : `/collection/${collection.id}`);
+                  setIsDropdownOpen(false);
+                }}
+              >
+                {collection.title}
+              </p>
+            ))}
+          </ul>
+        )}
+      </div>
+    
       <StyledList>
-        {filteredFlashCards.map((card) => (
+        {pathname.includes("/archive") 
+          ? flashCards.map((card) => (
             <FlashCard
               key={card.id}
               card={card}
               onMarkCorrect={onMarkCorrect}
               collections={collections}
               deleteCard={deleteCard}
-              flashCards={flashCards}
             />
-          ))}           
+          )) 
+          : filteredFlashCards.map((card) => (
+            <FlashCard
+              key={card.id}
+              card={card}
+              onMarkCorrect={onMarkCorrect}
+              collections={collections}
+              deleteCard={deleteCard}
+            />
+          ))}      
       </StyledList>
+
       {filteredFlashCards.length === 0 && (
         <StyledEmptyListMessage>{emptyListMessage}</StyledEmptyListMessage>
       )}
