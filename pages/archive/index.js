@@ -1,4 +1,5 @@
 import FlashCardList from "@/components/FlashCardList";
+import { useState } from "react";
 
 export default function ArchivePage({
   onMarkCorrect,
@@ -7,13 +8,28 @@ export default function ArchivePage({
   collections,
   noCards,
 }) {
+  const [selectedCollection, setSelectedCollection] = useState("");
+
+  const filteredFlashCards = flashCards.filter((card) =>
+    selectedCollection
+      ? card.collectionId === selectedCollection
+      : card.isCorrect
+  );
   return (
     <main>
       <h1>Archive</h1>
+      <select onChange={(event) => setSelectedCollection(event.target.value)}>
+        <option value="">All collections</option>
+        {collections.map((collection) => (
+          <option key={collection.id} value={collection.id}>
+            {collection.title}
+          </option>
+        ))}
+      </select>
       <FlashCardList
         onMarkCorrect={onMarkCorrect}
         deleteCard={deleteCard}
-        flashCards={flashCards.filter((card) => card.isCorrect)}
+        flashCards={filteredFlashCards}
         collections={collections}
         emptyListMessage={
           noCards
