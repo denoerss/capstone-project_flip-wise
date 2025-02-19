@@ -7,6 +7,13 @@ export default function ArchivePage({
   collections,
   noCards,
 }) {
+  // const [selectedCollection, setSelectedCollection] = useState("");
+
+  // const filteredFlashCards = flashCards.filter((card) =>
+  //   selectedCollection
+  //     ? card.collectionId === selectedCollection
+  //     : card.isCorrect
+  // );
 
   return (
     <main>

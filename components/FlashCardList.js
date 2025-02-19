@@ -35,28 +35,38 @@ export default function FlashCardList({
 }) {
   const router = useRouter();
   const { pathname } = router;
-
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  // const [selectedCollection, setSelectedCollection] = useState("");
+  const [selectedCollection, setSelectedCollection] = useState("");
 
-  const filteredFlashCards = currentCollection 
-  ? flashCards.filter((card) => card.collectionId === currentCollection.id
-  ): flashCards;
+  const filteredArchiveFlashCards = flashCards.filter((card) =>
+    selectedCollection
+      ? card.collectionId === selectedCollection
+      : card.isCorrect
+  );
+
+  const filteredFlashCards = currentCollection
+    ? flashCards.filter((card) => card.collectionId === currentCollection.id)
+    : flashCards;
 
   return (
     <>
       <div>
         <StyledHeading onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-          {currentCollection ? currentCollection.title : "All Cards" } ⏷
+          {currentCollection ? currentCollection.title : "All Cards"} ⏷
         </StyledHeading>
 
         {isDropdownOpen && (
           <ul>
             {collections.map((collection) => (
-              <p 
+              <p
                 key={collection.id}
                 onClick={() => {
-                  router.push(pathname.includes("/archive") ? `/archive/${collection.id}` : `/collection/${collection.id}`);
+                  router.push(
+                    pathname.includes("/archive")
+                      ? `/archive`
+                      : `/collection/${collection.id}`
+                  );
+                  setSelectedCollection(collection.id);
                   setIsDropdownOpen(false);
                 }}
               >
@@ -66,27 +76,27 @@ export default function FlashCardList({
           </ul>
         )}
       </div>
-    
+
       <StyledList>
-        {pathname.includes("/archive") 
-          ? flashCards.map((card) => (
-            <FlashCard
-              key={card.id}
-              card={card}
-              onMarkCorrect={onMarkCorrect}
-              collections={collections}
-              deleteCard={deleteCard}
-            />
-          )) 
+        {pathname.includes("/archive")
+          ? filteredArchiveFlashCards.map((card) => (
+              <FlashCard
+                key={card.id}
+                card={card}
+                onMarkCorrect={onMarkCorrect}
+                collections={collections}
+                deleteCard={deleteCard}
+              />
+            ))
           : filteredFlashCards.map((card) => (
-            <FlashCard
-              key={card.id}
-              card={card}
-              onMarkCorrect={onMarkCorrect}
-              collections={collections}
-              deleteCard={deleteCard}
-            />
-          ))}      
+              <FlashCard
+                key={card.id}
+                card={card}
+                onMarkCorrect={onMarkCorrect}
+                collections={collections}
+                deleteCard={deleteCard}
+              />
+            ))}
       </StyledList>
 
       {filteredFlashCards.length === 0 && (
