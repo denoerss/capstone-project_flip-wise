@@ -20,13 +20,12 @@ export default function HomePage({
   const currentCollection = collections.find(
     (collection) => collection.id === id
   );
-  const currentCollectionId = currentCollection?.id;
 
   return (
     <main>
       <StyledHeading>FlipWise</StyledHeading>
       <FlashCardList
-        currentCollectionId={currentCollectionId}
+      currentCollection={currentCollection}
         onMarkCorrect={onMarkCorrect}
         deleteCard={deleteCard}
         flashCards={flashCards}

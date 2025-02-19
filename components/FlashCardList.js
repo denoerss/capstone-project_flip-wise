@@ -24,7 +24,7 @@ const StyledEmptyListMessage = styled.p`
 `;
 
 export default function FlashCardList({
-  currentCollectionId,
+  currentCollection,
   onMarkCorrect,
   deleteCard,
   flashCards,
@@ -32,13 +32,13 @@ export default function FlashCardList({
   emptyListMessage,
 }) {
 
-  const filteredFlashCards = flashCards.filter(
-    (card) => card.collectionId === currentCollectionId
-  );
+  const filteredFlashCards = currentCollection 
+  ? flashCards.filter((card) => card.collectionId === currentCollection.id
+  ): flashCards;
 
   return (
     <>
-      <StyledHeading>Flip Cards List</StyledHeading>
+      <StyledHeading>{currentCollection ? currentCollection.title : "Archived Cards" }</StyledHeading>
       <StyledList>
         {filteredFlashCards.map((card) => (
             <FlashCard
@@ -47,10 +47,11 @@ export default function FlashCardList({
               onMarkCorrect={onMarkCorrect}
               collections={collections}
               deleteCard={deleteCard}
+              flashCards={flashCards}
             />
-          ))}
+          ))}           
       </StyledList>
-      {flashCards.length === 0 && (
+      {filteredFlashCards.length === 0 && (
         <StyledEmptyListMessage>{emptyListMessage}</StyledEmptyListMessage>
       )}
     </>

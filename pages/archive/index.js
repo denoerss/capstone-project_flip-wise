@@ -13,7 +13,7 @@ export default function ArchivePage({
       <FlashCardList
         onMarkCorrect={onMarkCorrect}
         deleteCard={deleteCard}
-        flashCards={flashCards}
+        flashCards={flashCards.filter((card) => card.isCorrect)}
         collections={collections}
         emptyListMessage={
           noCards
