@@ -33,6 +33,8 @@ export default function CollectionList({ collections, emptyListMessage }) {
             key={collection.id}
             href={`/collection/${collection.id}`}
             collectionTitle={collection.title}
+            totalCards={collection.totalCards}
+            correctCards={collection.correctCards}
           />
         ))}
       </StyledList>

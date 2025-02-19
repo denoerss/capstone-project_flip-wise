@@ -22,6 +22,21 @@ export default function App({ Component, pageProps }) {
     ? archivedFlashCards
     : router.pathname.startsWith("/collection") && activeFlashCards;
 
+  // get flashCard counts in collections
+  const collectionsWithCounts = collections.map((collection) => {
+    const flashCardsInCollection = flashCards.filter(
+      (card) => card.collectionId === collection.id
+    );
+    const correctCount = flashCardsInCollection.filter(
+      (card) => card.isCorrect
+    ).length;
+    return {
+      ...collection,
+      totalCards: flashCardsInCollection.length,
+      correctCards: correctCount,
+    };
+  });
+
   // function for submitting or editing a flashcard
   function handleSubmit(event, flashCardToUpdate_id) {
     event.preventDefault();
@@ -85,7 +100,7 @@ export default function App({ Component, pageProps }) {
         deleteCard={deleteCard}
         onMarkCorrect={onMarkCorrect}
         noCards={noCards}
-        collections={collections}
+        collections={collectionsWithCounts}
       />
       <Navigation />
     </>

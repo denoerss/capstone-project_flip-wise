@@ -8,7 +8,7 @@ const StyledCollectionContainer = styled.li`
   list-style: none;
   width: 80%;
   border-radius: 20px;
-  padding: 25px 25px 25px;
+  padding: 25px;
   line-height: 1.25;
   &:hover {
     cursor: pointer;
@@ -30,12 +30,19 @@ const StyledCollectionCard = styled(Link)`
   }
 `;
 
-export default function CollectionCard({ href, collectionTitle }) {
+export default function CollectionCard({
+  href,
+  collectionTitle,
+  totalCards,
+  correctCards,
+}) {
   return (
     <StyledCollectionContainer>
       <StyledCollectionCard href={href}>
         <h2>{collectionTitle}</h2>
-        <p>7/10 correct</p>
+        <p>
+          {correctCards} / {totalCards} correct
+        </p>
       </StyledCollectionCard>
     </StyledCollectionContainer>
   );
