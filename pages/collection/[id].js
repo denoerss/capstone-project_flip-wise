@@ -7,7 +7,7 @@ const StyledHeading = styled.h1`
   font-size: 2.5rem;
 `;
 
-export default function HomePage({
+export default function Collection({
   onMarkCorrect,
   deleteCard,
   flashCards,
@@ -25,7 +25,7 @@ export default function HomePage({
     <main>
       <StyledHeading>FlipWise</StyledHeading>
       <FlashCardList
-      currentCollection={currentCollection}
+        currentCollection={currentCollection}
         onMarkCorrect={onMarkCorrect}
         deleteCard={deleteCard}
         flashCards={flashCards}

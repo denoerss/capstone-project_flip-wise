@@ -2,6 +2,7 @@ import FlashCard from "./FlashCard";
 import styled from "styled-components";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import ArchiveCollection from "@/pages/archive/[id]";
 
 const StyledList = styled.ul`
   display: flex;
@@ -27,6 +28,7 @@ const StyledEmptyListMessage = styled.p`
 
 export default function FlashCardList({
   currentCollection,
+  currentArchivedCollection,
   onMarkCorrect,
   deleteCard,
   flashCards,
@@ -36,23 +38,26 @@ export default function FlashCardList({
   const router = useRouter();
   const { pathname } = router;
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedCollection, setSelectedCollection] = useState("");
-
-  const filteredArchiveFlashCards = flashCards.filter((card) =>
-    selectedCollection
-      ? card.collectionId === selectedCollection
-      : card.isCorrect
-  );
 
   const filteredFlashCards = currentCollection
     ? flashCards.filter((card) => card.collectionId === currentCollection.id)
     : flashCards;
 
+  const filteredArchivedFlashCards =
+    currentArchivedCollection && Array.isArray(flashCards)
+      ? flashCards.filter(
+          (card) => card.collectionId === currentArchivedCollection.id
+        )
+      : flashCards;
+
+  console.log("FAF:_", filteredArchivedFlashCards);
+
   return (
     <>
       <div>
         <StyledHeading onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-          {currentCollection ? currentCollection.title : "All Cards"} ⏷
+          {currentCollection ? currentCollection.title : "Select a collection"}{" "}
+          ⏷
         </StyledHeading>
 
         {isDropdownOpen && (
@@ -63,10 +68,9 @@ export default function FlashCardList({
                 onClick={() => {
                   router.push(
                     pathname.includes("/archive")
-                      ? `/archive`
+                      ? `/archive/${collection.id}`
                       : `/collection/${collection.id}`
                   );
-                  setSelectedCollection(collection.id);
                   setIsDropdownOpen(false);
                 }}
               >
@@ -79,7 +83,8 @@ export default function FlashCardList({
 
       <StyledList>
         {pathname.includes("/archive")
-          ? filteredArchiveFlashCards.map((card) => (
+          ? Array.isArray(filteredArchivedFlashCards) &&
+            filteredArchivedFlashCards.map((card) => (
               <FlashCard
                 key={card.id}
                 card={card}
