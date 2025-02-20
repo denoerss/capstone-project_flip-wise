@@ -12,15 +12,21 @@ export default function App({ Component, pageProps }) {
   });
   const router = useRouter();
 
-  const activeFlashCards = flashCards.filter((card) => !card.isCorrect);
-  const archivedFlashCards = flashCards.filter((card) => card.isCorrect);
+  // get flashCard counts in collections
+  const collectionsWithCounts = collections.map((collection) => {
+    const flashCardsInCollection = flashCards.filter(
+      (card) => card.collectionId === collection.id
+    );
+    const correctCount = flashCardsInCollection.filter(
+      (card) => card.isCorrect
+    ).length;
 
-  // determine which flashcards to show based on the route
-  const flashCardsToShow = router.pathname.startsWith("/edit")
-    ? flashCards
-    : router.pathname === "/archive"
-    ? archivedFlashCards
-    : activeFlashCards;
+    return {
+      ...collection,
+      totalCards: flashCardsInCollection.length,
+      correctCards: correctCount,
+    };
+  });
 
   // function for submitting or editing a flashcard
   function handleSubmit(event, flashCardToUpdate_id) {
@@ -62,9 +68,6 @@ export default function App({ Component, pageProps }) {
     setFlashCards(updatedFlashCards);
   }
 
-  // check if there are any cards
-  const noCards = flashCards.length === 0;
-
   function onMarkCorrect(id) {
     const updatedFlashCards = flashCards.map((flashCard) =>
       flashCard.id === id
@@ -81,11 +84,10 @@ export default function App({ Component, pageProps }) {
       <Component
         {...pageProps}
         onSubmit={handleSubmit}
-        flashCards={flashCardsToShow}
+        flashCards={flashCards}
         deleteCard={deleteCard}
         onMarkCorrect={onMarkCorrect}
-        noCards={noCards}
-        collections={collections}
+        collections={collectionsWithCounts}
       />
       <Navigation />
     </>

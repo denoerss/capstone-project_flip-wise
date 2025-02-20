@@ -1,4 +1,6 @@
+import { useState } from "react";
 import FlashCard from "./FlashCard";
+import Link from "next/link";
 import styled from "styled-components";
 
 const StyledList = styled.ul`
@@ -7,7 +9,7 @@ const StyledList = styled.ul`
   align-items: center;
   justify-content: center;
   gap: 15px;
-  padding-left: 0;
+  margin-left: 0;
 `;
 
 const StyledHeading = styled.h2`
@@ -23,16 +25,50 @@ const StyledEmptyListMessage = styled.p`
   margin-top: 5rem;
 `;
 
+const StyledLinkContainer = styled.ul`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 0;
+  gap: 5px;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+`;
+
 export default function FlashCardList({
-  onMarkCorrect,
-  deleteCard,
+  urlBase,
   flashCards,
+  deleteCard,
+  onMarkCorrect,
   collections,
-  emptyListMessage,
+  currentCollection,
 }) {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   return (
     <>
-      <StyledHeading>Flip Cards List</StyledHeading>
+      <div>
+        <StyledHeading onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+          {currentCollection ? currentCollection.title : "Select a collection"}⏷
+        </StyledHeading>
+
+        {isDropdownOpen && (
+          <StyledLinkContainer>
+            {collections.map((collection) => (
+              <StyledLink
+                key={collection.id}
+                href={`/${urlBase}/${collection.id}`}
+              >
+                {collection.title}
+              </StyledLink>
+            ))}
+          </StyledLinkContainer>
+        )}
+      </div>
+
       <StyledList>
         {flashCards.map((card) => (
           <FlashCard
@@ -44,8 +80,9 @@ export default function FlashCardList({
           />
         ))}
       </StyledList>
+
       {flashCards.length === 0 && (
-        <StyledEmptyListMessage>{emptyListMessage}</StyledEmptyListMessage>
+        <StyledEmptyListMessage>No cards found.</StyledEmptyListMessage>
       )}
     </>
   );

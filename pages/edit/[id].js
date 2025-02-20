@@ -21,7 +21,6 @@ export default function Edit({ collections, flashCards, onSubmit }) {
           isCorrect: selectedFlashCard?.isCorrect || false,
         }}
       />
-      ;
     </main>
   );
 }

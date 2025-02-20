@@ -5,21 +5,18 @@ export default function ArchivePage({
   deleteCard,
   flashCards,
   collections,
-  noCards,
 }) {
+  const archivedFlashCards = flashCards.filter((card) => card.isCorrect);
+
   return (
     <main>
       <h1>Archive</h1>
       <FlashCardList
         onMarkCorrect={onMarkCorrect}
         deleteCard={deleteCard}
-        flashCards={flashCards}
+        flashCards={archivedFlashCards}
         collections={collections}
-        emptyListMessage={
-          noCards
-            ? "No FlipCards left.\nClick on 'New Card' below to add new FlipCards."
-            : "No FlipCards archived."
-        }
+        urlBase={"archive"}
       />
     </main>
   );
