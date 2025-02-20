@@ -1,8 +1,7 @@
-import FlashCard from "./FlashCard";
-import styled from "styled-components";
 import { useState } from "react";
-import { useRouter } from "next/router";
-import ArchiveCollection from "@/pages/archive/[id]";
+import FlashCard from "./FlashCard";
+import Link from "next/link";
+import styled from "styled-components";
 
 const StyledList = styled.ul`
   display: flex;
@@ -27,85 +26,47 @@ const StyledEmptyListMessage = styled.p`
 `;
 
 export default function FlashCardList({
-  currentCollection,
-  currentArchivedCollection,
-  onMarkCorrect,
-  deleteCard,
+  urlBase,
   flashCards,
+  deleteCard,
+  onMarkCorrect,
   collections,
-  emptyListMessage,
+  currentCollection,
 }) {
-  const router = useRouter();
-  const { pathname } = router;
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const filteredFlashCards = currentCollection
-    ? flashCards.filter((card) => card.collectionId === currentCollection.id)
-    : flashCards;
-
-  const filteredArchivedFlashCards =
-    currentArchivedCollection && Array.isArray(flashCards)
-      ? flashCards.filter(
-          (card) => card.collectionId === currentArchivedCollection.id
-        )
-      : flashCards;
-
-  console.log("FAF:_", filteredArchivedFlashCards);
 
   return (
     <>
       <div>
         <StyledHeading onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-          {currentCollection ? currentCollection.title : "Select a collection"}{" "}
-          ⏷
+          {currentCollection ? currentCollection.title : "Select a collection"}⏷
         </StyledHeading>
 
         {isDropdownOpen && (
           <ul>
             {collections.map((collection) => (
-              <p
-                key={collection.id}
-                onClick={() => {
-                  router.push(
-                    pathname.includes("/archive")
-                      ? `/archive/${collection.id}`
-                      : `/collection/${collection.id}`
-                  );
-                  setIsDropdownOpen(false);
-                }}
-              >
+              <Link key={collection.id} href={`/${urlBase}/${collection.id}`}>
                 {collection.title}
-              </p>
+              </Link>
             ))}
           </ul>
         )}
       </div>
 
       <StyledList>
-        {pathname.includes("/archive")
-          ? Array.isArray(filteredArchivedFlashCards) &&
-            filteredArchivedFlashCards.map((card) => (
-              <FlashCard
-                key={card.id}
-                card={card}
-                onMarkCorrect={onMarkCorrect}
-                collections={collections}
-                deleteCard={deleteCard}
-              />
-            ))
-          : filteredFlashCards.map((card) => (
-              <FlashCard
-                key={card.id}
-                card={card}
-                onMarkCorrect={onMarkCorrect}
-                collections={collections}
-                deleteCard={deleteCard}
-              />
-            ))}
+        {flashCards.map((card) => (
+          <FlashCard
+            key={card.id}
+            card={card}
+            onMarkCorrect={onMarkCorrect}
+            collections={collections}
+            deleteCard={deleteCard}
+          />
+        ))}
       </StyledList>
 
-      {filteredFlashCards.length === 0 && (
-        <StyledEmptyListMessage>{emptyListMessage}</StyledEmptyListMessage>
+      {flashCards.length === 0 && (
+        <StyledEmptyListMessage>No cards found.</StyledEmptyListMessage>
       )}
     </>
   );

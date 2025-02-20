@@ -12,16 +12,6 @@ export default function App({ Component, pageProps }) {
   });
   const router = useRouter();
 
-  const activeFlashCards = flashCards.filter((card) => !card.isCorrect);
-  const archivedFlashCards = flashCards.filter((card) => card.isCorrect);
-
-  // determine which flashcards to show based on the route
-  const flashCardsToShow = router.pathname.startsWith("/edit")
-    ? flashCards
-    : router.pathname === "/archive"
-    ? archivedFlashCards
-    : router.pathname.startsWith("/collection") && activeFlashCards;
-
   // get flashCard counts in collections
   const collectionsWithCounts = collections.map((collection) => {
     const flashCardsInCollection = flashCards.filter(
@@ -96,7 +86,7 @@ export default function App({ Component, pageProps }) {
       <Component
         {...pageProps}
         onSubmit={handleSubmit}
-        flashCards={flashCardsToShow}
+        flashCards={flashCards}
         deleteCard={deleteCard}
         onMarkCorrect={onMarkCorrect}
         noCards={noCards}

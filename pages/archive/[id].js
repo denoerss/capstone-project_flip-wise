@@ -12,31 +12,34 @@ export default function ArchiveCollection({
   deleteCard,
   flashCards,
   collections,
-  noCards,
 }) {
   const router = useRouter();
   const { id } = router.query;
 
-  const currentArchivedCollection = collections.find(
+  const currentCollection = collections.find(
     (collection) => collection.id === id
   );
 
-  console.log("currentArchivedCollection: ", currentArchivedCollection.id);
+  if (!currentCollection) {
+    return null;
+  }
+
+  const archivedFlashCards = flashCards.filter((card) => card.isCorrect);
+
+  const filteredFlashCards = archivedFlashCards.filter(
+    (card) => card.collectionId === currentCollection.id
+  );
 
   return (
     <main>
       <StyledHeading>FlipWise</StyledHeading>
       <FlashCardList
-        currentArchivedCollection={currentArchivedCollection}
         onMarkCorrect={onMarkCorrect}
         deleteCard={deleteCard}
-        flashCards={flashCards}
+        flashCards={filteredFlashCards}
         collections={collections}
-        emptyListMessage={
-          noCards
-            ? "No FlipCards left.\nClick on 'New Card' below to add new FlipCards."
-            : "All FlipCards are marked as correct."
-        }
+        urlBase={"archive"}
+        currentCollection={currentCollection}
       />
     </main>
   );

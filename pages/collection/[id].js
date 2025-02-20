@@ -12,7 +12,6 @@ export default function Collection({
   deleteCard,
   flashCards,
   collections,
-  noCards,
 }) {
   const router = useRouter();
   const { id } = router.query;
@@ -21,20 +20,26 @@ export default function Collection({
     (collection) => collection.id === id
   );
 
+  if (!currentCollection) {
+    return null;
+  }
+
+  const activeFlashCards = flashCards.filter((card) => !card.isCorrect);
+
+  const filteredFlashCards = activeFlashCards.filter(
+    (card) => card.collectionId === currentCollection.id
+  );
+
   return (
     <main>
       <StyledHeading>FlipWise</StyledHeading>
       <FlashCardList
-        currentCollection={currentCollection}
         onMarkCorrect={onMarkCorrect}
         deleteCard={deleteCard}
-        flashCards={flashCards}
+        flashCards={filteredFlashCards}
         collections={collections}
-        emptyListMessage={
-          noCards
-            ? "No FlipCards left.\nClick on 'New Card' below to add new FlipCards."
-            : "All FlipCards are marked as correct."
-        }
+        urlBase={"collection"}
+        currentCollection={currentCollection}
       />
     </main>
   );
