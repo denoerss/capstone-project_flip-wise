@@ -20,6 +20,7 @@ export default function App({ Component, pageProps }) {
     const correctCount = flashCardsInCollection.filter(
       (card) => card.isCorrect
     ).length;
+
     return {
       ...collection,
       totalCards: flashCardsInCollection.length,
@@ -67,9 +68,6 @@ export default function App({ Component, pageProps }) {
     setFlashCards(updatedFlashCards);
   }
 
-  // check if there are any cards
-  const noCards = flashCards.length === 0;
-
   function onMarkCorrect(id) {
     const updatedFlashCards = flashCards.map((flashCard) =>
       flashCard.id === id
@@ -89,7 +87,6 @@ export default function App({ Component, pageProps }) {
         flashCards={flashCards}
         deleteCard={deleteCard}
         onMarkCorrect={onMarkCorrect}
-        noCards={noCards}
         collections={collectionsWithCounts}
       />
       <Navigation />

@@ -23,7 +23,7 @@ const StyledEmptyListMessage = styled.p`
   margin-top: 5rem;
 `;
 
-export default function CollectionList({ collections, emptyListMessage }) {
+export default function CollectionList({ collections }) {
   return (
     <>
       <StyledHeading>Collections</StyledHeading>
@@ -39,7 +39,7 @@ export default function CollectionList({ collections, emptyListMessage }) {
         ))}
       </StyledList>
       {collections.length === 0 && (
-        <StyledEmptyListMessage>{emptyListMessage}</StyledEmptyListMessage>
+        <StyledEmptyListMessage>No collections found.</StyledEmptyListMessage>
       )}
     </>
   );
