@@ -9,7 +9,7 @@ const StyledList = styled.ul`
   align-items: center;
   justify-content: center;
   gap: 15px;
-  padding-left: 0;
+  margin-left: 0;
 `;
 
 const StyledHeading = styled.h2`
@@ -23,6 +23,19 @@ const StyledEmptyListMessage = styled.p`
   text-align: center;
   line-height: 5;
   margin-top: 5rem;
+`;
+
+const StyledLinkContainer = styled.ul`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 0;
+  gap: 5px;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: black;
 `;
 
 export default function FlashCardList({
@@ -43,13 +56,16 @@ export default function FlashCardList({
         </StyledHeading>
 
         {isDropdownOpen && (
-          <ul>
+          <StyledLinkContainer>
             {collections.map((collection) => (
-              <Link key={collection.id} href={`/${urlBase}/${collection.id}`}>
+              <StyledLink
+                key={collection.id}
+                href={`/${urlBase}/${collection.id}`}
+              >
                 {collection.title}
-              </Link>
+              </StyledLink>
             ))}
-          </ul>
+          </StyledLinkContainer>
         )}
       </div>
 
