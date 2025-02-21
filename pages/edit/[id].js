@@ -1,5 +1,6 @@
 import Form from "@/components/Form";
 import { useRouter } from "next/router";
+import BackButton from "@/components/BackButton";
 
 export default function Edit({ collections, flashCards, onSubmit }) {
   const router = useRouter();
@@ -21,6 +22,7 @@ export default function Edit({ collections, flashCards, onSubmit }) {
           isCorrect: selectedFlashCard?.isCorrect || false,
         }}
       />
+      <BackButton />
     </main>
   );
 }

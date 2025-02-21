@@ -1,4 +1,5 @@
 import FlashCardList from "@/components/FlashCardList";
+import Navigation from "@/components/Navigation";
 
 export default function ArchivePage({
   onMarkCorrect,
@@ -18,6 +19,7 @@ export default function ArchivePage({
         collections={collections}
         urlBase={"archive"}
       />
+      <Navigation />
     </main>
   );
 }

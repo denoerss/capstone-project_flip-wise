@@ -1,5 +1,6 @@
 import CollectionList from "@/components/CollectionList";
 import styled from "styled-components";
+import Navigation from "@/components/Navigation";
 
 const StyledHeading = styled.h1`
   text-align: center;
@@ -14,6 +15,7 @@ export default function HomePage({ collections }) {
         collections={collections}
         emptyListMessage="No Collections available."
       />
+      <Navigation />
     </main>
   );
 }

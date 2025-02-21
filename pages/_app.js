@@ -89,7 +89,6 @@ export default function App({ Component, pageProps }) {
         onMarkCorrect={onMarkCorrect}
         collections={collectionsWithCounts}
       />
-      <Navigation />
     </>
   );
 }
