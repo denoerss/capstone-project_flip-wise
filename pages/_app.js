@@ -67,7 +67,7 @@ export default function App({ Component, pageProps }) {
   }
 
   // submit function to add a new collection
-  function onSubmitCollection(event, collectionColor) {
+  function onSubmitCollection(event) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
@@ -80,8 +80,6 @@ export default function App({ Component, pageProps }) {
     };
 
     setCollections([newCollection, ...collections]);
-    console.log("COLLECTIONS: ", collections);
-    console.log("newCollection: ", newCollection);
     event.target.reset();
   }
 

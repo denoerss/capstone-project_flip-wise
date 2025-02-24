@@ -21,9 +21,9 @@ export default function CollectionList({ collections }) {
   return (
     <>
       <StyledList>
-        {collections.map((collection, index) => (
+        {collections.map((collection) => (
           <CollectionCard
-            key={index}
+            key={collection.id}
             href={`/collection/${collection.id}`}
             collectionTitle={collection.title}
             totalCards={collection.totalCards}

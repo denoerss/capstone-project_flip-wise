@@ -12,10 +12,16 @@ const StyledList = styled.ul`
   padding-left: 0;
 `;
 
-const StyledHeadline = styled.h1`
-  text-align: center;
+const StyledDropdownButton = styled.button`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.75rem;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin: 40px 10px 10px 10px;
+  text-decoration: none;
+  background-color: transparent;
+  border: none;
 `;
 
 const StyledEmptyListMessage = styled.p`
@@ -25,13 +31,22 @@ const StyledEmptyListMessage = styled.p`
   margin-top: 5rem;
 `;
 
-const StyledLinkContainer = styled.ul`
+const StyledDropdownContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const StyledDropdownList = styled.ul`
+  display: flex;
+  flex-direction: column;
   padding-left: 0;
-  margin-left: 0;
   gap: 5px;
+`;
+
+const StyledDropdownItem = styled.li`
+  list-style: none;
+  line-height: 2;
 `;
 
 const StyledLink = styled(Link)`
@@ -51,26 +66,30 @@ export default function FlashCardList({
 
   return (
     <>
-      <div style={{ margin: "0" }}>
-        <StyledHeadline onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+      <StyledDropdownContainer>
+        <StyledDropdownButton
+          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          aria-expanded={isDropdownOpen}
+          aria-controls="dropdown-menu"
+        >
           {currentCollection ? currentCollection.title : "Select a collection"}{" "}
           ⏷
-        </StyledHeadline>
-
+        </StyledDropdownButton>
         {isDropdownOpen && (
-          <StyledLinkContainer>
+          <StyledDropdownList id="dropdown-menu">
             {collections.map((collection) => (
-              <StyledLink
+              <StyledDropdownItem
                 key={collection.id}
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                href={`/${urlBase}/${collection.id}`}
+                onClick={() => setIsDropdownOpen(false)}
               >
-                {collection.title}
-              </StyledLink>
+                <StyledLink href={`/${urlBase}/${collection.id}`}>
+                  {collection.title}
+                </StyledLink>
+              </StyledDropdownItem>
             ))}
-          </StyledLinkContainer>
+          </StyledDropdownList>
         )}
-      </div>
+      </StyledDropdownContainer>
 
       <StyledList>
         {flashCards.map((card) => (

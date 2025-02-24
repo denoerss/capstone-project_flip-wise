@@ -23,16 +23,19 @@ const StyledForm = styled.form`
   gap: 10px;
 `;
 
-const StyledColors = styled.div`
+const StyledColors = styled.button`
   width: 24px;
   height: 24px;
   border-radius: 50px;
+  border: none;
   cursor: pointer;
+  background-color: ${(prop) => prop.$inputColor};
 `;
 
 const StyledColorPicker = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   gap: 12px;
 `;
 
@@ -67,8 +70,10 @@ export default function CreateCollection({ onSubmitCollection }) {
           <StyledColorPicker>
             {initialColors.map((color, index) => (
               <StyledColors
+                type="button"
+                aria-label="color-picker"
+                $inputColor={color}
                 key={index}
-                style={{ backgroundColor: color }}
                 onClick={() => setCollectionColor(color)}
               ></StyledColors>
             ))}
