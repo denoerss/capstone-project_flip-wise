@@ -1,7 +1,7 @@
 import Form from "@/components/Form";
 import { useRouter } from "next/router";
 
-export default function Edit({ collections, flashCards, onSubmit }) {
+export default function EditCard({ collections, flashCards, onSubmit }) {
   const router = useRouter();
   const { id } = router.query;
 

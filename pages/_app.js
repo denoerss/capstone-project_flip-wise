@@ -68,6 +68,13 @@ export default function App({ Component, pageProps }) {
     setFlashCards(updatedFlashCards);
   }
 
+  function deleteCollection(id) {
+    const updatedCollections = collections.filter(
+      (collection) => collection.id !== id
+    );
+    setFlashCards(updatedFlashCards);
+  }
+
   function onMarkCorrect(id) {
     const updatedFlashCards = flashCards.map((flashCard) =>
       flashCard.id === id
