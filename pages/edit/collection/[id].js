@@ -23,7 +23,7 @@ const StyledConfirmContainer = styled.div`
   gap: 10px;
 `;
 
-export default function EditCollection({ collections }) {
+export default function EditCollection({ collections, deleteCollection }) {
   const router = useRouter();
   const { id } = router.query;
 
@@ -41,7 +41,7 @@ export default function EditCollection({ collections }) {
   function handleConfirmDelete(event) {
     event.stopPropagation();
     setShowDeleteButton(true);
-    deleteCollection(collection.id);
+    deleteCollection(selectedCollection.id);
   }
 
   return (

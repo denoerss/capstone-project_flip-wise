@@ -3,13 +3,18 @@ import { flashcards as initialFlashCards } from "@/lib/data";
 import Navigation from "@/components/Navigation";
 import { useRouter } from "next/router";
 import useLocalStorageState from "use-local-storage-state";
-import { collections } from "@/lib/data";
+import { collections as initialCollections } from "@/lib/data";
 import { uid } from "uid";
 
 export default function App({ Component, pageProps }) {
   const [flashCards, setFlashCards] = useLocalStorageState("flashCards", {
     defaultValue: initialFlashCards,
   });
+
+  const [collections, setCollections] = useLocalStorageState("collections", {
+    defaultValue: initialCollections,
+  });
+
   const router = useRouter();
 
   // get flashCard counts in collections
@@ -72,7 +77,7 @@ export default function App({ Component, pageProps }) {
     const updatedCollections = collections.filter(
       (collection) => collection.id !== id
     );
-    setFlashCards(updatedFlashCards);
+    setCollections(updatedCollections);
   }
 
   function onMarkCorrect(id) {
@@ -93,6 +98,7 @@ export default function App({ Component, pageProps }) {
         onSubmit={handleSubmit}
         flashCards={flashCards}
         deleteCard={deleteCard}
+        deleteCollection={deleteCollection}
         onMarkCorrect={onMarkCorrect}
         collections={collectionsWithCounts}
       />
