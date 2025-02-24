@@ -9,10 +9,10 @@ const StyledList = styled.ul`
   align-items: center;
   justify-content: center;
   gap: 15px;
-  margin-left: 0;
+  padding-left: 0;
 `;
 
-const StyledHeading = styled.h2`
+const StyledHeadline = styled.h1`
   text-align: center;
   font-weight: bold;
   margin-bottom: 10px;
@@ -30,6 +30,7 @@ const StyledLinkContainer = styled.ul`
   flex-direction: column;
   align-items: center;
   padding-left: 0;
+  margin-left: 0;
   gap: 5px;
 `;
 
@@ -50,16 +51,18 @@ export default function FlashCardList({
 
   return (
     <>
-      <div>
-        <StyledHeading onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-          {currentCollection ? currentCollection.title : "Select a collection"}⏷
-        </StyledHeading>
+      <div style={{ margin: "0" }}>
+        <StyledHeadline onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+          {currentCollection ? currentCollection.title : "Select a collection"}{" "}
+          ⏷
+        </StyledHeadline>
 
         {isDropdownOpen && (
           <StyledLinkContainer>
             {collections.map((collection) => (
               <StyledLink
                 key={collection.id}
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 href={`/${urlBase}/${collection.id}`}
               >
                 {collection.title}

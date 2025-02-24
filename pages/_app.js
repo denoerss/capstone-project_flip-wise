@@ -1,10 +1,10 @@
 import GlobalStyle from "../styles";
 import { flashcards as initialFlashCards } from "@/lib/data";
-import Navigation from "@/components/Navigation";
 import { useRouter } from "next/router";
 import useLocalStorageState from "use-local-storage-state";
 import { initialCollections } from "@/lib/data";
 import { uid } from "uid";
+import Navigation from "@/components/Navigation";
 
 export default function App({ Component, pageProps }) {
   const [flashCards, setFlashCards] = useLocalStorageState("flashCards", {
@@ -66,7 +66,8 @@ export default function App({ Component, pageProps }) {
     }
   }
 
-  function onSubmitCollection(event) {
+  // submit function to add a new collection
+  function onSubmitCollection(event, collectionColor) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
@@ -74,13 +75,17 @@ export default function App({ Component, pageProps }) {
 
     const newCollection = {
       ...data,
+      color: event.target.color.value,
       id: uid(),
     };
 
     setCollections([newCollection, ...collections]);
+    console.log("COLLECTIONS: ", collections);
+    console.log("newCollection: ", newCollection);
     event.target.reset();
   }
 
+  // delete function for a single card
   function deleteCard(id) {
     const updatedFlashCards = flashCards.filter(
       (flashcard) => flashcard.id !== id
@@ -88,6 +93,7 @@ export default function App({ Component, pageProps }) {
     setFlashCards(updatedFlashCards);
   }
 
+  // toggle isCorrect key for cards
   function onMarkCorrect(id) {
     const updatedFlashCards = flashCards.map((flashCard) =>
       flashCard.id === id
@@ -110,6 +116,7 @@ export default function App({ Component, pageProps }) {
         onMarkCorrect={onMarkCorrect}
         collections={collectionsWithCounts}
       />
+      <Navigation />
     </>
   );
 }

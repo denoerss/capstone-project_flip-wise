@@ -1,16 +1,21 @@
 import CreateNav from "@/components/CreateNav";
-import Navigation from "@/components/Navigation";
 import { useState } from "react";
 import styled from "styled-components";
 import Button from "@/components/Button";
+
+const StyledHeadline = styled.h1`
+  display: flex;
+  justify-content: center;
+`;
 
 const StyledFormContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
   width: 100vw;
-  gap: 10px;
+  padding: 3em;
 `;
+
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -31,30 +36,42 @@ const StyledColorPicker = styled.div`
   gap: 12px;
 `;
 
+const StyledButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 50px;
+`;
+
 export default function CreateCollection({ onSubmitCollection }) {
   const [collectionColor, setCollectionColor] = useState("#ffffff");
   const initialColors = ["#c28375", "#DAF7A6", "#75c297", "#7597c2", "#ab75c2"];
 
+  function handleCancel(event) {
+    event.preventDefault();
+    event.target.form.reset(); // reset the form
+  }
+
   return (
     <>
+      <StyledHeadline>Create</StyledHeadline>
       <CreateNav />
-      <h1>Create new Collection</h1>
       <StyledFormContainer>
         <StyledForm onSubmit={onSubmitCollection}>
           <label htmlFor="title" required>
-            Enter a collection title:
+            Title:
           </label>
-          <input type="text" id="title" name="title" />
+          <input type="text" id="title" name="title" required />
 
+          <label htmlFor="colorPicker">Color:</label>
           <StyledColorPicker>
-            {initialColors.map((color) => (
+            {initialColors.map((color, index) => (
               <StyledColors
-                key={initialColors.index}
+                key={index}
                 style={{ backgroundColor: color }}
                 onClick={() => setCollectionColor(color)}
               ></StyledColors>
             ))}
-            <label htmlFor="colorPicker"></label>
             <input
               type="color"
               name="color"
@@ -64,11 +81,16 @@ export default function CreateCollection({ onSubmitCollection }) {
               required
             />
           </StyledColorPicker>
-          <Button>Create</Button>
-          <Button>Reset</Button>
+          <StyledButtonContainer>
+            <Button type="submit" onClick={handleCancel}>
+              Reset
+            </Button>
+            <Button type="button" buttonVariant="create">
+              Create
+            </Button>
+          </StyledButtonContainer>
         </StyledForm>
       </StyledFormContainer>
-      <Navigation />
     </>
   );
 }

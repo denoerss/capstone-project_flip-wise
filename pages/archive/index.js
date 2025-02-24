@@ -1,5 +1,10 @@
 import FlashCardList from "@/components/FlashCardList";
-import Navigation from "@/components/Navigation";
+import styled from "styled-components";
+
+const StyledHeadline = styled.h1`
+  display: flex;
+  justify-content: center;
+`;
 
 export default function ArchivePage({
   onMarkCorrect,
@@ -11,7 +16,7 @@ export default function ArchivePage({
 
   return (
     <main>
-      <h1>Archive</h1>
+      <StyledHeadline>Archive</StyledHeadline>
       <FlashCardList
         onMarkCorrect={onMarkCorrect}
         deleteCard={deleteCard}
@@ -19,7 +24,6 @@ export default function ArchivePage({
         collections={collections}
         urlBase={"archive"}
       />
-      <Navigation />
     </main>
   );
 }

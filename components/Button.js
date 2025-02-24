@@ -45,6 +45,12 @@ const StyledButton = styled.button`
     css`
       background-color: rgb(140, 151, 215);
     `}
+
+      ${({ $buttonVariant }) =>
+    $buttonVariant === "create" &&
+    css`
+      border: 1px solid black;
+    `}
 `;
 
 export default function Button({ onClick, children, buttonVariant }) {
