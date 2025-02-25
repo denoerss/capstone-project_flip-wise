@@ -12,8 +12,11 @@ export default function EditCollection({ collections, onSubmitCollection }) {
   const { id } = router.query;
 
   const selectedCollection = collections.find(
-    (collection) => collection.id === id || "Collection not found"
+    (collection) => collection.id === id
   );
+  if (!selectedCollection) {
+    return "Collection not found";
+  }
 
   return (
     <main>

@@ -48,8 +48,12 @@ export default function Form({
     <>
       <StyledForm
         onSubmit={(event) => {
-          onSubmit(event, prevValues?.id);
+          event.preventDefault();
+          const formData = new FormData(event.target);
+          const data = Object.fromEntries(formData);
+          onSubmit(data, prevValues?.id);
           setConfirmMessage(true);
+          event.target.reset();
         }}
       >
         <StyledFormElement>

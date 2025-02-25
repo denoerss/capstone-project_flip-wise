@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
 import Button from "@/components/Button";
-import { uid } from "uid";
 
 const StyledFormContainer = styled.div`
   display: flex;
@@ -61,8 +60,12 @@ export default function CollectionForm({ onSubmitCollection, prevValues }) {
       <StyledFormContainer>
         <StyledForm
           onSubmit={(event) => {
-            onSubmitCollection(event, prevValues?.id);
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+            onSubmitCollection(data, prevValues?.id);
             setConfirmMessage(true);
+            event.target.reset();
           }}
         >
           <label htmlFor="title" required>
@@ -83,7 +86,7 @@ export default function CollectionForm({ onSubmitCollection, prevValues }) {
                 type="button"
                 aria-label="color-picker"
                 $inputColor={color}
-                key={uid()}
+                key={color}
                 onClick={() => setCollectionColor(color)}
               />
             ))}
