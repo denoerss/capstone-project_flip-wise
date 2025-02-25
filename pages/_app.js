@@ -1,15 +1,20 @@
 import GlobalStyle from "../styles";
 import { flashcards as initialFlashCards } from "@/lib/data";
-import Navigation from "@/components/Navigation";
 import { useRouter } from "next/router";
 import useLocalStorageState from "use-local-storage-state";
-import { collections } from "@/lib/data";
+import { initialCollections } from "@/lib/data";
 import { uid } from "uid";
+import Navigation from "@/components/Navigation";
 
 export default function App({ Component, pageProps }) {
   const [flashCards, setFlashCards] = useLocalStorageState("flashCards", {
     defaultValue: initialFlashCards,
   });
+
+  const [collections, setCollections] = useLocalStorageState("collections", {
+    defaultValue: initialCollections,
+  });
+
   const router = useRouter();
 
   // get flashCard counts in collections
@@ -61,6 +66,24 @@ export default function App({ Component, pageProps }) {
     }
   }
 
+  // submit function to add a new collection
+  function onSubmitCollection(event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
+
+    const newCollection = {
+      ...data,
+      color: event.target.color.value,
+      id: uid(),
+    };
+
+    setCollections([newCollection, ...collections]);
+    event.target.reset();
+  }
+
+  // delete function for a single card
   function deleteCard(id) {
     const updatedFlashCards = flashCards.filter(
       (flashcard) => flashcard.id !== id
@@ -68,6 +91,7 @@ export default function App({ Component, pageProps }) {
     setFlashCards(updatedFlashCards);
   }
 
+  // toggle isCorrect key for cards
   function onMarkCorrect(id) {
     const updatedFlashCards = flashCards.map((flashCard) =>
       flashCard.id === id
@@ -84,6 +108,7 @@ export default function App({ Component, pageProps }) {
       <Component
         {...pageProps}
         onSubmit={handleSubmit}
+        onSubmitCollection={onSubmitCollection}
         flashCards={flashCards}
         deleteCard={deleteCard}
         onMarkCorrect={onMarkCorrect}

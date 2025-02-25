@@ -1,33 +1,23 @@
 import styled from "styled-components";
+import { useRouter } from "next/router";
 import Link from "next/link";
 
 const StyledCollectionContainer = styled.li`
-  background-color: ${({ $showAnswer }) =>
-    $showAnswer ? "#A9A9A9" : "#D3D3D3"};
-  position: relative;
-  list-style: none;
-  width: 80%;
-  border-radius: 20px;
-  padding: 25px;
-  line-height: 1.25;
-  &:hover {
-    cursor: pointer;
-  }
+  list-style-type: none;
 `;
 
-const StyledCollectionCard = styled(Link)`
-  background-color: rgb(149, 178, 246);
-  min-width: 80px;
-  padding: 0.9rem;
-  border-style: none;
+const StyledCollectionLink = styled(Link)`
+  width: 80vw;
+  list-style: none;
+  padding: 10px;
   border-radius: 10px;
-  font-size: 1.3rem;
+  display: flex;
   color: rgb(17, 17, 17);
   text-decoration: none;
-  text-align: center;
   &:hover {
     cursor: pointer;
   }
+  background-color: ${(prop) => prop.$inputColor};
 `;
 
 export default function CollectionCard({
@@ -35,15 +25,19 @@ export default function CollectionCard({
   collectionTitle,
   totalCards,
   correctCards,
+  color,
 }) {
+  const router = useRouter();
   return (
     <StyledCollectionContainer>
-      <StyledCollectionCard href={href}>
-        <h2>{collectionTitle}</h2>
-        <p>
-          {correctCards} / {totalCards} correct
-        </p>
-      </StyledCollectionCard>
+      <StyledCollectionLink href={href} $inputColor={color}>
+        <div>
+          <h2>{collectionTitle}</h2>
+          <p>
+            {correctCards} / {totalCards} correct
+          </p>
+        </div>
+      </StyledCollectionLink>
     </StyledCollectionContainer>
   );
 }

@@ -6,14 +6,8 @@ const StyledList = styled.ul`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 15px;
+  gap: 5px;
   padding-left: 0;
-`;
-
-const StyledHeading = styled.h2`
-  text-align: center;
-  font-weight: bold;
-  margin-bottom: 10px;
 `;
 
 const StyledEmptyListMessage = styled.p`
@@ -26,7 +20,6 @@ const StyledEmptyListMessage = styled.p`
 export default function CollectionList({ collections }) {
   return (
     <>
-      <StyledHeading>Collections</StyledHeading>
       <StyledList>
         {collections.map((collection) => (
           <CollectionCard
@@ -35,6 +28,7 @@ export default function CollectionList({ collections }) {
             collectionTitle={collection.title}
             totalCards={collection.totalCards}
             correctCards={collection.correctCards}
+            color={collection.color}
           />
         ))}
       </StyledList>
