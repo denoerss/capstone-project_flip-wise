@@ -12,7 +12,7 @@ export default function EditCollection({ collections, onSubmitCollection }) {
   const { id } = router.query;
 
   const selectedCollection = collections.find(
-    (collection) => collection.id === id
+    (collection) => collection.id === id || "Collection not found"
   );
 
   return (
@@ -21,11 +21,7 @@ export default function EditCollection({ collections, onSubmitCollection }) {
       <CollectionForm
         onSubmitCollection={onSubmitCollection}
         collections={collections}
-        prevValues={{
-          id: selectedCollection?.id || "",
-          title: selectedCollection?.title || "",
-          color: selectedCollection?.color || "",
-        }}
+        prevValues={selectedCollection}
       />
     </main>
   );
