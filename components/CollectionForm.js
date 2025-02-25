@@ -2,11 +2,6 @@ import { useState } from "react";
 import styled from "styled-components";
 import Button from "@/components/Button";
 
-const StyledHeadline = styled.h1`
-  display: flex;
-  justify-content: center;
-`;
-
 const StyledFormContainer = styled.div`
   display: flex;
   align-items: center;
@@ -45,7 +40,12 @@ const StyledButtonContainer = styled.div`
   margin-top: 50px;
 `;
 
+const StyledSubmitMessage = styled.p`
+  text-align: center;
+`;
+
 export default function CollectionForm({ onSubmitCollection, prevValues }) {
+  const [confirmMessage, setConfirmMessage] = useState("");
   const [collectionColor, setCollectionColor] = useState(prevValues?.color);
   const initialColors = ["#c28375", "#DAF7A6", "#75c297", "#7597c2", "#ab75c2"];
 
@@ -57,7 +57,11 @@ export default function CollectionForm({ onSubmitCollection, prevValues }) {
   return (
     <>
       <StyledFormContainer>
-        <StyledForm onSubmit={(e) => onSubmitCollection(e, prevValues?.id)}>
+        <StyledForm
+          onSubmit={(e) => {
+            onSubmitCollection(e, prevValues?.id), setConfirmMessage(true);
+          }}
+        >
           <label htmlFor="title" required>
             Title:
           </label>
@@ -99,6 +103,11 @@ export default function CollectionForm({ onSubmitCollection, prevValues }) {
             </Button>
           </StyledButtonContainer>
         </StyledForm>
+        {confirmMessage && (
+          <StyledSubmitMessage>
+            {!prevValues?.id && "Collection Created."}
+          </StyledSubmitMessage>
+        )}
       </StyledFormContainer>
     </>
   );
