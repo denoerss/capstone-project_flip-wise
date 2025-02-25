@@ -52,6 +52,7 @@ export default function CollectionForm({ onSubmitCollection, prevValues }) {
   function handleCancel(event) {
     event.preventDefault();
     event.target.form.reset(); // reset the form
+    setCollectionColor(prevValues?.color || ""); // Reset color to previous value
   }
 
   return (
@@ -82,7 +83,7 @@ export default function CollectionForm({ onSubmitCollection, prevValues }) {
                 $inputColor={color}
                 key={index}
                 onClick={() => setCollectionColor(color)}
-              ></StyledColors>
+              />
             ))}
             <input
               type="color"
