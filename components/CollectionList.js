@@ -29,6 +29,7 @@ export default function CollectionList({ collections }) {
             totalCards={collection.totalCards}
             correctCards={collection.correctCards}
             color={collection.color}
+            collection={collection}
           />
         ))}
       </StyledList>

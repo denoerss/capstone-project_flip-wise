@@ -1,4 +1,3 @@
-import CreateNav from "@/components/CreateNav";
 import { useState } from "react";
 import styled from "styled-components";
 import Button from "@/components/Button";
@@ -46,8 +45,8 @@ const StyledButtonContainer = styled.div`
   margin-top: 50px;
 `;
 
-export default function CollectionForm({ onSubmitCollection }) {
-  const [collectionColor, setCollectionColor] = useState("#ffffff");
+export default function CollectionForm({ onSubmitCollection, prevValues }) {
+  const [collectionColor, setCollectionColor] = useState(prevValues?.color);
   const initialColors = ["#c28375", "#DAF7A6", "#75c297", "#7597c2", "#ab75c2"];
 
   function handleCancel(event) {
@@ -57,14 +56,18 @@ export default function CollectionForm({ onSubmitCollection }) {
 
   return (
     <>
-      <StyledHeadline>Create</StyledHeadline>
-      <CreateNav />
       <StyledFormContainer>
-        <StyledForm onSubmit={onSubmitCollection}>
+        <StyledForm onSubmit={(e) => onSubmitCollection(e, prevValues?.id)}>
           <label htmlFor="title" required>
             Title:
           </label>
-          <input type="text" id="title" name="title" required />
+          <input
+            type="text"
+            id="title"
+            name="title"
+            required
+            defaultValue={prevValues?.title || ""}
+          />
 
           <label htmlFor="colorPicker">Color:</label>
           <StyledColorPicker>
@@ -84,6 +87,7 @@ export default function CollectionForm({ onSubmitCollection }) {
               value={collectionColor}
               onChange={(event) => setCollectionColor(event.target.value)}
               required
+              defaultValue={prevValues?.color || ""}
             />
           </StyledColorPicker>
           <StyledButtonContainer>
@@ -91,7 +95,7 @@ export default function CollectionForm({ onSubmitCollection }) {
               Reset
             </Button>
             <Button type="button" buttonVariant="create">
-              Create
+              {prevValues?.id ? "Update" : "Create"}
             </Button>
           </StyledButtonContainer>
         </StyledForm>

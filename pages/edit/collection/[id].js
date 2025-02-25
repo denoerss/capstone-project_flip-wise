@@ -1,4 +1,4 @@
-import Form from "@/components/Form";
+import CollectionForm from "@/components/CollectionForm";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
@@ -7,7 +7,7 @@ const StyledHeader = styled.h1`
   justify-content: center;
 `;
 
-export default function Edit({ collections, onSubmit }) {
+export default function EditCollection({ collections, onSubmitCollection }) {
   const router = useRouter();
   const { id } = router.query;
 
@@ -18,15 +18,13 @@ export default function Edit({ collections, onSubmit }) {
   return (
     <main>
       <StyledHeader>Edit</StyledHeader>
-      <Form
-        onSubmit={onSubmit}
+      <CollectionForm
+        onSubmitCollection={onSubmitCollection}
         collections={collections}
         prevValues={{
-          id: selectedFlashCard?.id || "",
-          collectionId: selectedFlashCard?.collectionId || "",
-          question: selectedFlashCard?.question || "",
-          answer: selectedFlashCard?.answer || "",
-          isCorrect: selectedFlashCard?.isCorrect || false,
+          id: selectedCollection?.id || "",
+          title: selectedCollection?.title || "",
+          color: selectedCollection?.color || "",
         }}
       />
     </main>

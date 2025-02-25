@@ -67,7 +67,7 @@ export default function App({ Component, pageProps }) {
   }
 
   // submit function to add a new collection
-  function onSubmitCollection(event) {
+  function onSubmitCollection(event, collectionToUpdate_id) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
@@ -79,8 +79,22 @@ export default function App({ Component, pageProps }) {
       id: uid(),
     };
 
-    setCollections([newCollection, ...collections]);
-    event.target.reset();
+    if (!collectionToUpdate_id) {
+      setCollections([newCollection, ...collections]);
+      event.target.reset();
+    } else {
+      setCollections(
+        collections.map((collection) =>
+          collection.id === collectionToUpdate_id
+            ? {
+                id: collectionToUpdate_id,
+                ...data,
+              }
+            : collection
+        )
+      );
+      router.back();
+    }
   }
 
   // delete function for a single card
