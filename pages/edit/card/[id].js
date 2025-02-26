@@ -7,7 +7,7 @@ const StyledHeader = styled.h1`
   justify-content: center;
 `;
 
-export default function Edit({ collections, flashCards, onSubmit }) {
+export default function EditCard({ collections, flashCards, onSubmit }) {
   const router = useRouter();
   const { id } = router.query;
 

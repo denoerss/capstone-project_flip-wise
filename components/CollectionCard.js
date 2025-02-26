@@ -20,7 +20,7 @@ const StyledCollectionLink = styled(Link)`
   }
   background-color: ${(prop) => prop.$inputColor};
 `;
-const StyledEditLink = styled(Link)`
+const StyledEditButton = styled.button`
   position: absolute;
   right: 5px;
   bottom: 5px;
@@ -47,6 +47,7 @@ export default function CollectionCard({
   collection,
 }) {
   const router = useRouter();
+
   return (
     <StyledCollectionContainer>
       <StyledCollectionLink href={href} $inputColor={color}>
@@ -56,14 +57,15 @@ export default function CollectionCard({
             {correctCards} / {totalCards} correct
           </p>
         </div>
-        <StyledEditLink
-          href={`/edit/collection/${collection.id}`}
+        <StyledEditButton
           onClick={(event) => {
+            event.preventDefault();
             event.stopPropagation();
+            router.push(`/edit/collection/${collection.id}`);
           }}
         >
           Edit
-        </StyledEditLink>
+        </StyledEditButton>
       </StyledCollectionLink>
     </StyledCollectionContainer>
   );

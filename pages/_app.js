@@ -2,7 +2,7 @@ import GlobalStyle from "../styles";
 import { flashcards as initialFlashCards } from "@/lib/data";
 import { useRouter } from "next/router";
 import useLocalStorageState from "use-local-storage-state";
-import { initialCollections } from "@/lib/data";
+import { collections as initialCollections } from "@/lib/data";
 import { uid } from "uid";
 import Navigation from "@/components/Navigation";
 
@@ -92,6 +92,13 @@ export default function App({ Component, pageProps }) {
     setFlashCards(updatedFlashCards);
   }
 
+  function deleteCollection(id) {
+    const updatedCollections = collections.filter(
+      (collection) => collection.id !== id
+    );
+    setCollections(updatedCollections);
+  }
+
   // toggle isCorrect key for cards
   function onMarkCorrect(id) {
     const updatedFlashCards = flashCards.map((flashCard) =>
@@ -112,6 +119,7 @@ export default function App({ Component, pageProps }) {
         onSubmitCollection={onSubmitCollection}
         flashCards={flashCards}
         deleteCard={deleteCard}
+        deleteCollection={deleteCollection}
         onMarkCorrect={onMarkCorrect}
         collections={collectionsWithCounts}
       />
