@@ -119,7 +119,7 @@ export default function FlashCard({
         )}
         <StyledButtonContainer>
           <StyledEditLink
-            href={`/edit/card/(${card.id}`}
+            href={`/edit/card/${card.id}`}
             onClick={(event) => {
               event.stopPropagation();
             }}

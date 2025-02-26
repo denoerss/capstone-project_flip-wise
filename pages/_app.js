@@ -1,10 +1,10 @@
 import GlobalStyle from "../styles";
 import { flashcards as initialFlashCards } from "@/lib/data";
-import Navigation from "@/components/Navigation";
 import { useRouter } from "next/router";
 import useLocalStorageState from "use-local-storage-state";
 import { collections as initialCollections } from "@/lib/data";
 import { uid } from "uid";
+import Navigation from "@/components/Navigation";
 
 export default function App({ Component, pageProps }) {
   const [flashCards, setFlashCards] = useLocalStorageState("flashCards", {
@@ -34,12 +34,7 @@ export default function App({ Component, pageProps }) {
   });
 
   // function for submitting or editing a flashcard
-  function handleSubmit(event, flashCardToUpdate_id) {
-    event.preventDefault();
-
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
-
+  function handleSubmit(data, flashCardToUpdate_id) {
     const newFlashCard = {
       ...data,
       id: uid(),
@@ -49,7 +44,6 @@ export default function App({ Component, pageProps }) {
     // handle submit behaviour by mode (add or edit)
     if (!flashCardToUpdate_id) {
       setFlashCards([newFlashCard, ...flashCards]);
-      event.target.reset();
     } else {
       setFlashCards(
         flashCards.map((flashCard) =>
@@ -66,6 +60,31 @@ export default function App({ Component, pageProps }) {
     }
   }
 
+  // submit function to add a new collection
+  function onSubmitCollection(data, collectionToUpdate_id) {
+    const newCollection = {
+      ...data,
+      id: uid(),
+    };
+
+    if (!collectionToUpdate_id) {
+      setCollections([newCollection, ...collections]);
+    } else {
+      setCollections(
+        collections.map((collection) =>
+          collection.id === collectionToUpdate_id
+            ? {
+                id: collectionToUpdate_id,
+                ...data,
+              }
+            : collection
+        )
+      );
+      router.back();
+    }
+  }
+
+  // delete function for a single card
   function deleteCard(id) {
     const updatedFlashCards = flashCards.filter(
       (flashcard) => flashcard.id !== id
@@ -80,6 +99,7 @@ export default function App({ Component, pageProps }) {
     setCollections(updatedCollections);
   }
 
+  // toggle isCorrect key for cards
   function onMarkCorrect(id) {
     const updatedFlashCards = flashCards.map((flashCard) =>
       flashCard.id === id
@@ -96,6 +116,7 @@ export default function App({ Component, pageProps }) {
       <Component
         {...pageProps}
         onSubmit={handleSubmit}
+        onSubmitCollection={onSubmitCollection}
         flashCards={flashCards}
         deleteCard={deleteCard}
         deleteCollection={deleteCollection}

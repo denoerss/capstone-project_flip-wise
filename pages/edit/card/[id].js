@@ -1,5 +1,11 @@
 import Form from "@/components/Form";
 import { useRouter } from "next/router";
+import styled from "styled-components";
+
+const StyledHeader = styled.h1`
+  display: flex;
+  justify-content: center;
+`;
 
 export default function EditCard({ collections, flashCards, onSubmit }) {
   const router = useRouter();
@@ -9,7 +15,7 @@ export default function EditCard({ collections, flashCards, onSubmit }) {
 
   return (
     <main>
-      <h1>Edit the FlashCard</h1>
+      <StyledHeader>Edit</StyledHeader>
       <Form
         onSubmit={onSubmit}
         collections={collections}

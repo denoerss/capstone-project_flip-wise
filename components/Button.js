@@ -37,13 +37,19 @@ const StyledButton = styled.button`
   ${({ $buttonVariant }) =>
     $buttonVariant === "incorrect" &&
     css`
-      background-color: rgb(247, 207, 229);
+      background-color: #f7cfe5;
     `}
 
   ${({ $buttonVariant }) =>
     $buttonVariant === "edit" &&
     css`
-      background-color: rgb(140, 151, 215);
+      background-color: #8c97d7;
+    `}
+
+      ${({ $buttonVariant }) =>
+    $buttonVariant === "create" &&
+    css`
+      border: 1px solid #000000;
     `}
 `;
 

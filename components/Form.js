@@ -6,16 +6,29 @@ import { useRouter } from "next/router";
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  align-items: center;
+  gap: 10px;
   padding: 1em 2em;
+  width: 100vw;
 `;
 
-const SmallText = styled.p`
-  font-size: 0.8rem;
+const StyledFormElement = styled.div`
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  width: 250px;
 `;
 
 const SubmitMessage = styled.p`
   text-align: center;
+`;
+
+const StyledButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 50px;
+  gap: 24px;
 `;
 
 export default function Form({
@@ -34,12 +47,17 @@ export default function Form({
   return (
     <>
       <StyledForm
-        onSubmit={(e) => {
-          onSubmit(e, prevValues?.id), setConfirmMessage(true);
+        onSubmit={(event) => {
+          event.preventDefault();
+          const formData = new FormData(event.target);
+          const data = Object.fromEntries(formData);
+          onSubmit(data, prevValues?.id);
+          setConfirmMessage(true);
+          event.target.reset();
         }}
       >
-        <div>
-          <label htmlFor="question">Question*</label>
+        <StyledFormElement>
+          <label htmlFor="question">Question:</label>
           <input
             type="text"
             id="question"
@@ -47,10 +65,10 @@ export default function Form({
             required
             defaultValue={prevValues?.question || ""}
           />
-        </div>
+        </StyledFormElement>
 
-        <div>
-          <label htmlFor="answer">Answer*</label>
+        <StyledFormElement>
+          <label htmlFor="answer">Answer:</label>
           <input
             type="text"
             id="answer"
@@ -58,10 +76,10 @@ export default function Form({
             required
             defaultValue={prevValues?.answer || ""}
           />
-        </div>
+        </StyledFormElement>
 
-        <div>
-          <label htmlFor="collections">Collection*</label>
+        <StyledFormElement>
+          <label htmlFor="collections">Collection:</label>
           <select
             id="collections"
             name="collectionId"
@@ -77,14 +95,18 @@ export default function Form({
               </option>
             ))}
           </select>
-        </div>
+        </StyledFormElement>
 
-        <SmallText>*required</SmallText>
-
-        <Button>{prevValues?.id ? "Update" : "Create"}</Button>
-        {router.pathname === "/edit" ? null : (
-          <Button onClick={handleCancel}>Reset</Button>
-        )}
+        <StyledButtonContainer>
+          {router.pathname === "/edit" ? null : (
+            <Button type="button" onClick={handleCancel}>
+              Reset
+            </Button>
+          )}
+          <Button type="submit" buttonVariant="create">
+            {prevValues?.id ? "Update" : "Create"}
+          </Button>
+        </StyledButtonContainer>
 
         {confirmMessage && (
           <SubmitMessage>

@@ -1,21 +1,29 @@
 import styled from "styled-components";
+import { useRouter } from "next/router";
 import Link from "next/link";
 
 const StyledCollectionContainer = styled.li`
-  background-color: ${({ $showAnswer }) =>
-    $showAnswer ? "#A9A9A9" : "#D3D3D3"};
+  list-style-type: none;
+`;
+
+const StyledCollectionLink = styled(Link)`
   position: relative;
+  width: 80vw;
   list-style: none;
-  width: 80%;
-  border-radius: 20px;
-  padding: 25px;
-  line-height: 1.25;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  color: rgb(17, 17, 17);
+  text-decoration: none;
   &:hover {
     cursor: pointer;
   }
+  background-color: ${(prop) => prop.$inputColor};
 `;
-
-const StyledCollectionCard = styled(Link)`
+const StyledEditLink = styled(Link)`
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
   background-color: rgb(149, 178, 246);
   min-width: 80px;
   padding: 0.9rem;
@@ -35,15 +43,28 @@ export default function CollectionCard({
   collectionTitle,
   totalCards,
   correctCards,
+  color,
+  collection,
 }) {
+  const router = useRouter();
   return (
     <StyledCollectionContainer>
-      <StyledCollectionCard href={href}>
-        <h2>{collectionTitle}</h2>
-        <p>
-          {correctCards} / {totalCards} correct
-        </p>
-      </StyledCollectionCard>
+      <StyledCollectionLink href={href} $inputColor={color}>
+        <div>
+          <h2>{collectionTitle}</h2>
+          <p>
+            {correctCards} / {totalCards} correct
+          </p>
+        </div>
+        <StyledEditLink
+          href={`/edit/collection/${collection.id}`}
+          onClick={(event) => {
+            event.stopPropagation();
+          }}
+        >
+          Edit
+        </StyledEditLink>
+      </StyledCollectionLink>
     </StyledCollectionContainer>
   );
 }

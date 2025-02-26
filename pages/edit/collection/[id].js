@@ -1,7 +1,12 @@
-import Button from "@/components/Button";
+import CollectionForm from "@/components/CollectionForm";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { useState } from "react";
+
+const StyledHeader = styled.h1`
+  display: flex;
+  justify-content: center;
+`;
 
 const StyledDeleteContainer = styled.div`
   display: flex;
@@ -23,13 +28,20 @@ const StyledConfirmContainer = styled.div`
   gap: 10px;
 `;
 
-export default function EditCollection({ collections, deleteCollection }) {
+export default function EditCollection({
+  collections,
+  onSubmitCollection,
+  deleteCollection,
+}) {
   const router = useRouter();
   const { id } = router.query;
 
   const selectedCollection = collections.find(
     (collection) => collection.id === id
   );
+  if (!selectedCollection) {
+    return "Collection not found";
+  }
 
   const [showDeleteButton, setShowDeleteButton] = useState(true);
 
@@ -45,7 +57,13 @@ export default function EditCollection({ collections, deleteCollection }) {
   }
 
   return (
-    <>
+    <main>
+      <StyledHeader>Edit</StyledHeader>
+      <CollectionForm
+        onSubmitCollection={onSubmitCollection}
+        collections={collections}
+        prevValues={selectedCollection}
+      />
       <StyledDeleteContainer>
         {showDeleteButton ? (
           <Button buttonVariant="delete" onClick={handleToggleButton}>
@@ -65,6 +83,6 @@ export default function EditCollection({ collections, deleteCollection }) {
           </>
         )}
       </StyledDeleteContainer>
-    </>
+    </main>
   );
 }

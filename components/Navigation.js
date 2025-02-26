@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const NavbarContainer = styled.nav`
   position: fixed;
@@ -28,10 +29,14 @@ const NavItem = styled(Link)`
 `;
 
 export default function Navigation() {
+  const router = useRouter();
+  const pathname = router.pathname;
+  pathname.includes("/");
+
   return (
     <NavbarContainer>
       <NavItem href="/">Home</NavItem>
-      <NavItem href="/create">New Card</NavItem>
+      <NavItem href={"/create-card"}>+</NavItem>
       <NavItem href="/archive">Archive</NavItem>
     </NavbarContainer>
   );
