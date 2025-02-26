@@ -46,7 +46,9 @@ const StyledSubmitMessage = styled.p`
 
 export default function CollectionForm({ onSubmitCollection, prevValues }) {
   const [confirmMessage, setConfirmMessage] = useState("");
-  const [collectionColor, setCollectionColor] = useState(prevValues?.color);
+  const [collectionColor, setCollectionColor] = useState(
+    prevValues?.color || "#cacaca"
+  );
   const initialColors = ["#c28375", "#DAF7A6", "#75c297", "#7597c2", "#ab75c2"];
 
   function handleCancel(event) {

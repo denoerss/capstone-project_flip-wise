@@ -44,7 +44,7 @@ export default function EditCollection({
   );
 
   if (!selectedCollection) {
-    return "Collection not found";
+    return null;
   }
 
   function handleToggleButton(event) {

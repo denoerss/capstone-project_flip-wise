@@ -59,6 +59,7 @@ export default function CollectionCard({
         </div>
         <StyledEditButton
           onClick={(event) => {
+            event.preventDefault();
             event.stopPropagation();
             router.push(`/edit/collection/${collection.id}`);
           }}
