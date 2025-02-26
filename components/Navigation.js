@@ -9,7 +9,7 @@ const NavbarContainer = styled.nav`
   left: 0;
   width: 100%;
   background-color: #fff;
-  box-shadow: 0 -1px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 -1px 6px rgba(0, 0, 0, 0.3);
   padding: 10px 20px;
   display: flex;
   justify-content: space-around;

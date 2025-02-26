@@ -38,7 +38,7 @@ export default function ArchiveCollection({
         deleteCard={deleteCard}
         flashCards={filteredFlashCards}
         collections={collections}
-        urlBase={"archive"}
+        urlBase={"likes"}
         currentCollection={currentCollection}
       />
     </main>

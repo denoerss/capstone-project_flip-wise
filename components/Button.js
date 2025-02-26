@@ -1,8 +1,6 @@
 import styled, { css } from "styled-components";
 
 const StyledButton = styled.button`
-  min-width: 80px;
-  padding: 1rem;
   border-style: none;
   border-radius: 10px;
   font-size: 1.25rem;
@@ -56,6 +54,8 @@ const StyledButton = styled.button`
     $buttonVariant === "allCards" &&
     css`
       border: 1px solid #000000;
+      border-radius: 24px;
+      height: 48px;
     `}
 `;
 

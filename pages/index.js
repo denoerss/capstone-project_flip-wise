@@ -1,6 +1,7 @@
 import CollectionList from "@/components/CollectionList";
 import styled from "styled-components";
 import Button from "@/components/Button";
+import { motion } from "motion/react";
 
 const StyledHeader = styled.header`
   height: 80px;
@@ -12,19 +13,21 @@ const StyledHeader = styled.header`
   border-radius: 0 0 24px 24px;
   display: flex;
   justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
 `;
 
 export default function HomePage({ collections }) {
   return (
-    <main>
+    <motion.main initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       <StyledHeader>
         <h1>Collections</h1>
-        <Button $buttonVariant="allCards">all cards</Button>
+        <Button buttonVariant="allCards">all cards</Button>
       </StyledHeader>
       <CollectionList
         collections={collections}
         emptyListMessage="No Collections available."
       />
-    </main>
+    </motion.main>
   );
 }

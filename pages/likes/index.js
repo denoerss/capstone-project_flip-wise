@@ -22,7 +22,7 @@ export default function ArchivePage({
         deleteCard={deleteCard}
         flashCards={archivedFlashCards}
         collections={collections}
-        urlBase={"archive"}
+        urlBase={"likes"}
       />
     </main>
   );

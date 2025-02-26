@@ -1,5 +1,7 @@
 import { useRouter } from "next/router";
 import FlashCardList from "@/components/FlashCardList";
+import { motion } from "motion/react";
+import styled from "styled-components";
 
 export default function Collection({
   onMarkCorrect,
@@ -22,8 +24,10 @@ export default function Collection({
     (card) => card.collectionId === currentCollection.id
   );
 
+  const StyledMain = styled(motion.main);
+
   return (
-    <main>
+    <motion.main initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       <FlashCardList
         onMarkCorrect={onMarkCorrect}
         deleteCard={deleteCard}
@@ -32,6 +36,6 @@ export default function Collection({
         urlBase={"collection"}
         currentCollection={currentCollection}
       />
-    </main>
+    </motion.main>
   );
 }

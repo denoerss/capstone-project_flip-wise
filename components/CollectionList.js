@@ -8,6 +8,7 @@ const StyledList = styled.ul`
   justify-content: center;
   gap: 5px;
   padding-left: 0;
+  margin-bottom: 80px;
 `;
 
 const StyledEmptyListMessage = styled.p`
