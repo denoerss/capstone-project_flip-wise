@@ -47,8 +47,13 @@ export default function Form({
   return (
     <>
       <StyledForm
-        onSubmit={(e) => {
-          onSubmit(e, prevValues?.id), setConfirmMessage(true);
+        onSubmit={(event) => {
+          event.preventDefault();
+          const formData = new FormData(event.target);
+          const data = Object.fromEntries(formData);
+          onSubmit(data, prevValues?.id);
+          setConfirmMessage(true);
+          event.target.reset();
         }}
       >
         <StyledFormElement>

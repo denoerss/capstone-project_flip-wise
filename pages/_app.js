@@ -34,12 +34,7 @@ export default function App({ Component, pageProps }) {
   });
 
   // function for submitting or editing a flashcard
-  function handleSubmit(event, flashCardToUpdate_id) {
-    event.preventDefault();
-
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
-
+  function handleSubmit(data, flashCardToUpdate_id) {
     const newFlashCard = {
       ...data,
       id: uid(),
@@ -49,7 +44,6 @@ export default function App({ Component, pageProps }) {
     // handle submit behaviour by mode (add or edit)
     if (!flashCardToUpdate_id) {
       setFlashCards([newFlashCard, ...flashCards]);
-      event.target.reset();
     } else {
       setFlashCards(
         flashCards.map((flashCard) =>
@@ -67,20 +61,27 @@ export default function App({ Component, pageProps }) {
   }
 
   // submit function to add a new collection
-  function onSubmitCollection(event) {
-    event.preventDefault();
-
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
-
+  function onSubmitCollection(data, collectionToUpdate_id) {
     const newCollection = {
       ...data,
-      color: event.target.color.value,
       id: uid(),
     };
 
-    setCollections([newCollection, ...collections]);
-    event.target.reset();
+    if (!collectionToUpdate_id) {
+      setCollections([newCollection, ...collections]);
+    } else {
+      setCollections(
+        collections.map((collection) =>
+          collection.id === collectionToUpdate_id
+            ? {
+                id: collectionToUpdate_id,
+                ...data,
+              }
+            : collection
+        )
+      );
+      router.back();
+    }
   }
 
   // delete function for a single card
