@@ -2,6 +2,7 @@ import CollectionForm from "@/components/CollectionForm";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { useState } from "react";
+import Button from "@/components/Button";
 
 const StyledHeader = styled.h1`
   display: flex;
@@ -36,14 +37,15 @@ export default function EditCollection({
   const router = useRouter();
   const { id } = router.query;
 
+  const [showDeleteButton, setShowDeleteButton] = useState(true);
+
   const selectedCollection = collections.find(
     (collection) => collection.id === id
   );
+
   if (!selectedCollection) {
     return "Collection not found";
   }
-
-  const [showDeleteButton, setShowDeleteButton] = useState(true);
 
   function handleToggleButton(event) {
     event.stopPropagation();
@@ -54,6 +56,7 @@ export default function EditCollection({
     event.stopPropagation();
     setShowDeleteButton(true);
     deleteCollection(selectedCollection.id);
+    router.back();
   }
 
   return (

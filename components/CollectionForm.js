@@ -61,10 +61,13 @@ export default function CollectionForm({ onSubmitCollection, prevValues }) {
         <StyledForm
           onSubmit={(event) => {
             event.preventDefault();
+
             const formData = new FormData(event.target);
             const data = Object.fromEntries(formData);
+
             onSubmitCollection(data, prevValues?.id);
             setConfirmMessage(true);
+
             event.target.reset();
           }}
         >
@@ -75,8 +78,8 @@ export default function CollectionForm({ onSubmitCollection, prevValues }) {
             type="text"
             id="title"
             name="title"
-            required
             defaultValue={prevValues?.title || ""}
+            required
           />
 
           <label htmlFor="colorPicker">Color:</label>
@@ -85,8 +88,8 @@ export default function CollectionForm({ onSubmitCollection, prevValues }) {
               <StyledColors
                 type="button"
                 aria-label="color-picker"
-                $inputColor={color}
                 key={color}
+                $inputColor={color}
                 onClick={() => setCollectionColor(color)}
               />
             ))}
@@ -97,9 +100,9 @@ export default function CollectionForm({ onSubmitCollection, prevValues }) {
               value={collectionColor}
               onChange={(event) => setCollectionColor(event.target.value)}
               required
-              defaultValue={prevValues?.color || ""}
             />
           </StyledColorPicker>
+
           <StyledButtonContainer>
             <Button type="submit" onClick={handleCancel}>
               Reset
@@ -109,6 +112,7 @@ export default function CollectionForm({ onSubmitCollection, prevValues }) {
             </Button>
           </StyledButtonContainer>
         </StyledForm>
+
         {confirmMessage && (
           <StyledSubmitMessage>
             {!prevValues?.id && "Collection Created."}
