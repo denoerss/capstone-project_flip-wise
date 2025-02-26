@@ -33,7 +33,7 @@ const StyledEditButton = styled.button`
   border: 1px solid #111111;
   min-width: 80px;
   border-radius: 24px;
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   color: rgb(17, 17, 17);
   text-decoration: none;
   text-align: center;

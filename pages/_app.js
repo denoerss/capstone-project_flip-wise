@@ -5,6 +5,9 @@ import { flashcards as initialFlashCards } from "@/lib/data";
 import { collections as initialCollections } from "@/lib/data";
 import { uid } from "uid";
 import { useRouter } from "next/router";
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export default function App({ Component, pageProps }) {
   const [flashCards, setFlashCards] = useLocalStorageState("flashCards", {
@@ -111,7 +114,7 @@ export default function App({ Component, pageProps }) {
   }
 
   return (
-    <>
+    <div className={inter.className}>
       <GlobalStyle />
       <Component
         {...pageProps}
@@ -124,6 +127,6 @@ export default function App({ Component, pageProps }) {
         collections={collectionsWithCounts}
       />
       <Navigation />
-    </>
+    </div>
   );
 }
