@@ -4,31 +4,35 @@ import Link from "next/link";
 
 const StyledCollectionContainer = styled.li`
   list-style-type: none;
+  margin-bottom: -50px;
+  transition: margin-bottom 0.2s ease-in-out;
+  &:hover {
+    margin-bottom: -40px;
+  }
 `;
 
 const StyledCollectionLink = styled(Link)`
   position: relative;
-  width: 80vw;
+  width: 95vw;
+  height: 200px;
   list-style: none;
-  padding: 10px;
-  border-radius: 10px;
+  padding: 16px;
+  border-radius: 24px;
   display: flex;
+  flex-direction: column;
   color: rgb(17, 17, 17);
   text-decoration: none;
+  filter: drop-shadow(0px -4px 4px rgba(0, 0, 0, 0.1));
   &:hover {
     cursor: pointer;
   }
   background-color: ${(prop) => prop.$inputColor};
 `;
 const StyledEditButton = styled.button`
-  position: absolute;
-  right: 5px;
-  bottom: 5px;
-  background-color: rgb(149, 178, 246);
+  background-color: transparent;
+  border: 1px solid #111111;
   min-width: 80px;
-  padding: 0.9rem;
-  border-style: none;
-  border-radius: 10px;
+  border-radius: 24px;
   font-size: 1.3rem;
   color: rgb(17, 17, 17);
   text-decoration: none;
@@ -38,11 +42,15 @@ const StyledEditButton = styled.button`
   }
 `;
 
+const StyledCardInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export default function CollectionCard({
   href,
   collectionTitle,
   totalCards,
-  correctCards,
   color,
   collection,
 }) {
@@ -51,21 +59,19 @@ export default function CollectionCard({
   return (
     <StyledCollectionContainer>
       <StyledCollectionLink href={href} $inputColor={color}>
-        <div>
-          <h2>{collectionTitle}</h2>
-          <p>
-            {correctCards} / {totalCards} correct
-          </p>
-        </div>
-        <StyledEditButton
-          onClick={(event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            router.push(`/edit/collection/${collection.id}`);
-          }}
-        >
-          Edit
-        </StyledEditButton>
+        <h2>{collectionTitle}</h2>
+        <StyledCardInfo>
+          <StyledEditButton
+            onClick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              router.push(`/edit/collection/${collection.id}`);
+            }}
+          >
+            edit
+          </StyledEditButton>
+          <p>{totalCards} cards</p>
+        </StyledCardInfo>
       </StyledCollectionLink>
     </StyledCollectionContainer>
   );

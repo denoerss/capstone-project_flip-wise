@@ -16,7 +16,7 @@ export default function ArchivePage({
 
   return (
     <main>
-      <StyledHeadline>Archive</StyledHeadline>
+      <StyledHeadline>Likes</StyledHeadline>
       <FlashCardList
         onMarkCorrect={onMarkCorrect}
         deleteCard={deleteCard}

@@ -1,4 +1,3 @@
-import { collections } from "@/lib/data";
 import styled from "styled-components";
 
 const StyledAnswer = styled.p`

@@ -4,6 +4,7 @@ import FlashCardFront from "./FlashCardFront";
 import FlashCardBack from "./FlashCardBack";
 import Button from "./Button";
 import Link from "next/link";
+import { Bookmark } from "lucide-react";
 
 const StyledCard = styled.li`
   background-color: ${({ $showAnswer }) =>
@@ -62,6 +63,13 @@ const StyledEditLink = styled(Link)`
   }
 `;
 
+const StyledBookmark = styled(Bookmark)`
+  position: absolute;
+  right: 30px;
+  height: 36px;
+  width: 36px;
+`;
+
 export default function FlashCard({
   card,
   onMarkCorrect,
@@ -98,14 +106,14 @@ export default function FlashCard({
   return (
     <StyledCard $showAnswer={showAnswer} onClick={flipCard}>
       <>
+        <StyledBookmark
+          onClick={handleCorrect}
+          fill={card.isCorrect ? "#111111" : "none"}
+        >
+          {card.isCorrect ? "incorrect" : "correct"}
+        </StyledBookmark>
         {showAnswer ? (
           <>
-            <Button
-              onClick={handleCorrect}
-              buttonVariant={card.isCorrect ? "incorrect" : "correct"}
-            >
-              {card.isCorrect ? "incorrect" : "correct"}
-            </Button>
             <FlashCardBack
               answer={card.answer}
               collectionTitle={collectionTitle}

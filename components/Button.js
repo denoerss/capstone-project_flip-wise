@@ -51,6 +51,12 @@ const StyledButton = styled.button`
     css`
       border: 1px solid #000000;
     `}
+
+   ${({ $buttonVariant }) =>
+    $buttonVariant === "allCards" &&
+    css`
+      border: 1px solid #000000;
+    `}
 `;
 
 export default function Button({ onClick, children, buttonVariant }) {

@@ -18,9 +18,7 @@ export default function Collection({
     return null;
   }
 
-  const activeFlashCards = flashCards.filter((card) => !card.isCorrect);
-
-  const filteredFlashCards = activeFlashCards.filter(
+  const filteredFlashCards = flashCards.filter(
     (card) => card.collectionId === currentCollection.id
   );
 
