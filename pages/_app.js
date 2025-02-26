@@ -1,10 +1,10 @@
 import GlobalStyle from "../styles";
-import { flashcards as initialFlashCards } from "@/lib/data";
-import { useRouter } from "next/router";
+import Navigation from "@/components/Navigation";
 import useLocalStorageState from "use-local-storage-state";
+import { flashcards as initialFlashCards } from "@/lib/data";
 import { collections as initialCollections } from "@/lib/data";
 import { uid } from "uid";
-import Navigation from "@/components/Navigation";
+import { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }) {
   const [flashCards, setFlashCards] = useLocalStorageState("flashCards", {
