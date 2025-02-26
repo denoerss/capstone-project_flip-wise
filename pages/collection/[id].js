@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import FlashCardList from "@/components/FlashCardList";
+import Link from "next/link";
 
 export default function Collection({
   onMarkCorrect,
@@ -26,6 +27,7 @@ export default function Collection({
 
   return (
     <main>
+      <Link href={`/play-mode/${id}`}>PlayMode</Link>
       <FlashCardList
         onMarkCorrect={onMarkCorrect}
         deleteCard={deleteCard}
