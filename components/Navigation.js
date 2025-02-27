@@ -31,7 +31,11 @@ const NavItem = styled(Link)`
 export default function Navigation() {
   const router = useRouter();
   const pathname = router.pathname;
-  pathname.includes("/");
+  const isPlayMode = pathname.includes("/play");
+
+  if (isPlayMode) {
+    return null;
+  }
 
   return (
     <NavbarContainer>
