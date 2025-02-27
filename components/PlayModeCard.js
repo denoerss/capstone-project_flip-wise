@@ -1,27 +1,42 @@
 import FlashCardBack from "./FlashCardBack";
 import FlashCardFront from "./FlashCardFront";
-import Button from "./Button";
 import styled from "styled-components";
-import { useState } from "react";
 
-const StyledCard = styled.li`
-  background-color: ${({ $showAnswer }) =>
-    $showAnswer ? "#A9A9A9" : "#D3D3D3"};
+const StyledCard = styled.div`
   position: relative;
-  list-style: none;
-  width: 80%;
-  border-radius: 20px;
-  padding: 25px 25px 25px;
-  line-height: 1.25;
+  background-color: #fff;
+  width: 90%;
+  min-height: 35vh;
+  border-radius: 35px;
+  padding: 30px;
+  padding-top: 15px;
+  line-height: 1.3;
   &:hover {
     cursor: pointer;
   }
 `;
 
-export default function PlayModeCard({ card, onMarkCorrect }) {
-  const [showAnswer, setShowAnswer] = useState(false);
+const StyledButton = styled.button`
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  padding: 0.9rem;
+  background-color: transparent;
+  border: 1.5px solid #000;
+  border-radius: 50px;
+  font-size: 1.3rem;
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
-  function flipCard() {
+export default function PlayModeCard({
+  card,
+  onMarkCorrect,
+  showAnswer,
+  setShowAnswer,
+}) {
+  function toggleAnswer() {
     setShowAnswer((prev) => !prev);
   }
 
@@ -31,17 +46,18 @@ export default function PlayModeCard({ card, onMarkCorrect }) {
   }
 
   return (
-    <StyledCard $showAnswer={showAnswer} onClick={flipCard}>
+    <StyledCard onClick={toggleAnswer}>
       <>
         {showAnswer ? (
           <>
-            <Button
+            <FlashCardBack answer={card.answer} question={card.question} />
+
+            <StyledButton
               onClick={handleCorrect}
               buttonVariant={card.isCorrect ? "incorrect" : "correct"}
             >
               {card.isCorrect ? "incorrect" : "correct"}
-            </Button>
-            <FlashCardBack answer={card.answer} />
+            </StyledButton>
           </>
         ) : (
           <FlashCardFront question={card.question} />
