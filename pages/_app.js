@@ -23,7 +23,7 @@ export default function App({ Component, pageProps }) {
       (card) => card.collectionId === collection.id
     );
     const correctCount = flashCardsInCollection.filter(
-      (card) => card.isCorrect
+      (card) => card.isLiked
     ).length;
 
     return {
@@ -38,7 +38,7 @@ export default function App({ Component, pageProps }) {
     const newFlashCard = {
       ...data,
       id: uid(),
-      isCorrect: false,
+      isLiked: false,
     };
 
     // handle submit behaviour by mode (add or edit)
@@ -51,7 +51,7 @@ export default function App({ Component, pageProps }) {
             ? {
                 id: flashCardToUpdate_id,
                 ...data,
-                isCorrect: flashCard.isCorrect,
+                isLiked: flashCard.isLiked,
               }
             : flashCard
         )
@@ -99,11 +99,11 @@ export default function App({ Component, pageProps }) {
     setCollections(updatedCollections);
   }
 
-  // toggle isCorrect key for cards
-  function onMarkCorrect(id) {
+  // toggle isLiked key for cards
+  function onLiked(id) {
     const updatedFlashCards = flashCards.map((flashCard) =>
       flashCard.id === id
-        ? { ...flashCard, isCorrect: !flashCard.isCorrect }
+        ? { ...flashCard, isLiked: !flashCard.isLiked }
         : flashCard
     );
 
@@ -120,7 +120,7 @@ export default function App({ Component, pageProps }) {
         flashCards={flashCards}
         deleteCard={deleteCard}
         deleteCollection={deleteCollection}
-        onMarkCorrect={onMarkCorrect}
+        onLiked={onLiked}
         collections={collectionsWithCounts}
       />
       <Navigation />

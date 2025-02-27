@@ -20,7 +20,7 @@ const StyledEmptyListMessage = styled.p`
 export default function FlashCardList({
   flashCards,
   deleteCard,
-  onMarkCorrect,
+  onLiked,
   collections,
 }) {
   return (
@@ -30,7 +30,7 @@ export default function FlashCardList({
           <FlashCard
             key={card.id}
             card={card}
-            onMarkCorrect={onMarkCorrect}
+            onLiked={onLiked}
             collections={collections}
             deleteCard={deleteCard}
           />

@@ -33,7 +33,7 @@ const StyledButton = styled.button`
 `;
 
 export default function Collection({
-  onMarkCorrect,
+  onLiked,
   deleteCard,
   flashCards,
   collections,
@@ -52,7 +52,7 @@ export default function Collection({
   const backgroundColor = currentCollection.color;
 
   // FlashCards
-  const activeFlashCards = flashCards.filter((card) => !card.isCorrect);
+  const activeFlashCards = flashCards.filter((card) => !card.isLiked);
   const filteredFlashCards = activeFlashCards.filter(
     (card) => card.collectionId === currentCollection.id
   );
@@ -71,7 +71,7 @@ export default function Collection({
       </StyledHeader>
 
       <FlashCardList
-        onMarkCorrect={onMarkCorrect}
+        onLiked={onLiked}
         deleteCard={deleteCard}
         flashCards={filteredFlashCards}
         collections={collections}

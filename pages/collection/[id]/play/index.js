@@ -87,7 +87,7 @@ const StyledFooter = styled.footer`
   z-index: 200;
 `;
 
-export default function PlayMode({ collections, flashCards, onMarkCorrect }) {
+export default function PlayMode({ collections, flashCards }) {
   // Router
   const router = useRouter();
   const { id, card } = router.query; // id for remaining in current collection, card for moving to next card/page
@@ -96,6 +96,7 @@ export default function PlayMode({ collections, flashCards, onMarkCorrect }) {
   const [showStopConfirm, setShowStopConfirm] = useState(true);
   const [showFinalMessage, setShowFinalMessage] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
+  const [isCorrect, setIsCorrect] = useState(false);
 
   // Background Color
   const currentCollection = collections.find(
@@ -144,7 +145,7 @@ export default function PlayMode({ collections, flashCards, onMarkCorrect }) {
 
   function handleCorrect(event) {
     event.stopPropagation();
-    onMarkCorrect(card.id);
+    onLiked(card.id);
   }
 
   // Retry Function
@@ -187,7 +188,7 @@ export default function PlayMode({ collections, flashCards, onMarkCorrect }) {
               <>
                 <PlayModeCard
                   card={filteredFlashCards[currentPage]}
-                  onMarkCorrect={onMarkCorrect}
+                  onLiked={onLiked}
                   showAnswer={showAnswer}
                   setShowAnswer={setShowAnswer}
                 />
