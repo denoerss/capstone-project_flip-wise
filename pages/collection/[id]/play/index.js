@@ -87,7 +87,7 @@ const StyledFooter = styled.footer`
   z-index: 200;
 `;
 
-export default function PlayMode({ collections, flashCards, onCorrect }) {
+export default function PlayMode({ collections, flashCards }) {
   // Router
   const router = useRouter();
   const { id, card } = router.query; // id for remaining in current collection, card for moving to next card/page
@@ -96,6 +96,7 @@ export default function PlayMode({ collections, flashCards, onCorrect }) {
   const [showStopConfirm, setShowStopConfirm] = useState(true);
   const [showFinalMessage, setShowFinalMessage] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
+  const [isCorrect, setIsCorrect] = useState(0);
 
   // Background Color
   const currentCollection = collections.find(
@@ -112,10 +113,6 @@ export default function PlayMode({ collections, flashCards, onCorrect }) {
   const totalPages = filteredFlashCards.length;
   const currentPage = card ? parseInt(card, 10) : 0; // pareInt converts string into number, base 10 ensures number to be decimal
   const firstPage = currentPage === 0;
-
-  const correctCardsCount = filteredFlashCards.filter(
-    (card) => card.isCorrect === true
-  ).length;
 
   // Stop Functions
   function handleToggle() {
@@ -150,7 +147,14 @@ export default function PlayMode({ collections, flashCards, onCorrect }) {
   function handleRetry() {
     setShowAnswer(false);
     setShowFinalMessage(false);
+    setIsCorrect(0);
     router.push(`/collection/${id}/play?card=0`);
+  }
+
+  //Correct
+  function handleCorrect() {
+    setIsCorrect(isCorrect + 1);
+    handleNext();
   }
 
   return (
@@ -175,7 +179,7 @@ export default function PlayMode({ collections, flashCards, onCorrect }) {
         <StyledMessageContainer>
           <h2>Well done!</h2>
           <p>
-            {correctCardsCount} / {totalPages} answered correctly
+            {isCorrect} / {totalPages} answered correctly
           </p>
           <StyledButtonContainer>
             <StyledButton onClick={handleRetry}>retry</StyledButton>
@@ -192,8 +196,8 @@ export default function PlayMode({ collections, flashCards, onCorrect }) {
                   showAnswer={showAnswer}
                   setShowAnswer={setShowAnswer}
                 />
-                <button onClick={onCorrect(currentPage)}>✅</button>
-                <button onClick={onCorrect(currentPage)}>❌</button>
+                <button onClick={handleCorrect}>✅</button>
+                <button onClick={handleNext}>❌</button>
               </>
             ) : (
               <p>No cards found.</p>

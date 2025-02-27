@@ -39,7 +39,6 @@ export default function App({ Component, pageProps }) {
       ...data,
       id: uid(),
       isLiked: false,
-      isCorrect: false,
     };
 
     // handle submit behaviour by mode (add or edit)
@@ -53,7 +52,6 @@ export default function App({ Component, pageProps }) {
                 id: flashCardToUpdate_id,
                 ...data,
                 isLiked: flashCard.isLiked,
-                isCorrect: flashCard.isCorrect,
               }
             : flashCard
         )
@@ -112,14 +110,6 @@ export default function App({ Component, pageProps }) {
     setFlashCards(updatedFlashCards);
   }
 
-  function onCorrect(id) {
-    const updatedFlashCards = flashCards.map((flashCard) =>
-      flashCard.id === id ? { ...flashCard, isCorrect: true } : flashCard
-    );
-
-    setFlashCards(updatedFlashCards);
-  }
-
   return (
     <>
       <GlobalStyle />
@@ -131,7 +121,6 @@ export default function App({ Component, pageProps }) {
         deleteCard={deleteCard}
         deleteCollection={deleteCollection}
         onLiked={onLiked}
-        onCorrect={onCorrect}
         collections={collectionsWithCounts}
       />
       <Navigation />
