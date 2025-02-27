@@ -32,13 +32,6 @@ const StyledHeadline = styled.h1`
   justify-content: flex-start;
 `;
 
-const StyledConfirmContainer = styled.div`
-  align-items: center;
-  text-align: center;
-  margin-top: 0;
-  position: relative;
-`;
-
 const StyledButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -63,6 +56,7 @@ const StyledButton = styled.button`
 
 const StyledCardContainer = styled.div`
   display: flex;
+  flex-direction: column;
   position: relative;
   justify-content: center;
   align-items: center;
@@ -124,7 +118,6 @@ export default function PlayMode({ collections, flashCards, onMarkCorrect }) {
     setShowStopConfirm((prev) => !prev);
   }
   function handleConfirmStop() {
-    setShowStopConfirm(true);
     router.push(`/collection/${id}`);
   }
 
@@ -149,6 +142,11 @@ export default function PlayMode({ collections, flashCards, onMarkCorrect }) {
     }
   }
 
+  function handleCorrect(event) {
+    event.stopPropagation();
+    onMarkCorrect(card.id);
+  }
+
   // Retry Function
   function handleRetry() {
     setShowAnswer(false);
@@ -166,12 +164,10 @@ export default function PlayMode({ collections, flashCards, onMarkCorrect }) {
           </StyledButton>
         ) : (
           <>
-            <StyledConfirmContainer>
-              <StyledButtonContainer>
-                <StyledButton onClick={handleConfirmStop}>confirm</StyledButton>
-                <StyledButton onClick={handleToggle}>cancel</StyledButton>
-              </StyledButtonContainer>
-            </StyledConfirmContainer>
+            <StyledButtonContainer>
+              <StyledButton onClick={handleConfirmStop}>confirm</StyledButton>
+              <StyledButton onClick={handleToggle}>cancel</StyledButton>
+            </StyledButtonContainer>
           </>
         )}
       </StyledHeader>
@@ -188,14 +184,22 @@ export default function PlayMode({ collections, flashCards, onMarkCorrect }) {
         <>
           <StyledCardContainer>
             {filteredFlashCards.length > 0 ? (
-              <PlayModeCard
-                card={filteredFlashCards[currentPage]}
-                onMarkCorrect={onMarkCorrect}
-                showAnswer={showAnswer}
-                setShowAnswer={setShowAnswer}
-              />
+              <>
+                <PlayModeCard
+                  card={filteredFlashCards[currentPage]}
+                  onMarkCorrect={onMarkCorrect}
+                  showAnswer={showAnswer}
+                  setShowAnswer={setShowAnswer}
+                />
+                <StyledButton
+                  onClick={handleCorrect}
+                  buttonVariant={card.isCorrect ? "incorrect" : "correct"}
+                >
+                  {card.isCorrect ? "incorrect" : "correct"}
+                </StyledButton>
+              </>
             ) : (
-              <p>No cards available.</p>
+              <p>No cards found.</p>
             )}
           </StyledCardContainer>
 

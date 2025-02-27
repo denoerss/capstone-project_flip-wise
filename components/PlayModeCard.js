@@ -16,49 +16,16 @@ const StyledCard = styled.div`
   }
 `;
 
-const StyledButton = styled.button`
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
-  padding: 0.9rem;
-  background-color: transparent;
-  border: 1.5px solid #000;
-  border-radius: 50px;
-  font-size: 1.3rem;
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-export default function PlayModeCard({
-  card,
-  onMarkCorrect,
-  showAnswer,
-  setShowAnswer,
-}) {
+export default function PlayModeCard({ card, showAnswer, setShowAnswer }) {
   function toggleAnswer() {
     setShowAnswer((prev) => !prev);
-  }
-
-  function handleCorrect(event) {
-    event.stopPropagation();
-    onMarkCorrect(card.id);
   }
 
   return (
     <StyledCard onClick={toggleAnswer}>
       <>
         {showAnswer ? (
-          <>
-            <FlashCardBack answer={card.answer} question={card.question} />
-
-            <StyledButton
-              onClick={handleCorrect}
-              buttonVariant={card.isCorrect ? "incorrect" : "correct"}
-            >
-              {card.isCorrect ? "incorrect" : "correct"}
-            </StyledButton>
-          </>
+          <FlashCardBack answer={card.answer} question={card.question} />
         ) : (
           <FlashCardFront question={card.question} />
         )}
