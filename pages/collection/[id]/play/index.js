@@ -96,7 +96,7 @@ const StyledFooter = styled.footer`
 export default function PlayMode({ collections, flashCards, onMarkCorrect }) {
   // Router
   const router = useRouter();
-  const { id, card } = router.query;
+  const { id, card } = router.query; // id for remaining in current collection, card for moving to next card/page
 
   // States
   const [showStopConfirm, setShowStopConfirm] = useState(true);
@@ -116,7 +116,7 @@ export default function PlayMode({ collections, flashCards, onMarkCorrect }) {
     (card) => card.collectionId === currentCollection.id
   );
   const totalPages = filteredFlashCards.length;
-  const currentPage = card ? parseInt(card, 10) || 0 : 0;
+  const currentPage = card ? parseInt(card, 10) : 0; // pareInt converts string into number, base 10 ensures number to be decimal
   const firstPage = currentPage === 0;
 
   // Stop Functions
@@ -139,9 +139,10 @@ export default function PlayMode({ collections, flashCards, onMarkCorrect }) {
   function handleNext() {
     if (currentPage < totalPages - 1) {
       setShowAnswer(false);
+      // navigate to new URL while keeping current page structure
       router.push({
-        pathname: router.pathname,
-        query: { id, card: currentPage + 1 },
+        pathname: router.pathname, // ensure to stay on same page
+        query: { id, card: currentPage + 1 }, // go to next card
       });
     } else {
       setShowFinalMessage(true);
@@ -177,7 +178,7 @@ export default function PlayMode({ collections, flashCards, onMarkCorrect }) {
 
       {showFinalMessage ? (
         <StyledMessageContainer>
-          <h2>You nailed it!</h2>
+          <h2>Well done!</h2>
           <StyledButtonContainer>
             <StyledButton onClick={handleRetry}>retry</StyledButton>
             <StyledButton onClick={handleConfirmStop}>quit</StyledButton>
@@ -197,6 +198,7 @@ export default function PlayMode({ collections, flashCards, onMarkCorrect }) {
               <p>No cards available.</p>
             )}
           </StyledCardContainer>
+
           <StyledFooter>
             <StyledButton onClick={handlePrev} firstPage={firstPage}>
               prev

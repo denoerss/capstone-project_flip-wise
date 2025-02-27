@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import FlashCardList from "@/components/FlashCardList";
 import Dropdown from "@/components/Dropdown";
-import Link from "next/link";
 import styled from "styled-components";
 
 const StyledMain = styled.main`
@@ -14,20 +13,20 @@ const StyledMain = styled.main`
 
 const StyledHeader = styled.header`
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
 `;
 
-const StyledLink = styled(Link)`
-  font-size: 1.25rem;
+const StyledButton = styled.button`
   text-decoration: none;
-  text-align: center;
-  align-items: center;
-  max-width: fit-content;
-  color: #000000;
-  background-color: #cacaca;
-  padding: 1rem;
+  color: #ffffff;
+  background-color: #000000;
+  padding: 0.9rem;
+  margin: 45px 35px 0 0;
+  min-width: 100px;
   border-style: none;
-  border-radius: 10px;
+  border-radius: 30px;
+  font-size: 1.3rem;
   &:hover {
     cursor: pointer;
   }
@@ -39,24 +38,24 @@ export default function Collection({
   flashCards,
   collections,
 }) {
+  // Router
   const router = useRouter();
   const { id } = router.query;
 
+  // Background Color
   const currentCollection = collections.find(
     (collection) => collection.id === id
   );
-
   if (!currentCollection) {
     return null;
   }
+  const backgroundColor = currentCollection.color;
 
+  // FlashCards
   const activeFlashCards = flashCards.filter((card) => !card.isCorrect);
-
   const filteredFlashCards = activeFlashCards.filter(
     (card) => card.collectionId === currentCollection.id
   );
-
-  const backgroundColor = currentCollection.color;
 
   return (
     <StyledMain color={backgroundColor}>
@@ -66,8 +65,13 @@ export default function Collection({
           collections={collections}
           currentCollection={currentCollection}
         />
-        <StyledLink href={`/collection/${id}/play?card=0`}>Play</StyledLink>
+        <StyledButton
+          onClick={() => router.push(`/collection/${id}/play?card=0`)}
+        >
+          ⏵ play
+        </StyledButton>
       </StyledHeader>
+
       <FlashCardList
         onMarkCorrect={onMarkCorrect}
         deleteCard={deleteCard}
