@@ -1,0 +1,213 @@
+import { useRouter } from "next/router";
+import PlayModeCard from "@/components/PlayModeCard";
+import styled from "styled-components";
+import { useState } from "react";
+
+const StyledMain = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: ${(props) => props.color || "#ffffff"};
+  flex-grow: 1;
+  min-height: 100vh;
+  :hover {
+    cursor: pointer;
+  }
+`;
+
+const StyledHeader = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 2.25rem;
+  position: fixed;
+  top: 2rem;
+  z-index: 100;
+  transition: transform 0.3s ease;
+`;
+
+const StyledHeadline = styled.h1`
+  display: flex;
+  justify-content: flex-start;
+`;
+
+const StyledConfirmContainer = styled.div`
+  align-items: center;
+  text-align: center;
+  margin-top: 0;
+  position: relative;
+`;
+
+const StyledButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  gap: 20px;
+`;
+
+const StyledButton = styled.button`
+  padding: 0.9rem;
+  border: 1.5px solid black;
+  min-width: 100px;
+  border-radius: 30px;
+  font-size: 1.3rem;
+  color: ${(props) => (props.stop ? "#fff" : "#000")};
+  background-color: ${(props) => (props.stop ? "#000" : "transparent")};
+  opacity: ${(props) => (props.firstPage ? "0" : "1")};
+  pointer-events: ${(props) => (props.firstPage ? "none" : "auto")};
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const StyledCardContainer = styled.div`
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  width: 100%;
+  min-height: 100vh;
+  padding-bottom: 20px;
+`;
+
+const StyledMessageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  padding-bottom: 20px;
+`;
+
+const StyledFooter = styled.footer`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 30px;
+  z-index: 200;
+`;
+
+export default function PlayMode({ collections, flashCards, onMarkCorrect }) {
+  // Router
+  const router = useRouter();
+  const { id, card } = router.query;
+
+  // States
+  const [showStopConfirm, setShowStopConfirm] = useState(true);
+  const [showFinalMessage, setShowFinalMessage] = useState(false);
+  const [showAnswer, setShowAnswer] = useState(false);
+
+  // Background Color
+  const currentCollection = collections.find(
+    (collection) => collection.id === id
+  );
+  if (!currentCollection) return <p>No collection found.</p>;
+
+  const backgroundColor = currentCollection.color;
+
+  // Pages / Cards
+  const filteredFlashCards = flashCards.filter(
+    (card) => card.collectionId === currentCollection.id
+  );
+  const totalPages = filteredFlashCards.length;
+  const currentPage = card ? parseInt(card, 10) || 0 : 0;
+  const firstPage = currentPage === 0;
+
+  // Stop Functions
+  function handleToggle() {
+    setShowStopConfirm((prev) => !prev);
+  }
+  function handleConfirmStop() {
+    setShowStopConfirm(true);
+    router.push(`/collection/${id}`);
+  }
+
+  // Nav Functions
+  function handlePrev() {
+    if (currentPage > 0) {
+      setShowAnswer(false);
+      setShowFinalMessage(false);
+      router.back();
+    }
+  }
+  function handleNext() {
+    if (currentPage < totalPages - 1) {
+      setShowAnswer(false);
+      router.push({
+        pathname: router.pathname,
+        query: { id, card: currentPage + 1 },
+      });
+    } else {
+      setShowFinalMessage(true);
+    }
+  }
+
+  // Retry Function
+  function handleRetry() {
+    setShowAnswer(false);
+    setShowFinalMessage(false);
+    router.push(`/collection/${id}/play?card=0`);
+  }
+
+  return (
+    <StyledMain color={backgroundColor}>
+      <StyledHeader>
+        <StyledHeadline>{currentCollection.title}</StyledHeadline>
+        {showStopConfirm ? (
+          <StyledButton onClick={handleToggle} stop={stop}>
+            ⏹ stop
+          </StyledButton>
+        ) : (
+          <>
+            <StyledConfirmContainer>
+              <StyledButtonContainer>
+                <StyledButton onClick={handleConfirmStop}>confirm</StyledButton>
+                <StyledButton onClick={handleToggle}>cancel</StyledButton>
+              </StyledButtonContainer>
+            </StyledConfirmContainer>
+          </>
+        )}
+      </StyledHeader>
+
+      {showFinalMessage ? (
+        <StyledMessageContainer>
+          <h2>You nailed it!</h2>
+          <StyledButtonContainer>
+            <StyledButton onClick={handleRetry}>retry</StyledButton>
+            <StyledButton onClick={handleConfirmStop}>quit</StyledButton>
+          </StyledButtonContainer>
+        </StyledMessageContainer>
+      ) : (
+        <>
+          <StyledCardContainer>
+            {filteredFlashCards.length > 0 ? (
+              <PlayModeCard
+                card={filteredFlashCards[currentPage]}
+                onMarkCorrect={onMarkCorrect}
+                showAnswer={showAnswer}
+                setShowAnswer={setShowAnswer}
+              />
+            ) : (
+              <p>No cards available.</p>
+            )}
+          </StyledCardContainer>
+          <StyledFooter>
+            <StyledButton onClick={handlePrev} firstPage={firstPage}>
+              prev
+            </StyledButton>
+            <p aria-label="page-counter">
+              {currentPage + 1} / {totalPages}
+            </p>
+            <StyledButton onClick={handleNext}>next</StyledButton>
+          </StyledFooter>
+        </>
+      )}
+    </StyledMain>
+  );
+}
