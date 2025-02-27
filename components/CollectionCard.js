@@ -42,7 +42,7 @@ export default function CollectionCard({
   href,
   collectionTitle,
   totalCards,
-  correctCards,
+  likedCards,
   color,
   collection,
 }) {
@@ -54,7 +54,7 @@ export default function CollectionCard({
         <div>
           <h2>{collectionTitle}</h2>
           <p>
-            {correctCards} / {totalCards} correct
+            {likedCards} / {totalCards} liked
           </p>
         </div>
         <StyledEditButton

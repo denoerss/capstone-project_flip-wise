@@ -87,7 +87,7 @@ const StyledFooter = styled.footer`
   z-index: 200;
 `;
 
-export default function PlayMode({ collections, flashCards }) {
+export default function PlayMode({ collections, flashCards, onCorrect }) {
   // Router
   const router = useRouter();
   const { id, card } = router.query; // id for remaining in current collection, card for moving to next card/page
@@ -96,7 +96,6 @@ export default function PlayMode({ collections, flashCards }) {
   const [showStopConfirm, setShowStopConfirm] = useState(true);
   const [showFinalMessage, setShowFinalMessage] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
-  const [isCorrect, setIsCorrect] = useState(false);
 
   // Background Color
   const currentCollection = collections.find(
@@ -113,6 +112,10 @@ export default function PlayMode({ collections, flashCards }) {
   const totalPages = filteredFlashCards.length;
   const currentPage = card ? parseInt(card, 10) : 0; // pareInt converts string into number, base 10 ensures number to be decimal
   const firstPage = currentPage === 0;
+
+  const correctCardsCount = filteredFlashCards.filter(
+    (card) => card.isCorrect === true
+  ).length;
 
   // Stop Functions
   function handleToggle() {
@@ -143,11 +146,6 @@ export default function PlayMode({ collections, flashCards }) {
     }
   }
 
-  function handleCorrect(event) {
-    event.stopPropagation();
-    onLiked(card.id);
-  }
-
   // Retry Function
   function handleRetry() {
     setShowAnswer(false);
@@ -176,6 +174,9 @@ export default function PlayMode({ collections, flashCards }) {
       {showFinalMessage ? (
         <StyledMessageContainer>
           <h2>Well done!</h2>
+          <p>
+            {correctCardsCount} / {totalPages} answered correctly
+          </p>
           <StyledButtonContainer>
             <StyledButton onClick={handleRetry}>retry</StyledButton>
             <StyledButton onClick={handleConfirmStop}>quit</StyledButton>
@@ -188,16 +189,11 @@ export default function PlayMode({ collections, flashCards }) {
               <>
                 <PlayModeCard
                   card={filteredFlashCards[currentPage]}
-                  onLiked={onLiked}
                   showAnswer={showAnswer}
                   setShowAnswer={setShowAnswer}
                 />
-                <StyledButton
-                  onClick={handleCorrect}
-                  buttonVariant={card.isCorrect ? "incorrect" : "correct"}
-                >
-                  {card.isCorrect ? "incorrect" : "correct"}
-                </StyledButton>
+                <button onClick={onCorrect(currentPage)}>✅</button>
+                <button onClick={onCorrect(currentPage)}>❌</button>
               </>
             ) : (
               <p>No cards found.</p>

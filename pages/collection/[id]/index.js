@@ -65,7 +65,9 @@ export default function Collection({
           collections={collections}
           currentCollection={currentCollection}
         />
-        <StyledButton onClick={() => router.push(`/archive/${id}/play?card=0`)}>
+        <StyledButton
+          onClick={() => router.push(`/collection/${id}/play?card=0`)}
+        >
           ⏵ play
         </StyledButton>
       </StyledHeader>
