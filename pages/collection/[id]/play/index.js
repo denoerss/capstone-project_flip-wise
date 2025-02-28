@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import PlayModeCard from "@/components/PlayModeCard";
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const StyledMain = styled.main`
   display: flex;
@@ -96,6 +96,26 @@ export default function PlayMode({ collections, flashCards }) {
   const [showFinalMessage, setShowFinalMessage] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
   const [isCorrect, setIsCorrect] = useState(0);
+  const [timeElapsed, setTimeElapsed] = useState(0);
+
+  //Timer
+
+  useEffect(() => {
+    if (showFinalMessage || !showStopConfirm) return; // Stop timer when quiz ends
+
+    const timer = setInterval(() => {
+      setTimeElapsed((prevTime) => prevTime + 1);
+    }, 1000);
+
+    return () => clearInterval(timer); // Cleanup on unmount
+  }, [showFinalMessage, showStopConfirm]);
+
+  // Format time as MM:SS
+  function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+  }
 
   // Background Color
   const currentCollection = collections.find(
@@ -148,6 +168,7 @@ export default function PlayMode({ collections, flashCards }) {
     setShowAnswer(false);
     setShowFinalMessage(false);
     setIsCorrect(0);
+    setTimeElapsed(0); // Reset the timer
     router.push(`/collection/${id}/play?card=0`);
   }
 
@@ -161,6 +182,7 @@ export default function PlayMode({ collections, flashCards }) {
     <StyledMain color={backgroundColor}>
       <StyledHeader>
         <StyledHeadline>{currentCollection.title}</StyledHeadline>
+        <p>Time: {formatTime(timeElapsed)}</p>
         {showStopConfirm ? (
           <StyledButton onClick={handleToggle} stop={stop}>
             ⏹ stop
@@ -181,6 +203,7 @@ export default function PlayMode({ collections, flashCards }) {
           <p>
             {isCorrect} / {totalPages} answered correctly
           </p>
+          <p>Time spent: {formatTime(timeElapsed)}</p>
           <StyledButtonContainer>
             <StyledButton onClick={handleRetry}>retry</StyledButton>
             <StyledButton onClick={handleConfirmStop}>quit</StyledButton>
