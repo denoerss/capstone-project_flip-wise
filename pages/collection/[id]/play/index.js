@@ -47,8 +47,7 @@ const StyledButton = styled.button`
   font-size: 1.3rem;
   color: ${(props) => (props.stop ? "#fff" : "#000")};
   background-color: ${(props) => (props.stop ? "#000" : "transparent")};
-  opacity: ${(props) => (props.firstPage ? "0" : "1")};
-  pointer-events: ${(props) => (props.firstPage ? "none" : "auto")};
+
   &:hover {
     cursor: pointer;
   }
@@ -112,7 +111,7 @@ export default function PlayMode({ collections, flashCards }) {
   );
   const totalPages = filteredFlashCards.length;
   const currentPage = card ? parseInt(card, 10) : 0; // pareInt converts string into number, base 10 ensures number to be decimal
-  const firstPage = currentPage === 0;
+  // const firstPage = currentPage === 0;
 
   // Stop Functions
   function handleToggle() {
@@ -123,13 +122,14 @@ export default function PlayMode({ collections, flashCards }) {
   }
 
   // Nav Functions
-  function handlePrev() {
-    if (currentPage > 0) {
-      setShowAnswer(false);
-      setShowFinalMessage(false);
-      router.back();
-    }
-  }
+  // function handlePrev() {
+  //   if (currentPage > 0) {
+  //     setShowAnswer(false);
+  //     setShowFinalMessage(false);
+  //     router.back();
+  //   }
+  // }
+
   function handleNext() {
     if (currentPage < totalPages - 1) {
       setShowAnswer(false);
@@ -196,8 +196,6 @@ export default function PlayMode({ collections, flashCards }) {
                   showAnswer={showAnswer}
                   setShowAnswer={setShowAnswer}
                 />
-                <button onClick={handleCorrect}>✅</button>
-                <button onClick={handleNext}>❌</button>
               </>
             ) : (
               <p>No cards found.</p>
@@ -205,13 +203,15 @@ export default function PlayMode({ collections, flashCards }) {
           </StyledCardContainer>
 
           <StyledFooter>
-            <StyledButton onClick={handlePrev} firstPage={firstPage}>
+            {/* <StyledButton onClick={handlePrev} firstPage={firstPage}>
               prev
-            </StyledButton>
+            </StyledButton> */}
+            <button onClick={handleNext}>❌</button>
             <p aria-label="page-counter">
               {currentPage + 1} / {totalPages}
             </p>
-            <StyledButton onClick={handleNext}>next</StyledButton>
+            {/* <StyledButton onClick={handleNext}>next</StyledButton> */}
+            <button onClick={handleCorrect}>✅</button>
           </StyledFooter>
         </>
       )}
