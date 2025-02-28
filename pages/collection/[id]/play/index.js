@@ -112,7 +112,7 @@ export default function PlayMode({ collections, flashCards }) {
   const [gameState, setGameState] = useState("countdown");
 
   // Countdown Timer: Runs until 0, then shows quiz content
-  const isCounting = countDown > 0;
+  const isCounting = countDown > -1;
 
   useEffect(() => {
     if (!isCounting) {
@@ -176,6 +176,7 @@ export default function PlayMode({ collections, flashCards }) {
       setCurrentPage(currentPage + 1);
     } else {
       setShowFinalMessage(true);
+      setGameState("end");
     }
   }
 
@@ -186,6 +187,7 @@ export default function PlayMode({ collections, flashCards }) {
     setScore(0);
     setTimeElapsed(0); // Reset the timer
     setCurrentPage(0);
+    setGameState("play");
   }
 
   //Correct
@@ -218,18 +220,27 @@ export default function PlayMode({ collections, flashCards }) {
         )}
 
         {gameState === "play" && (
-          <StyledCardContainer>
-            <p>Time: {formatTime(timeElapsed)}</p>
-            {filteredFlashCards.length > 0 ? (
-              <PlayModeCard
-                card={filteredFlashCards[currentPage]}
-                showAnswer={showAnswer}
-                setShowAnswer={setShowAnswer}
-              />
-            ) : (
-              <p>No cards found.</p>
-            )}
-          </StyledCardContainer>
+          <>
+            <StyledCardContainer>
+              <p>Time: {formatTime(timeElapsed)}</p>
+              {filteredFlashCards.length > 0 ? (
+                <PlayModeCard
+                  card={filteredFlashCards[currentPage]}
+                  showAnswer={showAnswer}
+                  setShowAnswer={setShowAnswer}
+                />
+              ) : (
+                <p>No cards found.</p>
+              )}
+            </StyledCardContainer>
+            <StyledFooter>
+              <button onClick={handleNext}>❌</button>
+              <p aria-label="page-counter">
+                {currentPage + 1} / {totalPages}
+              </p>
+              <button onClick={handleCorrect}>✅</button>
+            </StyledFooter>
+          </>
         )}
 
         {gameState === "end" && (
@@ -246,14 +257,6 @@ export default function PlayMode({ collections, flashCards }) {
           </StyledMessageContainer>
         )}
       </>
-
-      <StyledFooter>
-        <button onClick={handleNext}>❌</button>
-        <p aria-label="page-counter">
-          {currentPage + 1} / {totalPages}
-        </p>
-        <button onClick={handleCorrect}>✅</button>
-      </StyledFooter>
     </StyledMain>
   );
 }
