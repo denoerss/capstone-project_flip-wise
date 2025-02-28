@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import PlayModeCard from "@/components/PlayModeCard";
+import formatTime from "@/lib/utils";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 
@@ -96,6 +97,12 @@ const StyledFooter = styled.footer`
   z-index: 200;
 `;
 
+const GAME_STATES = {
+  COUNTDOWN: "countdown",
+  PLAY: "play",
+  END: "end",
+};
+
 export default function PlayMode({ collections, flashCards }) {
   // Router
   const router = useRouter();
@@ -109,14 +116,14 @@ export default function PlayMode({ collections, flashCards }) {
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [countDown, setCountDown] = useState(3);
   const [currentPage, setCurrentPage] = useState(0);
-  const [gameState, setGameState] = useState("countdown");
+  const [gameState, setGameState] = useState(GAME_STATES.COUNTDOWN);
 
   // Countdown Timer: Runs until 0, then shows quiz content
-  const isCounting = countDown > -1;
+  const isCounting = countDown > 0;
 
   useEffect(() => {
     if (!isCounting) {
-      return setGameState("play");
+      return setGameState(GAME_STATES.PLAY);
     }
 
     const timeoutId = setTimeout(() => {
@@ -138,13 +145,6 @@ export default function PlayMode({ collections, flashCards }) {
 
     return () => clearInterval(timer); // Cleanup on unmount
   }, [showFinalMessage, showStopConfirm, isCounting]);
-
-  // Format time as MM:SS
-  function formatTime(seconds) {
-    const minutes = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
-  }
 
   // Background Color
   const currentCollection = collections.find(
@@ -176,7 +176,7 @@ export default function PlayMode({ collections, flashCards }) {
       setCurrentPage(currentPage + 1);
     } else {
       setShowFinalMessage(true);
-      setGameState("end");
+      setGameState(GAME_STATES.END);
     }
   }
 
@@ -187,7 +187,7 @@ export default function PlayMode({ collections, flashCards }) {
     setScore(0);
     setTimeElapsed(0); // Reset the timer
     setCurrentPage(0);
-    setGameState("play");
+    setGameState(GAME_STATES.PLAY);
   }
 
   //Correct
@@ -215,11 +215,11 @@ export default function PlayMode({ collections, flashCards }) {
       </StyledHeader>
 
       <>
-        {gameState === "countdown" && (
+        {gameState === GAME_STATES.COUNTDOWN && (
           <StyledCountDown>{countDown}</StyledCountDown>
         )}
 
-        {gameState === "play" && (
+        {gameState === GAME_STATES.PLAY && (
           <>
             <StyledCardContainer>
               <p>Time: {formatTime(timeElapsed)}</p>
@@ -243,13 +243,14 @@ export default function PlayMode({ collections, flashCards }) {
           </>
         )}
 
-        {gameState === "end" && (
+        {gameState === GAME_STATES.END && (
           <StyledMessageContainer>
             <h2>Well done!</h2>
             <p>
-              {score} / {totalPages} answered correctly
+              You have answered <br />
+              {score} / {totalPages} questions correctly <br />
+              in {formatTime(timeElapsed)} seconds.
             </p>
-            <p>Time spent: {formatTime(timeElapsed)}</p>
             <StyledButtonContainer>
               <StyledButton onClick={handleRetry}>retry</StyledButton>
               <StyledButton onClick={handleConfirmStop}>quit</StyledButton>
