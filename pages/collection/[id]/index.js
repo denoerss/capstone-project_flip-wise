@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import FlashCardList from "@/components/FlashCardList";
 import Dropdown from "@/components/Dropdown";
 import styled from "styled-components";
+import Link from "next/link";
 
 const StyledMain = styled.main`
   display: flex;
@@ -17,7 +18,7 @@ const StyledHeader = styled.header`
   justify-content: space-between;
 `;
 
-const StyledButton = styled.button`
+const StyledLink = styled(Link)`
   text-decoration: none;
   color: #ffffff;
   background-color: #000000;
@@ -65,11 +66,7 @@ export default function Collection({
           collections={collections}
           currentCollection={currentCollection}
         />
-        <StyledButton
-          onClick={() => router.push(`/collection/${id}/play?card=0`)}
-        >
-          ⏵ play
-        </StyledButton>
+        <StyledLink href={`/collection/${id}/play`}>⏵ play</StyledLink>
       </StyledHeader>
 
       <FlashCardList

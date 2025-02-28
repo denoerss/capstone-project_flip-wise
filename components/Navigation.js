@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 const NavbarContainer = styled.nav`
   position: fixed;
@@ -29,14 +28,6 @@ const NavItem = styled(Link)`
 `;
 
 export default function Navigation() {
-  const router = useRouter();
-  const pathname = router.pathname;
-  const isPlayMode = pathname.includes("/play");
-
-  if (isPlayMode) {
-    return null;
-  }
-
   return (
     <NavbarContainer>
       <NavItem href="/">Home</NavItem>

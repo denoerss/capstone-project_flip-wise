@@ -110,6 +110,9 @@ export default function App({ Component, pageProps }) {
     setFlashCards(updatedFlashCards);
   }
 
+  // navigation
+  const showNavigation = !router.pathname.includes("/play");
+
   return (
     <>
       <GlobalStyle />
@@ -123,7 +126,7 @@ export default function App({ Component, pageProps }) {
         onLiked={onLiked}
         collections={collectionsWithCounts}
       />
-      <Navigation />
+      {showNavigation && <Navigation />}
     </>
   );
 }

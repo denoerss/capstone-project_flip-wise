@@ -99,32 +99,34 @@ const StyledFooter = styled.footer`
 export default function PlayMode({ collections, flashCards }) {
   // Router
   const router = useRouter();
-  const { id, card } = router.query; // id for remaining in current collection, card for moving to next card/page
+  const { id } = router.query; // id for remaining in current collection, card for moving to next card/page
 
   // States
   const [showStopConfirm, setShowStopConfirm] = useState(true);
   const [showFinalMessage, setShowFinalMessage] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
-  const [isCorrect, setIsCorrect] = useState(0);
+  const [score, setScore] = useState(0);
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [countDown, setCountDown] = useState(3);
-  const [isCounting, setIsCounting] = useState(true);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [gameState, setGameState] = useState("countdown");
 
   // Countdown Timer: Runs until 0, then shows quiz content
-  useEffect(() => {
-    if (countDown > 0) {
-      const countDownTimer = setInterval(() => {
-        setCountDown((prevTime) => prevTime - 1);
-      }, 1000);
+  const isCounting = countDown > 0;
 
-      return () => clearInterval(countDownTimer);
-    } else {
-      setIsCounting(false); // Countdown finished, show quiz
+  useEffect(() => {
+    if (!isCounting) {
+      return setGameState("play");
     }
+
+    const timeoutId = setTimeout(() => {
+      setCountDown(countDown - 1);
+    }, 1000);
+
+    return () => clearTimeout(timeoutId);
   }, [countDown]);
 
   //Timer
-
   useEffect(() => {
     if (showFinalMessage || !showStopConfirm) return; // Stop timer when quiz ends
 
@@ -157,7 +159,6 @@ export default function PlayMode({ collections, flashCards }) {
     (card) => card.collectionId === currentCollection.id
   );
   const totalPages = filteredFlashCards.length;
-  const currentPage = card ? parseInt(card, 10) : 0; // pareInt converts string into number, base 10 ensures number to be decimal
 
   // Stop Functions
   function handleToggle() {
@@ -168,15 +169,11 @@ export default function PlayMode({ collections, flashCards }) {
   }
 
   // Nav Functions
-
   function handleNext() {
     if (currentPage < totalPages - 1) {
       setShowAnswer(false);
       // navigate to new URL while keeping current page structure
-      router.push({
-        pathname: router.pathname, // ensure to stay on same page
-        query: { id, card: currentPage + 1 }, // go to next card
-      });
+      setCurrentPage(currentPage + 1);
     } else {
       setShowFinalMessage(true);
     }
@@ -186,14 +183,14 @@ export default function PlayMode({ collections, flashCards }) {
   function handleRetry() {
     setShowAnswer(false);
     setShowFinalMessage(false);
-    setIsCorrect(0);
+    setScore(0);
     setTimeElapsed(0); // Reset the timer
-    router.push(`/collection/${id}/play?card=0`);
+    setCurrentPage(0);
   }
 
   //Correct
   function handleCorrect() {
-    setIsCorrect(isCorrect + 1);
+    setScore(score + 1);
     handleNext();
   }
 
@@ -215,51 +212,48 @@ export default function PlayMode({ collections, flashCards }) {
         )}
       </StyledHeader>
 
-      {showFinalMessage ? (
-        <StyledMessageContainer>
-          <h2>Well done!</h2>
-          <p>
-            {isCorrect} / {totalPages} answered correctly
-          </p>
-          <p>Time spent: {formatTime(timeElapsed)}</p>
-          <StyledButtonContainer>
-            <StyledButton onClick={handleRetry}>retry</StyledButton>
-            <StyledButton onClick={handleConfirmStop}>quit</StyledButton>
-          </StyledButtonContainer>
-        </StyledMessageContainer>
-      ) : (
-        <>
-          {isCounting ? (
-            <StyledCountDown>{countDown}</StyledCountDown> // Show countdown before quiz starts
-          ) : (
-            <>
-              <StyledCardContainer>
-                <p>Time: {formatTime(timeElapsed)}</p>
-                {filteredFlashCards.length > 0 ? (
-                  <>
-                    <PlayModeCard
-                      card={filteredFlashCards[currentPage]}
-                      showAnswer={showAnswer}
-                      setShowAnswer={setShowAnswer}
-                    />
-                  </>
-                ) : (
-                  <p>No cards found.</p>
-                )}
-              </StyledCardContainer>
+      <>
+        {gameState === "countdown" && (
+          <StyledCountDown>{countDown}</StyledCountDown>
+        )}
 
-              <StyledFooter>
-                <button onClick={handleNext}>❌</button>
-                <p aria-label="page-counter">
-                  {currentPage + 1} / {totalPages}
-                </p>
+        {gameState === "play" && (
+          <StyledCardContainer>
+            <p>Time: {formatTime(timeElapsed)}</p>
+            {filteredFlashCards.length > 0 ? (
+              <PlayModeCard
+                card={filteredFlashCards[currentPage]}
+                showAnswer={showAnswer}
+                setShowAnswer={setShowAnswer}
+              />
+            ) : (
+              <p>No cards found.</p>
+            )}
+          </StyledCardContainer>
+        )}
 
-                <button onClick={handleCorrect}>✅</button>
-              </StyledFooter>
-            </>
-          )}
-        </>
-      )}
+        {gameState === "end" && (
+          <StyledMessageContainer>
+            <h2>Well done!</h2>
+            <p>
+              {score} / {totalPages} answered correctly
+            </p>
+            <p>Time spent: {formatTime(timeElapsed)}</p>
+            <StyledButtonContainer>
+              <StyledButton onClick={handleRetry}>retry</StyledButton>
+              <StyledButton onClick={handleConfirmStop}>quit</StyledButton>
+            </StyledButtonContainer>
+          </StyledMessageContainer>
+        )}
+      </>
+
+      <StyledFooter>
+        <button onClick={handleNext}>❌</button>
+        <p aria-label="page-counter">
+          {currentPage + 1} / {totalPages}
+        </p>
+        <button onClick={handleCorrect}>✅</button>
+      </StyledFooter>
     </StyledMain>
   );
 }
