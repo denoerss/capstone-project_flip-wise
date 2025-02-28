@@ -15,6 +15,16 @@ const StyledMain = styled.main`
   }
 `;
 
+const StyledCountDown = styled.h2`
+  font-size: 7rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+`;
+
 const StyledHeader = styled.header`
   display: flex;
   justify-content: space-between;
@@ -97,18 +107,35 @@ export default function PlayMode({ collections, flashCards }) {
   const [showAnswer, setShowAnswer] = useState(false);
   const [isCorrect, setIsCorrect] = useState(0);
   const [timeElapsed, setTimeElapsed] = useState(0);
+  const [countDown, setCountDown] = useState(3);
+  const [isCounting, setIsCounting] = useState(true);
+
+  // Countdown Timer: Runs until 0, then shows quiz content
+  useEffect(() => {
+    if (countDown > 0) {
+      const countDownTimer = setInterval(() => {
+        setCountDown((prevTime) => prevTime - 1);
+      }, 1000);
+
+      return () => clearInterval(countDownTimer);
+    } else {
+      setIsCounting(false); // Countdown finished, show quiz
+    }
+  }, [countDown]);
 
   //Timer
 
   useEffect(() => {
     if (showFinalMessage || !showStopConfirm) return; // Stop timer when quiz ends
 
-    const timer = setInterval(() => {
-      setTimeElapsed((prevTime) => prevTime + 1);
-    }, 1000);
+    const timer =
+      !isCounting &&
+      setInterval(() => {
+        setTimeElapsed((prevTime) => prevTime + 1);
+      }, 1000);
 
     return () => clearInterval(timer); // Cleanup on unmount
-  }, [showFinalMessage, showStopConfirm]);
+  }, [showFinalMessage, showStopConfirm, isCounting]);
 
   // Format time as MM:SS
   function formatTime(seconds) {
@@ -182,7 +209,6 @@ export default function PlayMode({ collections, flashCards }) {
     <StyledMain color={backgroundColor}>
       <StyledHeader>
         <StyledHeadline>{currentCollection.title}</StyledHeadline>
-        <p>Time: {formatTime(timeElapsed)}</p>
         {showStopConfirm ? (
           <StyledButton onClick={handleToggle} stop={stop}>
             ⏹ stop
@@ -211,31 +237,38 @@ export default function PlayMode({ collections, flashCards }) {
         </StyledMessageContainer>
       ) : (
         <>
-          <StyledCardContainer>
-            {filteredFlashCards.length > 0 ? (
-              <>
-                <PlayModeCard
-                  card={filteredFlashCards[currentPage]}
-                  showAnswer={showAnswer}
-                  setShowAnswer={setShowAnswer}
-                />
-              </>
-            ) : (
-              <p>No cards found.</p>
-            )}
-          </StyledCardContainer>
+          {isCounting ? (
+            <StyledCountDown>{countDown}</StyledCountDown> // Show countdown before quiz starts
+          ) : (
+            <>
+              <StyledCardContainer>
+                <p>Time: {formatTime(timeElapsed)}</p>
+                {filteredFlashCards.length > 0 ? (
+                  <>
+                    <PlayModeCard
+                      card={filteredFlashCards[currentPage]}
+                      showAnswer={showAnswer}
+                      setShowAnswer={setShowAnswer}
+                    />
+                  </>
+                ) : (
+                  <p>No cards found.</p>
+                )}
+              </StyledCardContainer>
 
-          <StyledFooter>
-            {/* <StyledButton onClick={handlePrev} firstPage={firstPage}>
+              <StyledFooter>
+                {/* <StyledButton onClick={handlePrev} firstPage={firstPage}>
               prev
             </StyledButton> */}
-            <button onClick={handleNext}>❌</button>
-            <p aria-label="page-counter">
-              {currentPage + 1} / {totalPages}
-            </p>
-            {/* <StyledButton onClick={handleNext}>next</StyledButton> */}
-            <button onClick={handleCorrect}>✅</button>
-          </StyledFooter>
+                <button onClick={handleNext}>❌</button>
+                <p aria-label="page-counter">
+                  {currentPage + 1} / {totalPages}
+                </p>
+                {/* <StyledButton onClick={handleNext}>next</StyledButton> */}
+                <button onClick={handleCorrect}>✅</button>
+              </StyledFooter>
+            </>
+          )}
         </>
       )}
     </StyledMain>
