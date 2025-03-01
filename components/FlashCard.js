@@ -70,7 +70,7 @@ const StyledBookmark = styled(Bookmark)`
   width: 36px;
 `;
 
-export default function FlashCard({ card, deleteCard, collections }) {
+export default function FlashCard({ card, onLiked, deleteCard, collections }) {
   const [showAnswer, setShowAnswer] = useState(false);
   const [showDeleteButton, setShowDeleteButton] = useState(true);
 
@@ -104,14 +104,9 @@ export default function FlashCard({ card, deleteCard, collections }) {
         <StyledBookmark
           onClick={handleLiked}
           fill={card.isLiked ? "#111111" : "none"}
-        >
-          {card.isCorrect ? "unliked" : "liked"}
-        </StyledBookmark>
+        />
         {showAnswer ? (
           <>
-            <Button onClick={handleLiked}>
-              {card.isLiked ? "unlike" : "like"}
-            </Button>
             <FlashCardBack
               answer={card.answer}
               collectionTitle={collectionTitle}

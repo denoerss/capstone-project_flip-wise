@@ -53,8 +53,7 @@ export default function Collection({
   const backgroundColor = currentCollection.color;
 
   // FlashCards
-  const activeFlashCards = flashCards.filter((card) => !card.isLiked);
-  const filteredFlashCards = activeFlashCards.filter(
+  const filteredFlashCards = flashCards.filter(
     (card) => card.collectionId === currentCollection.id
   );
 

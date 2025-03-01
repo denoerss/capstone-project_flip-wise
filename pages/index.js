@@ -17,7 +17,7 @@ const StyledHeader = styled.header`
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
 `;
 
-export default function HomePage({ flashCards, collections }) {
+export default function HomePage({ flashCards, collections, onLiked }) {
   const [showAllCards, setShowAllCards] = useState(false);
 
   return (
@@ -33,6 +33,7 @@ export default function HomePage({ flashCards, collections }) {
       </StyledHeader>
       {showAllCards ? (
         <FlashCardList
+          onLiked={onLiked}
           flashCards={flashCards}
           collections={collections}
           urlBase={"/collection"}
