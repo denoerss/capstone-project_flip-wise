@@ -70,12 +70,7 @@ const StyledBookmark = styled(Bookmark)`
   width: 36px;
 `;
 
-export default function FlashCard({
-  card,
-  onMarkCorrect,
-  deleteCard,
-  collections,
-}) {
+export default function FlashCard({ card, deleteCard, collections }) {
   const [showAnswer, setShowAnswer] = useState(false);
   const [showDeleteButton, setShowDeleteButton] = useState(true);
 
@@ -83,9 +78,9 @@ export default function FlashCard({
     setShowAnswer((prev) => !prev);
   }
 
-  function handleCorrect(event) {
+  function handleLiked(event) {
     event.stopPropagation();
-    onMarkCorrect(card.id);
+    onLiked(card.id);
   }
 
   function handleToggleButton(event) {
@@ -114,6 +109,9 @@ export default function FlashCard({
         </StyledBookmark>
         {showAnswer ? (
           <>
+            <Button onClick={handleLiked}>
+              {card.isLiked ? "unfavorite" : "favorite"}
+            </Button>
             <FlashCardBack
               answer={card.answer}
               collectionTitle={collectionTitle}

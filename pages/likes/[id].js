@@ -8,7 +8,7 @@ const StyledHeading = styled.h1`
 `;
 
 export default function ArchiveCollection({
-  onMarkCorrect,
+  onLiked,
   deleteCard,
   flashCards,
   collections,
@@ -34,7 +34,7 @@ export default function ArchiveCollection({
     <main>
       <StyledHeading>FlipWise</StyledHeading>
       <FlashCardList
-        onMarkCorrect={onMarkCorrect}
+        onLiked={onLiked}
         deleteCard={deleteCard}
         flashCards={filteredFlashCards}
         collections={collections}

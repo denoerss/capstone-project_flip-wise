@@ -7,18 +7,18 @@ const StyledHeadline = styled.h1`
 `;
 
 export default function ArchivePage({
-  onMarkCorrect,
+  onLiked,
   deleteCard,
   flashCards,
   collections,
 }) {
-  const archivedFlashCards = flashCards.filter((card) => card.isCorrect);
+  const archivedFlashCards = flashCards.filter((card) => card.isLiked);
 
   return (
     <main>
       <StyledHeadline>Likes</StyledHeadline>
       <FlashCardList
-        onMarkCorrect={onMarkCorrect}
+        onLiked={onLiked}
         deleteCard={deleteCard}
         flashCards={archivedFlashCards}
         collections={collections}

@@ -1,4 +1,3 @@
-import { collections } from "@/lib/data";
 import styled from "styled-components";
 
 // const CardFront = styled.div``;
@@ -6,6 +5,7 @@ import styled from "styled-components";
 const StyledQuestion = styled.p`
   font-size: 1.75rem;
   font-weight: 600;
+  margin: 0;
 `;
 
 export default function FlashCardFront({ question, collectionTitle }) {

@@ -51,6 +51,7 @@ export default function CollectionCard({
   href,
   collectionTitle,
   totalCards,
+  likedCards,
   color,
   collection,
 }) {

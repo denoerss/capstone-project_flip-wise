@@ -22,14 +22,14 @@ export default function App({ Component, pageProps }) {
     const flashCardsInCollection = flashCards.filter(
       (card) => card.collectionId === collection.id
     );
-    const correctCount = flashCardsInCollection.filter(
-      (card) => card.isCorrect
+    const likedCount = flashCardsInCollection.filter(
+      (card) => card.isLiked
     ).length;
 
     return {
       ...collection,
       totalCards: flashCardsInCollection.length,
-      correctCards: correctCount,
+      likedCards: likedCount,
     };
   });
 
@@ -38,7 +38,7 @@ export default function App({ Component, pageProps }) {
     const newFlashCard = {
       ...data,
       id: uid(),
-      isCorrect: false,
+      isLiked: false,
     };
 
     // handle submit behaviour by mode (add or edit)
@@ -51,7 +51,7 @@ export default function App({ Component, pageProps }) {
             ? {
                 id: flashCardToUpdate_id,
                 ...data,
-                isCorrect: flashCard.isCorrect,
+                isLiked: flashCard.isLiked,
               }
             : flashCard
         )
@@ -99,16 +99,19 @@ export default function App({ Component, pageProps }) {
     setCollections(updatedCollections);
   }
 
-  // toggle isCorrect key for cards
-  function onMarkCorrect(id) {
+  // toggle isLiked key for cards
+  function onLiked(id) {
     const updatedFlashCards = flashCards.map((flashCard) =>
       flashCard.id === id
-        ? { ...flashCard, isCorrect: !flashCard.isCorrect }
+        ? { ...flashCard, isLiked: !flashCard.isLiked }
         : flashCard
     );
 
     setFlashCards(updatedFlashCards);
   }
+
+  // navigation
+  const showNavigation = !router.pathname.includes("/play");
 
   return (
     <>
@@ -120,10 +123,10 @@ export default function App({ Component, pageProps }) {
         flashCards={flashCards}
         deleteCard={deleteCard}
         deleteCollection={deleteCollection}
-        onMarkCorrect={onMarkCorrect}
+        onLiked={onLiked}
         collections={collectionsWithCounts}
       />
-      <Navigation />
+      {showNavigation && <Navigation />}
     </>
   );
 }
