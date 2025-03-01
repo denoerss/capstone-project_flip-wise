@@ -102,15 +102,15 @@ export default function FlashCard({ card, deleteCard, collections }) {
     <StyledCard $showAnswer={showAnswer} onClick={flipCard}>
       <>
         <StyledBookmark
-          onClick={handleCorrect}
-          fill={card.isCorrect ? "#111111" : "none"}
+          onClick={handleLiked}
+          fill={card.isLiked ? "#111111" : "none"}
         >
-          {card.isCorrect ? "incorrect" : "correct"}
+          {card.isCorrect ? "unliked" : "liked"}
         </StyledBookmark>
         {showAnswer ? (
           <>
             <Button onClick={handleLiked}>
-              {card.isLiked ? "unfavorite" : "favorite"}
+              {card.isLiked ? "unlike" : "like"}
             </Button>
             <FlashCardBack
               answer={card.answer}

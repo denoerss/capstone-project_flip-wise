@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { Plus } from "lucide-react";
 
 const NavbarContainer = styled.nav`
@@ -32,6 +33,9 @@ const AddButton = styled(Plus)`
 `;
 
 export default function Navigation() {
+  const router = useRouter();
+  const pathname = router.pathname;
+
   return (
     <NavbarContainer>
       <NavItem href="/" $isActive={pathname === "/"}>
