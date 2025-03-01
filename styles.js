@@ -1,5 +1,8 @@
 import { createGlobalStyle } from "styled-components";
+import { Inter } from "next/font/google";
 
+const inter = Inter({ subsets: ["latin"] });
+console.log(inter);
 export default createGlobalStyle`
   *,
   *::before,
@@ -9,6 +12,6 @@ export default createGlobalStyle`
 
   body {
     margin: 0;
-    font-family: system-ui, sans-serif;
+    font-family: ${inter.style.fontFamily}, system-ui, sans-serif;
   }
 `;

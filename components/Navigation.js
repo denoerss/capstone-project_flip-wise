@@ -24,10 +24,7 @@ const NavItem = styled(Link)`
   text-decoration: none;
   font-size: 24px;
   padding: 10px;
-
-  &:hover {
-    color: #0070f3;
-  }
+  font-weight: ${({ $isActive }) => ($isActive ? "600" : "400")};
 `;
 
 const AddButton = styled(Plus)`
@@ -42,12 +39,17 @@ export default function Navigation() {
 
   return (
     <NavbarContainer>
-      <NavItem href="/">Home</NavItem>
+      <NavItem href="/" $isActive={pathname === "/"}>
+        Home
+      </NavItem>
 
-      <NavItem href={"/create-card"}>
+      <NavItem href={pathname === "/" ? "/create-collection" : "/create-card"}>
         <AddButton />
       </NavItem>
-      <NavItem href="/likes">Likes</NavItem>
+
+      <NavItem href="/likes" $isActive={pathname === "/likes"}>
+        Likes
+      </NavItem>
     </NavbarContainer>
   );
 }

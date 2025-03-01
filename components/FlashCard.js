@@ -11,7 +11,7 @@ const StyledCard = styled.li`
     $showAnswer ? "#A9A9A9" : "#D3D3D3"};
   position: relative;
   list-style: none;
-  width: 80%;
+  width: 80vw;
   border-radius: 20px;
   padding: 25px 25px 25px;
   line-height: 1.25;

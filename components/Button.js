@@ -57,6 +57,16 @@ const StyledButton = styled.button`
       border-radius: 24px;
       height: 48px;
     `}
+
+       ${({ $buttonVariant }) =>
+    $buttonVariant === "allCardsActive" &&
+    css`
+      border: 1px solid #000000;
+      border-radius: 24px;
+      height: 48px;
+      color: #ffffff;
+      background-color: #000000;
+    `}
 `;
 
 export default function Button({ onClick, children, buttonVariant }) {
