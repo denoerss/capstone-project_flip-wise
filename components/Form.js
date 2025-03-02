@@ -31,6 +31,20 @@ const StyledButtonContainer = styled.div`
   gap: 24px;
 `;
 
+const StyledInput = styled.input`
+  font-size: 16px;
+  border-radius: 12px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  &:focus {
+    outline: none;
+    border: 1px solid #000;
+  }
+`;
+
 export default function Form({
   onSubmit, // function to handle form submit for both add and edit mode
   collections,
@@ -58,7 +72,7 @@ export default function Form({
       >
         <StyledFormElement>
           <label htmlFor="question">Question:</label>
-          <input
+          <StyledInput
             type="text"
             id="question"
             name="question"
@@ -69,7 +83,7 @@ export default function Form({
 
         <StyledFormElement>
           <label htmlFor="answer">Answer:</label>
-          <input
+          <StyledInput
             type="text"
             id="answer"
             name="answer"

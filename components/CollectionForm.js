@@ -44,6 +44,20 @@ const StyledSubmitMessage = styled.p`
   text-align: center;
 `;
 
+const StyledInput = styled.input`
+  font-size: 16px;
+  border-radius: 12px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  &:focus {
+    outline: none;
+    border: 1px solid #000;
+  }
+`;
+
 export default function CollectionForm({ onSubmitCollection, prevValues }) {
   const [confirmMessage, setConfirmMessage] = useState("");
   const [collectionColor, setCollectionColor] = useState(
@@ -76,7 +90,7 @@ export default function CollectionForm({ onSubmitCollection, prevValues }) {
           <label htmlFor="title" required>
             Title:
           </label>
-          <input
+          <StyledInput
             type="text"
             id="title"
             name="title"
