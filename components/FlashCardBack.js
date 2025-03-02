@@ -1,26 +1,23 @@
 import styled from "styled-components";
 
 const StyledBack = styled.div`
+  transform: rotateY(180deg);
   backface-visibility: hidden;
-  transform: rotateY(180deg); /* Fix mirrored issue */
-`;
-
-const StyledQuestion = styled.p`
-  font-size: 1.75rem;
-  font-weight: 600;
-  margin: 0;
 `;
 
 const StyledAnswer = styled.p`
-  font-size: 1.2rem;
-  font-weight: 400;
+  font-size: 2rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default function FlashCardBack({ answer, question, collectionTitle }) {
   return (
     <StyledBack>
-      <p>{collectionTitle}</p>
-      <StyledQuestion>{question}</StyledQuestion>
+      {collectionTitle && <p>{collectionTitle}</p>}
+
       <StyledAnswer>{answer}</StyledAnswer>
     </StyledBack>
   );

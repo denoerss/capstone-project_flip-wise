@@ -5,16 +5,16 @@ import FlashCardList from "@/components/FlashCardList";
 import { useState } from "react";
 
 const StyledHeader = styled.header`
+  color: var(--black);
   height: 80px;
   width: 100%;
   position: sticky;
   top: 0;
-  background-color: #ffffff;
   z-index: 10;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+  padding: 0 45px;
 `;
 
 export default function HomePage({ flashCards, collections, onLiked }) {
@@ -43,6 +43,7 @@ export default function HomePage({ flashCards, collections, onLiked }) {
           collections={collections}
           emptyListMessage="No Collections available."
           urlBase={"collection"}
+          countType="total"
         />
       )}
     </main>

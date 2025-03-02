@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import styled from "styled-components";
+import { ChevronDown } from "lucide-react";
 
 const StyledDropdownContainer = styled.div`
   display: flex;
@@ -12,9 +13,9 @@ const StyledDropdownButton = styled.button`
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 1.75rem;
-  font-weight: bold;
-  margin: 40px 10px 10px 10px;
+  font-size: 32px;
+  font-weight: 600;
+  margin: 25px 10px 10px 25px;
   text-decoration: none;
   background-color: transparent;
   border: none;

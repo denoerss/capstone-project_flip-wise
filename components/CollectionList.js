@@ -19,7 +19,7 @@ const StyledEmptyListMessage = styled.p`
   margin-top: 5rem;
 `;
 
-export default function CollectionList({ collections, urlBase }) {
+export default function CollectionList({ collections, urlBase, countType }) {
   return (
     <>
       <StyledList initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
@@ -28,10 +28,13 @@ export default function CollectionList({ collections, urlBase }) {
             key={collection.id}
             href={`/${urlBase}/${collection.id}`}
             collectionTitle={collection.title}
-            totalCards={collection.totalCards}
-            likedCards={collection.likedCards}
             color={collection.color}
             collection={collection}
+            count={
+              countType === "total"
+                ? collection.totalCards
+                : collection.likedCards
+            }
           />
         ))}
       </StyledList>

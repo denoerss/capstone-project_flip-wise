@@ -1,10 +1,11 @@
+import { motion } from "motion/react";
 import FlashCardBack from "./FlashCardBack";
 import FlashCardFront from "./FlashCardFront";
 import styled from "styled-components";
 
-const StyledCard = styled.div`
+const StyledCard = styled(motion.div)`
   position: relative;
-  background-color: #fff;
+  background-color: var(--white);
   width: 90%;
   min-height: 35vh;
   border-radius: 35px;
@@ -14,6 +15,7 @@ const StyledCard = styled.div`
   &:hover {
     cursor: pointer;
   }
+  transform-style: preserve-3d;
 `;
 
 export default function PlayModeCard({ card, showAnswer, setShowAnswer }) {
@@ -22,14 +24,16 @@ export default function PlayModeCard({ card, showAnswer, setShowAnswer }) {
   }
 
   return (
-    <StyledCard onClick={toggleAnswer}>
-      <>
-        {showAnswer ? (
-          <FlashCardBack answer={card.answer} question={card.question} />
-        ) : (
-          <FlashCardFront question={card.question} />
-        )}
-      </>
+    <StyledCard
+      onClick={toggleAnswer}
+      animate={{ rotateY: showAnswer ? 180 : 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      {showAnswer ? (
+        <FlashCardBack answer={card.answer} question={card.question} />
+      ) : (
+        <FlashCardFront question={card.question} />
+      )}
     </StyledCard>
   );
 }

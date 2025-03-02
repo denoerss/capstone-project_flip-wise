@@ -1,25 +1,27 @@
 import { createGlobalStyle } from "styled-components";
 import { Inter } from "next/font/google";
+import Button from "./components/Button";
 
 // Fonts
 const inter = Inter({ subsets: ["latin"] });
 
 export default createGlobalStyle`
 :root {
-  // Primary Colors
-  --black: #151515;
-  --white:rgb(255, 255, 255);
-  --light-grey:#cacaca;
+  /* Primary Colors */
+  --black: #141414;
+  --white: #ffffff;
+  --light-grey:#e1e1e1;
   
-  // Collection Colors
-  --orange: #FF9C86;
-  --pink: #fec9fa;
+  /* Collection Colors */
   --red: #f57173;
-  --purple: #DA9EFF
+  --orange: #ff9c86;
+  --yellow: #f2ffab;
+  --green: #94bd94;
+  --blue: #acd8ff;
+  --pink: #fec9fa;
+  --purple: #da9eff
 
-
-  // Font-Sizes
-  // Font-Weights
+  /* Font Weights */
 };
 
   *,
@@ -31,9 +33,24 @@ export default createGlobalStyle`
   body {
     margin: 0;
     font-family: ${inter.style.fontFamily}, system-ui, sans-serif;
+    color: var(--black);
+    background-color: var(--white);
   }
 
   h1 {
-    color: var(--black) ;
+    font-size: 32px;
   }
+
+  h2 {
+    font-size: 25px;
+    font-weight: 600;
+  }
+
+  p {
+    font-size: 16px;
+  }
+
+
+
+  
 `;

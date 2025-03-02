@@ -8,8 +8,8 @@ const NavbarContainer = styled.nav`
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #fff;
-  box-shadow: 0 -1px 6px rgba(0, 0, 0, 0.3);
+  background-color: var(--white);
+  box-shadow: 0 -1px 6px var(--light-grey);
   padding: 10px 20px;
   display: flex;
   justify-content: space-around;
@@ -22,7 +22,7 @@ const NavbarContainer = styled.nav`
 const NavItem = styled(Link)`
   color: #333;
   text-decoration: none;
-  font-size: 24px;
+  font-size: 16px;
   padding: 10px;
   font-weight: ${({ $isActive }) => ($isActive ? "600" : "400")};
 `;

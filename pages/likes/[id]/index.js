@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import FlashCardList from "@/components/FlashCardList";
 import Dropdown from "@/components/Dropdown";
 import styled from "styled-components";
-import Link from "next/link";
+import Button from "@/components/Button";
 
 const StyledMain = styled.main`
   display: flex;
@@ -13,24 +13,16 @@ const StyledMain = styled.main`
 `;
 
 const StyledHeader = styled.header`
+  color: var(--black);
+  height: 80px;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
-  align-items: flex-start;
   justify-content: space-between;
-`;
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: #ffffff;
-  background-color: #000000;
-  padding: 0.9rem;
-  margin: 45px 35px 0 0;
-  min-width: 100px;
-  border-style: none;
-  border-radius: 30px;
-  font-size: 1.3rem;
-  &:hover {
-    cursor: pointer;
-  }
+  align-items: center;
+  padding: 0 45px;
 `;
 
 export default function LikesPage({
@@ -65,7 +57,15 @@ export default function LikesPage({
           collections={collections}
           currentCollection={currentCollection}
         />
-        <StyledLink href={`/likes/${id}/play`}>⏵ play</StyledLink>
+
+        <Button
+          onClick={(event) => {
+            event.stopPropagation();
+            router.push(`/likes/${id}/play`);
+          }}
+        >
+          ⏵ play
+        </Button>
       </StyledHeader>
 
       <FlashCardList

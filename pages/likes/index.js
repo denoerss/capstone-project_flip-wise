@@ -5,16 +5,16 @@ import styled from "styled-components";
 import { useState } from "react";
 
 const StyledHeader = styled.header`
+  color: var(--black);
   height: 80px;
   width: 100%;
   position: sticky;
   top: 0;
-  background-color: #ffffff;
   z-index: 10;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+  padding: 0 45px;
 `;
 
 const StyledHeadline = styled.h1`
@@ -52,7 +52,7 @@ export default function LikedPage({
             setSelectedCollection(null); // Reset selected collection when toggling all cards
           }}
         >
-          All Cards
+          all cards
         </Button>
       </StyledHeader>
 
@@ -66,7 +66,6 @@ export default function LikedPage({
         />
       ) : selectedCollection ? (
         <>
-          {/* <Button onClick={}>← Back</Button> */}
           <FlashCardList
             onLiked={onLiked}
             deleteCard={deleteCard}
