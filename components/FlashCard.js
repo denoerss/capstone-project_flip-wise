@@ -21,6 +21,9 @@ const StyledCard = styled(motion.li)`
   border-radius: 20px;
   padding: 25px;
   line-height: 1.25;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   transform-style: preserve-3d;
   &:hover {
     cursor: pointer;
@@ -38,9 +41,6 @@ const StyledButtonContainer = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   align-items: flex-end;
-  position: absolute;
-  bottom: 10px;
-  right: 20px;
   gap: 10px;
   margin-bottom: 15px;
 `;
