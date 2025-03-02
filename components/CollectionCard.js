@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useRouter } from "next/router";
 import Link from "next/link";
 
 const StyledCollectionContainer = styled.li`
@@ -55,8 +54,6 @@ export default function CollectionCard({
   color,
   collection,
 }) {
-  const router = useRouter();
-
   return (
     <StyledCollectionContainer>
       <StyledCollectionLink href={href} $inputColor={color}>
@@ -71,7 +68,9 @@ export default function CollectionCard({
           >
             edit
           </StyledEditButton>
-          <p>{totalCards} cards</p>
+          <p>
+            {likedCards} / {totalCards} cards liked
+          </p>
         </StyledCardInfo>
       </StyledCollectionLink>
     </StyledCollectionContainer>

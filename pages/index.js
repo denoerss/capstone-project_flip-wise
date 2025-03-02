@@ -42,6 +42,7 @@ export default function HomePage({ flashCards, collections, onLiked }) {
         <CollectionList
           collections={collections}
           emptyListMessage="No Collections available."
+          urlBase={"collection"}
         />
       )}
     </main>

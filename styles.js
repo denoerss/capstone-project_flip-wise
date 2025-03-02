@@ -7,11 +7,16 @@ const inter = Inter({ subsets: ["latin"] });
 export default createGlobalStyle`
 :root {
   // Primary Colors
-  --black: #000000;
-  --white: #ffffff;
+  --black: #151515;
+  --white:rgb(255, 255, 255);
   --light-grey:#cacaca;
   
   // Collection Colors
+  --orange: #FF9C86;
+  --pink: #fec9fa;
+  --red: #f57173;
+  --purple: #DA9EFF
+
 
   // Font-Sizes
   // Font-Weights

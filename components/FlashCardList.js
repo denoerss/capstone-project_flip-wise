@@ -20,7 +20,6 @@ const StyledEmptyListMessage = styled.p`
 
 export default function FlashCardList({
   flashCards,
-  filteredFlashCards,
   deleteCard,
   onLiked,
   collections,

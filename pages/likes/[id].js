@@ -52,14 +52,10 @@ export default function LikesPage({
   }
   const backgroundColor = currentCollection.color;
 
-  console.log(currentCollection);
-
   // FlashCards for this collection
   const filteredLikedFlashCards = flashCards.filter(
     (card) => card.collectionId === currentCollection.id && card.isLiked
   );
-
-  console.log(filteredLikedFlashCards);
 
   return (
     <StyledMain color={backgroundColor}>
@@ -69,7 +65,7 @@ export default function LikesPage({
           collections={collections}
           currentCollection={currentCollection}
         />
-        <StyledLink href={`/collection/${id}/play`}>⏵ play</StyledLink>
+        <StyledLink href={`/likes/${id}/play`}>⏵ play</StyledLink>
       </StyledHeader>
 
       <FlashCardList

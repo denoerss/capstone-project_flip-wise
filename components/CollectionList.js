@@ -19,17 +19,17 @@ const StyledEmptyListMessage = styled.p`
   margin-top: 5rem;
 `;
 
-export default function CollectionList({ collections }) {
+export default function CollectionList({ collections, urlBase }) {
   return (
     <>
       <StyledList initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         {collections.map((collection) => (
           <CollectionCard
             key={collection.id}
-            href={`/collection/${collection.id}`}
+            href={`/${urlBase}/${collection.id}`}
             collectionTitle={collection.title}
             totalCards={collection.totalCards}
-            correctCards={collection.correctCards}
+            likedCards={collection.likedCards}
             color={collection.color}
             collection={collection}
           />

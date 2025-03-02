@@ -22,7 +22,7 @@ const StyledHeadline = styled.h1`
   justify-content: center;
 `;
 
-export default function LikesPage({
+export default function LikedPage({
   onLiked,
   deleteCard,
   flashCards,
@@ -78,6 +78,7 @@ export default function LikesPage({
         <CollectionList
           collections={collectionsWithLikedCards}
           emptyListMessage="No collections with liked cards."
+          urlBase={"likes"}
         />
       )}
     </main>
