@@ -149,7 +149,6 @@ export default function CollectionForm({ onSubmitCollection, prevValues }) {
             value={collectionColor}
             onChange={(event) => setCollectionColor(event.target.value)}
             required
-            disabled
           />
           <StyledColorsContainer>
             {initialColors.map((color) => (

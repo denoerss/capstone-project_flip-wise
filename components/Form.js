@@ -13,6 +13,7 @@ const StyledForm = styled.form`
 `;
 
 const StyledSelect = styled.select`
+  font-size: 16px;
   height: 40px;
   background-color: transparent;
   border-style: solid;

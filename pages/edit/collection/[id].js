@@ -16,7 +16,8 @@ const StyledDeleteContainer = styled.div`
 `;
 
 const StyledWarning = styled.p`
-  background-color: #ffa500;
+  color: red;
+
   padding: 5px;
   border-radius: 10px;
   margin-bottom: 10px;

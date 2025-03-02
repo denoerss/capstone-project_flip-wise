@@ -11,17 +11,6 @@ export default createGlobalStyle`
   --black: #141414;
   --white: #ffffff;
   --light-grey:#e1e1e1;
-  
-  /* Collection Colors */
-  --red: #f57173;
-  --orange: #ff9c86;
-  --yellow:#DAF7A6;
-  --green: #94bd94;
-  --blue: #acd8ff;
-  --pink: #fec9fa;
-  --purple: #da9eff;
-
-  /* Font Weights */
 };
 
   *,
