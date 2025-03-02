@@ -13,16 +13,9 @@ const StyledMain = styled.main`
 `;
 
 const StyledHeader = styled.header`
-  color: var(--black);
-  height: 80px;
-  width: 100%;
-  position: sticky;
-  top: 0;
-  z-index: 10;
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
-  align-items: center;
-  padding: 0 45px;
 `;
 
 export default function LikesPage({

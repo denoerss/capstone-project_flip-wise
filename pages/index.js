@@ -6,15 +6,17 @@ import { useState } from "react";
 
 const StyledHeader = styled.header`
   color: var(--black);
-  height: 80px;
+  height: 85px;
   width: 100%;
   position: sticky;
   top: 0;
   z-index: 10;
+  background-color: var(--white);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 45px;
+  border-radius: 0 0 24px 24px;
 `;
 
 export default function HomePage({ flashCards, collections, onLiked }) {

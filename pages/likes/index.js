@@ -19,11 +19,6 @@ const StyledHeader = styled.header`
   border-radius: 0 0 24px 24px;
 `;
 
-const StyledHeadline = styled.h1`
-  display: flex;
-  justify-content: center;
-`;
-
 export default function LikedPage({
   onLiked,
   deleteCard,

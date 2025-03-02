@@ -13,7 +13,7 @@ const flipVariants = {
 };
 
 const StyledCard = styled(motion.li)`
-  background-color: var(--white);
+  background-color: var(--light-grey);
   position: relative;
   list-style: none;
   min-height: 300px;
@@ -115,7 +115,7 @@ export default function FlashCard({ card, onLiked, deleteCard, collections }) {
         <StyledBookmark
           onClick={handleLiked}
           $showAnswer={showAnswer}
-          fill={card.isLiked ? "#111111" : "#e1e1e1"}
+          fill={card.isLiked ? "#111111" : "#ffffff"}
           strokeWidth={1.25}
           animate={{ scale: card.isLiked ? 1.1 : 1 }}
         />

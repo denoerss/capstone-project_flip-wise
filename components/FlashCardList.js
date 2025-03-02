@@ -9,6 +9,7 @@ const StyledList = styled(motion.ul)`
   justify-content: center;
   gap: 15px;
   padding-left: 0;
+  margin-bottom: 100px;
 `;
 
 const StyledEmptyListMessage = styled.p`

@@ -26,11 +26,25 @@ const StyledColors = styled.button`
   background-color: ${(prop) => prop.$inputColor};
 `;
 
-const StyledColorPicker = styled.div`
+const StyledColorsContainer = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   gap: 12px;
+`;
+
+const StyledColorPicker = styled.input`
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50vw;
+  height: 45px;
+  border-style: none;
+  background-color: transparent;
 `;
 
 const StyledButtonContainer = styled.div`
@@ -107,7 +121,15 @@ export default function CollectionForm({ onSubmitCollection, prevValues }) {
           />
 
           <label htmlFor="colorPicker">Color:</label>
-          <StyledColorPicker>
+          <StyledColorPicker
+            type="color"
+            name="color"
+            id="color"
+            value={collectionColor}
+            onChange={(event) => setCollectionColor(event.target.value)}
+            required
+          />
+          <StyledColorsContainer>
             {initialColors.map((color) => (
               <StyledColors
                 type="button"
@@ -117,15 +139,7 @@ export default function CollectionForm({ onSubmitCollection, prevValues }) {
                 onClick={() => setCollectionColor(color)}
               />
             ))}
-            <input
-              type="color"
-              name="color"
-              id="color"
-              value={collectionColor}
-              onChange={(event) => setCollectionColor(event.target.value)}
-              required
-            />
-          </StyledColorPicker>
+          </StyledColorsContainer>
 
           <StyledButtonContainer>
             <Button type="submit" onClick={handleCancel}>
