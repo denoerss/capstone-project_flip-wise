@@ -15,11 +15,11 @@ export default createGlobalStyle`
   /* Collection Colors */
   --red: #f57173;
   --orange: #ff9c86;
-  --yellow: #f2ffab;
+  --yellow:#DAF7A6;
   --green: #94bd94;
   --blue: #acd8ff;
   --pink: #fec9fa;
-  --purple: #da9eff
+  --purple: #da9eff;
 
   /* Font Weights */
 };

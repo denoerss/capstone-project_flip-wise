@@ -16,7 +16,7 @@ const StyledFormElement = styled.div`
   display: flex;
   gap: 10px;
   flex-direction: column;
-  width: 250px;
+  width: 50vw;
 `;
 
 const SubmitMessage = styled.p`

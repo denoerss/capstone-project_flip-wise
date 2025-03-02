@@ -13,7 +13,7 @@ const StyledFormContainer = styled.div`
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  width: 250px;
+  width: 50vw;
   gap: 10px;
 `;
 
@@ -63,7 +63,15 @@ export default function CollectionForm({ onSubmitCollection, prevValues }) {
   const [collectionColor, setCollectionColor] = useState(
     prevValues?.color || "#cacaca"
   );
-  const initialColors = ["#c28375", "#DAF7A6", "#75c297", "#7597c2", "#ab75c2"];
+  const initialColors = [
+    "#f57173",
+    "#ff9c86",
+    "#f2ffab",
+    "#94bd94",
+    "#acd8ff",
+    "#fec9fa",
+    "#da9eff",
+  ];
 
   function handleCancel(event) {
     event.preventDefault();
