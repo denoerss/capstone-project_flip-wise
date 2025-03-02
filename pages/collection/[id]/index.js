@@ -52,7 +52,7 @@ export default function Collection({
   }
   const backgroundColor = currentCollection.color;
 
-  // FlashCards
+  // FlashCards for this collection
   const filteredFlashCards = flashCards.filter(
     (card) => card.collectionId === currentCollection.id
   );
