@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import css from "styled-jsx/css";
 import { useState } from "react";
 import FlashCardFront from "./FlashCardFront";
 import FlashCardBack from "./FlashCardBack";
@@ -15,6 +16,11 @@ const StyledCard = styled.li`
   border-radius: 20px;
   padding: 25px 25px 25px;
   line-height: 1.25;
+  //Flip animation
+  transition: transform 0.5s ease-in-out;
+  transform: ${({ $flipped }) => ($flipped ? "rotateY(180deg)" : "rotateY(0)")};
+  transform-style: preserve-3d;
+
   &:hover {
     cursor: pointer;
   }
@@ -26,6 +32,8 @@ const StyledButtonContainer = styled.div`
   justify-content: flex-end;
   align-items: flex-end;
   gap: 10px;
+  transform: ${({ $flipped }) => $flipped && "rotateY(180deg)"};
+  backface-visibility: ${({ $flipped }) => ($flipped ? "hidden" : "hidden")};
 `;
 
 const StyledDeleteContainer = styled.div`
@@ -65,9 +73,11 @@ const StyledEditLink = styled(Link)`
 
 const StyledBookmark = styled(Bookmark)`
   position: absolute;
-  right: 30px;
+  ${({ $flipped }) => ($flipped ? "left: 30px;" : "right: 30px;")}
   height: 36px;
   width: 36px;
+  transform: ${({ $flipped }) => $flipped && "rotateY(180deg)"};
+  backface-visibility: ${({ $flipped }) => ($flipped ? "hidden" : "hidden")};
 `;
 
 export default function FlashCard({ card, onLiked, deleteCard, collections }) {
@@ -99,10 +109,15 @@ export default function FlashCard({ card, onLiked, deleteCard, collections }) {
   )?.title;
 
   return (
-    <StyledCard $showAnswer={showAnswer} onClick={flipCard}>
+    <StyledCard
+      $showAnswer={showAnswer}
+      $flipped={showAnswer}
+      onClick={flipCard}
+    >
       <>
         <StyledBookmark
           onClick={handleLiked}
+          $flipped={showAnswer}
           fill={card.isLiked ? "#111111" : "none"}
         />
         {showAnswer ? (
@@ -113,12 +128,14 @@ export default function FlashCard({ card, onLiked, deleteCard, collections }) {
             />
           </>
         ) : (
-          <FlashCardFront
-            question={card.question}
-            collectionTitle={collectionTitle}
-          />
+          <>
+            <FlashCardFront
+              question={card.question}
+              collectionTitle={collectionTitle}
+            />
+          </>
         )}
-        <StyledButtonContainer>
+        <StyledButtonContainer $flipped={showAnswer}>
           <StyledEditLink
             href={`/edit/card/${card.id}`}
             onClick={(event) => {
