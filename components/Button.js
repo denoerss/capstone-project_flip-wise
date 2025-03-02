@@ -13,7 +13,16 @@ const StyledButton = styled.button`
   }
 
   ${({ $buttonVariant }) =>
-    $buttonVariant === "black" &&
+    $buttonVariant === "play" &&
+    css`
+      border: 1px solid var(--black);
+      color: var(--white);
+      background-color: var(--black);
+      margin-top: 20px;
+    `}
+
+  ${({ $buttonVariant }) =>
+    $buttonVariant === "allCards" &&
     css`
       border: 1px solid var(--black);
       color: var(--white);

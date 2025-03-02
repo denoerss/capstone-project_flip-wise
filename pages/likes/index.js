@@ -43,7 +43,7 @@ export default function LikedPage({
       <StyledHeader>
         <h1>Likes</h1>
         <Button
-          buttonVariant={showAllLikedCards ? "black" : null}
+          buttonVariant={showAllLikedCards ? "allCards" : null}
           onClick={() => {
             setShowAllLikedCards(!showAllLikedCards);
             setSelectedCollection(null); // Reset selected collection when toggling all cards

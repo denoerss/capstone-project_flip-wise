@@ -16,6 +16,7 @@ const StyledHeader = styled.header`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  padding-right: 25px;
 `;
 
 export default function LikesPage({
@@ -52,7 +53,7 @@ export default function LikesPage({
         />
 
         <Button
-          buttonVariant="black"
+          buttonVariant="play"
           onClick={(event) => {
             event.stopPropagation();
             router.push(`/likes/${id}/play`);

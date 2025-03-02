@@ -199,7 +199,7 @@ export default function PlayMode({ collections, flashCards }) {
       <StyledHeader>
         <StyledHeadline>{currentCollection.title}</StyledHeadline>
         {showStopConfirm ? (
-          <Button onClick={handleToggle} stop={stop}>
+          <Button buttonVariant="play" onClick={handleToggle} stop={stop}>
             ⏹ stop
           </Button>
         ) : (
