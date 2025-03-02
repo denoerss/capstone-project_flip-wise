@@ -5,6 +5,7 @@ import { flashcards as initialFlashCards } from "@/lib/data";
 import { collections as initialCollections } from "@/lib/data";
 import { uid } from "uid";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 export default function App({ Component, pageProps }) {
   const [flashCards, setFlashCards] = useLocalStorageState("flashCards", {

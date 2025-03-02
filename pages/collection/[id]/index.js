@@ -55,7 +55,7 @@ export default function Collection({
           buttonVariant="play"
           onClick={(event) => {
             event.stopPropagation();
-            router.push(`/likes/${id}/play`);
+            router.push(`/collection/${id}/play`);
           }}
         >
           ⏵ play

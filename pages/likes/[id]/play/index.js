@@ -36,7 +36,7 @@ const StyledHeader = styled.header`
   width: 100%;
   padding: 0 2.25rem;
   position: fixed;
-  top: 2rem;
+  top: 0.2rem;
   z-index: 100;
   transition: transform 0.3s ease;
 `;
@@ -73,6 +73,11 @@ const StyledMessageContainer = styled.div`
   align-items: center;
   flex-grow: 1;
   padding-bottom: 20px;
+`;
+
+const StyledMessage = styled.p`
+  text-align: center;
+  line-height: 1.75;
 `;
 
 const StyledFooter = styled.footer`
@@ -245,11 +250,11 @@ export default function PlayMode({ collections, flashCards }) {
         {gameState === GAME_STATES.END && (
           <StyledMessageContainer>
             <h2>Well done!</h2>
-            <p>
+            <StyledMessage>
               You have answered <br />
               {score} / {totalPages} questions correctly <br />
               in {formatTime(timeElapsed)} seconds.
-            </p>
+            </StyledMessage>
             <StyledButtonContainer>
               <Button onClick={handleRetry}>retry</Button>
               <Button onClick={handleConfirmStop}>quit</Button>

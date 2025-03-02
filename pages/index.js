@@ -21,7 +21,6 @@ const StyledHeader = styled.header`
 
 export default function HomePage({ flashCards, collections, onLiked }) {
   const [showAllCards, setShowAllCards] = useState(false);
-
   return (
     <main>
       <StyledHeader>

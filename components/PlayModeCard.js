@@ -5,6 +5,9 @@ import styled from "styled-components";
 
 const StyledCard = styled(motion.div)`
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: var(--white);
   width: 90%;
   min-height: 35vh;

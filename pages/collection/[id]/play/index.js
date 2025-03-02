@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { Check } from "lucide-react";
+import Button from "@/components/Button";
 
 const StyledMain = styled.main`
   display: flex;
@@ -35,7 +36,7 @@ const StyledHeader = styled.header`
   width: 100%;
   padding: 0 2.25rem;
   position: fixed;
-  top: 2rem;
+  top: 0.2rem;
   z-index: 100;
   transition: transform 0.3s ease;
 `;
@@ -84,6 +85,11 @@ const StyledMessageContainer = styled.div`
   padding-bottom: 20px;
 `;
 
+const StyledMessage = styled.p`
+  text-align: center;
+  line-height: 1.75;
+`;
+
 const StyledFooter = styled.footer`
   display: flex;
   justify-content: space-between;
@@ -129,7 +135,7 @@ export default function PlayMode({ collections, flashCards }) {
     }, 1000);
 
     return () => clearTimeout(timeoutId);
-  }, [countDown]);
+  }, [countDown, isCounting]);
 
   //Timer
   useEffect(() => {
@@ -244,11 +250,11 @@ export default function PlayMode({ collections, flashCards }) {
         {gameState === GAME_STATES.END && (
           <StyledMessageContainer>
             <h2>Well done!</h2>
-            <p>
+            <StyledMessage>
               You have answered <br />
               {score} / {totalPages} questions correctly <br />
               in {formatTime(timeElapsed)} seconds.
-            </p>
+            </StyledMessage>
             <StyledButtonContainer>
               <Button onClick={handleRetry}>retry</Button>
               <Button onClick={handleConfirmStop}>quit</Button>
