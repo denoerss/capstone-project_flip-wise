@@ -12,6 +12,13 @@ const StyledForm = styled.form`
   width: 100vw;
 `;
 
+const StyledSelect = styled.select`
+  height: 40px;
+  background-color: transparent;
+  border-style: solid;
+  border-radius: 10px;
+`;
+
 const StyledFormElement = styled.div`
   display: flex;
   gap: 10px;
@@ -94,7 +101,7 @@ export default function Form({
 
         <StyledFormElement>
           <label htmlFor="collections">Collection:</label>
-          <select
+          <StyledSelect
             id="collections"
             name="collectionId"
             required
@@ -108,7 +115,7 @@ export default function Form({
                 {collection.title}
               </option>
             ))}
-          </select>
+          </StyledSelect>
         </StyledFormElement>
 
         <StyledButtonContainer>

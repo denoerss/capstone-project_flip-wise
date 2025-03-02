@@ -31,6 +31,7 @@ const StyledColorsContainer = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
+  border-radius: 20px;
   gap: 12px;
 `;
 
@@ -62,7 +63,7 @@ const StyledInput = styled.input`
   font-size: 16px;
   border-radius: 12px;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--light-grey);
   width: 100%;
   margin-top: 5px;
   margin-bottom: 5px;
@@ -75,16 +76,36 @@ const StyledInput = styled.input`
 export default function CollectionForm({ onSubmitCollection, prevValues }) {
   const [confirmMessage, setConfirmMessage] = useState("");
   const [collectionColor, setCollectionColor] = useState(
-    prevValues?.color || "#cacaca"
+    prevValues?.color || "#d3edff"
   );
   const initialColors = [
-    "#f57173",
-    "#ff9c86",
-    "#f2ffab",
-    "#94bd94",
-    "#acd8ff",
-    "#fec9fa",
-    "#da9eff",
+    "#d3edff",
+    "#b8dcff",
+    "#92c5f0",
+
+    "#e6b3ff",
+    "#c889ff",
+    "#a46fe1",
+
+    "#ffc4e2",
+    "#ff9de0",
+    "#d87cbc",
+
+    "#ffb3b5",
+    "#f98b8d",
+    "#d96a6e",
+
+    "#ffb7a3",
+    "#ffa58d",
+    "#e07d69",
+
+    "#fff7a3",
+    "#eef88c",
+    "#e3ee6a",
+
+    "#c6e6c6",
+    "#a0cfa0",
+    "#83af83",
   ];
 
   function handleCancel(event) {
@@ -128,6 +149,7 @@ export default function CollectionForm({ onSubmitCollection, prevValues }) {
             value={collectionColor}
             onChange={(event) => setCollectionColor(event.target.value)}
             required
+            disabled
           />
           <StyledColorsContainer>
             {initialColors.map((color) => (
