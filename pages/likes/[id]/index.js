@@ -59,6 +59,7 @@ export default function LikesPage({
         />
 
         <Button
+          buttonVariant="black"
           onClick={(event) => {
             event.stopPropagation();
             router.push(`/likes/${id}/play`);

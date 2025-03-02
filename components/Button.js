@@ -11,22 +11,13 @@ const StyledButton = styled.button`
     cursor: pointer;
     font-style: italic;
   }
-  ${({ $buttonVariant }) =>
-    $buttonVariant === "allCards" &&
-    css`
-      border: 1px solid #000000;
-      border-radius: 24px;
-      height: 48px;
-    `}
 
   ${({ $buttonVariant }) =>
-    $buttonVariant === "allCardsActive" &&
+    $buttonVariant === "black" &&
     css`
-      border: 1px solid #000000;
-      border-radius: 24px;
-      height: 48px;
-      color: #ffffff;
-      background-color: #000000;
+      border: 1px solid var(--black);
+      color: var(--white);
+      background-color: var(--black);
     `}
 `;
 

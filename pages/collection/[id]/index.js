@@ -51,6 +51,7 @@ export default function Collection({
           currentCollection={currentCollection}
         />
         <Button
+          buttonVariant="black"
           onClick={(event) => {
             event.stopPropagation();
             router.push(`/likes/${id}/play`);

@@ -25,7 +25,7 @@ export default function HomePage({ flashCards, collections, onLiked }) {
       <StyledHeader>
         <h1>Collections</h1>
         <Button
-          buttonVariant={showAllCards ? "allCardsActive" : "allCards"}
+          buttonVariant={showAllCards ? "black" : null}
           onClick={() => setShowAllCards(!showAllCards)}
         >
           all cards
