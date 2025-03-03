@@ -111,7 +111,7 @@ export default function CollectionForm({ onSubmitCollection, prevValues }) {
   function handleCancel(event) {
     event.preventDefault();
     event.target.form.reset(); // reset the form
-    setCollectionColor(prevValues?.color || ""); // Reset color to previous value
+    setCollectionColor(prevValues?.color || "#d3edff"); // Reset color to previous value
   }
 
   return (
