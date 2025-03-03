@@ -12,11 +12,19 @@ const StyledForm = styled.form`
   width: 100vw;
 `;
 
+const StyledSelect = styled.select`
+  font-size: 16px;
+  height: 40px;
+  background-color: transparent;
+  border-style: solid;
+  border-radius: 10px;
+`;
+
 const StyledFormElement = styled.div`
   display: flex;
   gap: 10px;
   flex-direction: column;
-  width: 250px;
+  width: 50vw;
 `;
 
 const SubmitMessage = styled.p`
@@ -29,6 +37,20 @@ const StyledButtonContainer = styled.div`
   justify-content: space-evenly;
   margin-top: 50px;
   gap: 24px;
+`;
+
+const StyledInput = styled.input`
+  font-size: 16px;
+  border-radius: 12px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  &:focus {
+    outline: none;
+    border: 1px solid #000;
+  }
 `;
 
 export default function Form({
@@ -58,7 +80,7 @@ export default function Form({
       >
         <StyledFormElement>
           <label htmlFor="question">Question:</label>
-          <input
+          <StyledInput
             type="text"
             id="question"
             name="question"
@@ -69,7 +91,7 @@ export default function Form({
 
         <StyledFormElement>
           <label htmlFor="answer">Answer:</label>
-          <input
+          <StyledInput
             type="text"
             id="answer"
             name="answer"
@@ -80,7 +102,7 @@ export default function Form({
 
         <StyledFormElement>
           <label htmlFor="collections">Collection:</label>
-          <select
+          <StyledSelect
             id="collections"
             name="collectionId"
             required
@@ -94,7 +116,7 @@ export default function Form({
                 {collection.title}
               </option>
             ))}
-          </select>
+          </StyledSelect>
         </StyledFormElement>
 
         <StyledButtonContainer>

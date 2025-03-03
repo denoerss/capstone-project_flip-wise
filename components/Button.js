@@ -1,43 +1,32 @@
 import styled, { css } from "styled-components";
 
 const StyledButton = styled.button`
-  min-width: 80px;
-  padding: 1rem;
-  border-style: none;
-  border-radius: 10px;
-  font-size: 1.25rem;
+  background-color: transparent;
+  border: 1.5px solid var(--black);
+  border-radius: 50px;
+  padding: 15px;
+  min-width: 100px;
+  font-size: 16px;
   &:hover {
     cursor: pointer;
+    font-style: italic;
   }
 
   ${({ $buttonVariant }) =>
-    $buttonVariant === "delete" &&
+    $buttonVariant === "play" &&
     css`
-      background-color: #ff6347;
+      border: 1px solid var(--black);
+      color: var(--white);
+      background-color: var(--black);
+      margin-top: 20px;
     `}
 
   ${({ $buttonVariant }) =>
-    $buttonVariant === "confirm" &&
+    $buttonVariant === "allCards" &&
     css`
-      background-color: #eedc82;
-    `}
-
-  ${({ $buttonVariant }) =>
-    $buttonVariant === "cancel" &&
-    css`
-      background-color: #e57373;
-    `}
-
-  ${({ $buttonVariant }) =>
-    $buttonVariant === "edit" &&
-    css`
-      background-color: #8c97d7;
-    `}
-
-      ${({ $buttonVariant }) =>
-    $buttonVariant === "create" &&
-    css`
-      border: 1px solid #000000;
+      border: 1px solid var(--black);
+      color: var(--white);
+      background-color: var(--black);
     `}
 `;
 

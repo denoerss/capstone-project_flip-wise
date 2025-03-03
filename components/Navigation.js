@@ -1,19 +1,22 @@
 import styled from "styled-components";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { Plus } from "lucide-react";
 
 const NavbarContainer = styled.nav`
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #fff;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  background-color: var(--white);
+  box-shadow: 0 -1px 6px var(--light-grey);
   padding: 10px 20px;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  height: 60px;
+  height: 80px;
   z-index: 10;
+  border-radius: 24px 24px 0 0;
 `;
 
 const NavItem = styled(Link)`
@@ -21,18 +24,31 @@ const NavItem = styled(Link)`
   text-decoration: none;
   font-size: 16px;
   padding: 10px;
+  font-weight: ${({ $isActive }) => ($isActive ? "600" : "400")};
+`;
 
-  &:hover {
-    color: #0070f3;
-  }
+const AddButton = styled(Plus)`
+  width: 36px;
+  height: 36px;
 `;
 
 export default function Navigation() {
+  const router = useRouter();
+  const pathname = router.pathname;
+
   return (
     <NavbarContainer>
-      <NavItem href="/">Home</NavItem>
-      <NavItem href={"/create-card"}>+</NavItem>
-      <NavItem href="/archive">Archive</NavItem>
+      <NavItem href="/" $isActive={pathname === "/"}>
+        Home
+      </NavItem>
+
+      <NavItem href={pathname === "/" ? "/create-collection" : "/create-card"}>
+        <AddButton />
+      </NavItem>
+
+      <NavItem href="/likes" $isActive={pathname === "/likes"}>
+        Likes
+      </NavItem>
     </NavbarContainer>
   );
 }

@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
 import PlayModeCard from "@/components/PlayModeCard";
+import Button from "@/components/Button";
 import formatTime from "@/lib/utils";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { Check } from "lucide-react";
-import Button from "@/components/Button";
 
 const StyledMain = styled.main`
   display: flex;
@@ -53,16 +53,6 @@ const StyledButtonContainer = styled.div`
   gap: 20px;
 `;
 
-const StyledX = styled(X)`
-  width: 36px;
-  height: 36px;
-`;
-
-const StyledCheck = styled(Check)`
-  width: 36px;
-  height: 36px;
-`;
-
 const StyledCardContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -99,6 +89,16 @@ const StyledFooter = styled.footer`
   width: 100%;
   padding: 30px;
   z-index: 200;
+`;
+
+const StyledX = styled(X)`
+  width: 36px;
+  height: 36px;
+`;
+
+const StyledCheck = styled(Check)`
+  width: 36px;
+  height: 36px;
 `;
 
 const GAME_STATES = {
@@ -160,7 +160,7 @@ export default function PlayMode({ collections, flashCards }) {
 
   // Pages / Cards
   const filteredFlashCards = flashCards.filter(
-    (card) => card.collectionId === currentCollection.id
+    (card) => card.collectionId === currentCollection.id && card.isLiked
   );
   const totalPages = filteredFlashCards.length;
 
@@ -169,7 +169,7 @@ export default function PlayMode({ collections, flashCards }) {
     setShowStopConfirm((prev) => !prev);
   }
   function handleConfirmStop() {
-    router.push(`/collection/${id}`);
+    router.push(`/likes/${id}`);
   }
 
   // Nav Functions
@@ -205,7 +205,7 @@ export default function PlayMode({ collections, flashCards }) {
       <StyledHeader>
         <StyledHeadline>{currentCollection.title}</StyledHeadline>
         {showStopConfirm ? (
-          <Button buttonVariant="play" onClick={handleToggle} stop={stop}>
+          <Button buttonVariant="allCards" onClick={handleToggle} stop={stop}>
             ⏹ stop
           </Button>
         ) : (

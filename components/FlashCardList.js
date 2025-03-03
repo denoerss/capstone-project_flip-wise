@@ -1,13 +1,15 @@
 import FlashCard from "./FlashCard";
 import styled from "styled-components";
+import { motion } from "motion/react";
 
-const StyledList = styled.ul`
+const StyledList = styled(motion.ul)`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 15px;
   padding-left: 0;
+  margin-bottom: 100px;
 `;
 
 const StyledEmptyListMessage = styled.p`
@@ -25,7 +27,7 @@ export default function FlashCardList({
 }) {
   return (
     <>
-      <StyledList>
+      <StyledList initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         {flashCards.map((card) => (
           <FlashCard
             key={card.id}

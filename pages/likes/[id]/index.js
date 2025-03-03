@@ -19,7 +19,7 @@ const StyledHeader = styled.header`
   padding-right: 25px;
 `;
 
-export default function Collection({
+export default function LikesPage({
   onLiked,
   deleteCard,
   flashCards,
@@ -39,23 +39,24 @@ export default function Collection({
   const backgroundColor = currentCollection.color;
 
   // FlashCards for this collection
-  const filteredFlashCards = flashCards.filter(
-    (card) => card.collectionId === currentCollection.id
+  const filteredLikedFlashCards = flashCards.filter(
+    (card) => card.collectionId === currentCollection.id && card.isLiked
   );
 
   return (
     <StyledMain color={backgroundColor}>
       <StyledHeader>
         <Dropdown
-          urlBase="collection"
+          urlBase="likes"
           collections={collections}
           currentCollection={currentCollection}
         />
+
         <Button
           buttonVariant="play"
           onClick={(event) => {
             event.stopPropagation();
-            router.push(`/collection/${id}/play`);
+            router.push(`/likes/${id}/play`);
           }}
         >
           ⏵ play
@@ -65,7 +66,7 @@ export default function Collection({
       <FlashCardList
         onLiked={onLiked}
         deleteCard={deleteCard}
-        flashCards={filteredFlashCards}
+        flashCards={filteredLikedFlashCards}
         collections={collections}
         currentCollection={currentCollection}
       />

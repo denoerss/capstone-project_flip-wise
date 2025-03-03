@@ -1,22 +1,39 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import FlashCardFront from "./FlashCardFront";
 import FlashCardBack from "./FlashCardBack";
 import Button from "./Button";
-import Link from "next/link";
+import { Bookmark } from "lucide-react";
 
-const StyledCard = styled.li`
-  background-color: ${({ $showAnswer }) =>
-    $showAnswer ? "#A9A9A9" : "#D3D3D3"};
+const flipVariants = {
+  front: { rotateY: 0 },
+  back: { rotateY: 180 },
+};
+
+const StyledCard = styled(motion.li)`
+  background-color: var(--light-grey);
   position: relative;
   list-style: none;
-  width: 80%;
+  min-height: 300px;
+  width: 95vw;
   border-radius: 20px;
-  padding: 25px 25px 25px;
+  padding: 25px;
   line-height: 1.25;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform-style: preserve-3d;
   &:hover {
     cursor: pointer;
   }
+`;
+
+// New wrapper that counter-rotates the buttons.
+const ButtonWrapper = styled.div`
+  transform: ${({ $showAnswer }) => ($showAnswer ? "rotateY(180deg)" : "none")};
+  backface-visibility: hidden;
 `;
 
 const StyledButtonContainer = styled.div`
@@ -25,12 +42,14 @@ const StyledButtonContainer = styled.div`
   justify-content: flex-end;
   align-items: flex-end;
   gap: 10px;
+  margin-bottom: 15px;
 `;
 
 const StyledDeleteContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-end;
 `;
 
 const StyledConfirmContainer = styled.div`
@@ -41,30 +60,24 @@ const StyledConfirmContainer = styled.div`
 `;
 
 const StyledWarning = styled.p`
-  background-color: #ffa500;
   padding: 5px;
   border-radius: 10px;
   margin-bottom: 10px;
 `;
 
-const StyledEditLink = styled(Link)`
-  background-color: rgb(149, 178, 246);
-  min-width: 80px;
-  padding: 0.9rem;
-  border-style: none;
-  border-radius: 10px;
-  font-size: 1.3rem;
-  color: rgb(17, 17, 17);
-  text-decoration: none;
-  text-align: center;
-  &:hover {
-    cursor: pointer;
-  }
+const StyledBookmark = styled(motion(Bookmark))`
+  ${({ $showAnswer }) => ($showAnswer ? "left: 30px;" : "right: 30px;")}
+  position: absolute;
+  height: 36px;
+  width: 36px;
+  transform: ${({ $showAnswer }) => $showAnswer && "rotateY(180deg)"};
 `;
 
 export default function FlashCard({ card, onLiked, deleteCard, collections }) {
   const [showAnswer, setShowAnswer] = useState(false);
   const [showDeleteButton, setShowDeleteButton] = useState(true);
+
+  const router = useRouter();
 
   function flipCard() {
     setShowAnswer((prev) => !prev);
@@ -91,54 +104,67 @@ export default function FlashCard({ card, onLiked, deleteCard, collections }) {
   )?.title;
 
   return (
-    <StyledCard $showAnswer={showAnswer} onClick={flipCard}>
+    <StyledCard
+      $showAnswer={showAnswer}
+      onClick={flipCard}
+      animate={showAnswer ? "back" : "front"}
+      variants={flipVariants}
+      transition={{ duration: 0.5 }}
+    >
       <>
+        <StyledBookmark
+          onClick={handleLiked}
+          $showAnswer={showAnswer}
+          fill={card.isLiked ? "#111111" : "#ffffff"}
+          strokeWidth={1.25}
+          animate={{ scale: card.isLiked ? 1.1 : 1 }}
+        />
         {showAnswer ? (
-          <>
-            <Button onClick={handleLiked}>
-              {card.isLiked ? "unfavorite" : "favorite"}
-            </Button>
-            <FlashCardBack
-              answer={card.answer}
-              collectionTitle={collectionTitle}
-            />
-          </>
+          <FlashCardBack
+            answer={card.answer}
+            collectionTitle={collectionTitle}
+          />
         ) : (
           <FlashCardFront
             question={card.question}
             collectionTitle={collectionTitle}
           />
         )}
-        <StyledButtonContainer>
-          <StyledEditLink
-            href={`/edit/card/${card.id}`}
-            onClick={(event) => {
-              event.stopPropagation();
-            }}
-          >
-            Edit
-          </StyledEditLink>
+        <ButtonWrapper $showAnswer={showAnswer}>
+          <StyledButtonContainer>
+            <Button
+              onClick={(event) => {
+                event.stopPropagation();
+                router.push(`/edit/card/${card.id}`);
+              }}
+            >
+              Edit
+            </Button>
 
-          <StyledDeleteContainer>
-            {showDeleteButton ? (
-              <Button buttonVariant="delete" onClick={handleToggleButton}>
-                Delete
-              </Button>
-            ) : (
-              <>
-                <StyledWarning>Delete Card?</StyledWarning>
-                <StyledConfirmContainer>
-                  <Button buttonVariant="confirm" onClick={handleConfirmDelete}>
-                    Confirm
-                  </Button>
-                  <Button buttonVariant="cancel" onClick={handleToggleButton}>
-                    Cancel
-                  </Button>
-                </StyledConfirmContainer>
-              </>
-            )}
-          </StyledDeleteContainer>
-        </StyledButtonContainer>
+            <StyledDeleteContainer>
+              {showDeleteButton ? (
+                <Button buttonVariant="delete" onClick={handleToggleButton}>
+                  Delete
+                </Button>
+              ) : (
+                <>
+                  <StyledWarning>Delete Card?</StyledWarning>
+                  <StyledConfirmContainer>
+                    <Button
+                      buttonVariant="confirm"
+                      onClick={handleConfirmDelete}
+                    >
+                      Confirm
+                    </Button>
+                    <Button buttonVariant="cancel" onClick={handleToggleButton}>
+                      Cancel
+                    </Button>
+                  </StyledConfirmContainer>
+                </>
+              )}
+            </StyledDeleteContainer>
+          </StyledButtonContainer>
+        </ButtonWrapper>
       </>
     </StyledCard>
   );
